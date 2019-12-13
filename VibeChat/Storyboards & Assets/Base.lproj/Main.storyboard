@@ -21,7 +21,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1wS-s5-2AU">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="246"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSM-v7-g0r" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSM-v7-g0r" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -43,7 +43,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="lAs-dN-cQY"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r1n-EX-TCc" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r1n-EX-TCc" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="62" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -65,7 +65,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="W93-Gt-chv"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-cG-4d9" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-cG-4d9" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="124" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -87,7 +87,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="AMZ-DL-Ytg"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-oo-enG" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-oo-enG" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="186" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -145,11 +145,25 @@
                                     <action selector="closeButtonPressed:" destination="SMX-eS-i3a" eventType="touchUpInside" id="yEk-cY-O78"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="X0n-qm-Qwk">
+                                <rect key="frame" x="154" y="64" width="240" height="85"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="DY6-1j-Hes"/>
+                                    <constraint firstAttribute="height" constant="85" id="TxS-1M-bUl"/>
+                                </constraints>
+                                <color key="textColor" red="0.97254901959999995" green="0.43921568630000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.80784313730000001" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="W4L-G8-r4U" firstAttribute="top" secondItem="ZUk-iw-haQ" secondAttribute="top" constant="20" id="IFX-d2-PNY"/>
                             <constraint firstItem="W4L-G8-r4U" firstAttribute="leading" secondItem="ZUk-iw-haQ" secondAttribute="leading" constant="20" id="WGK-Se-DRt"/>
+                            <constraint firstItem="ZUk-iw-haQ" firstAttribute="trailing" secondItem="X0n-qm-Qwk" secondAttribute="trailing" constant="20" id="sLC-sq-2k8"/>
+                            <constraint firstItem="X0n-qm-Qwk" firstAttribute="top" secondItem="ZUk-iw-haQ" secondAttribute="top" constant="20" id="tS4-zo-LoQ"/>
                             <constraint firstItem="7eU-gh-DHg" firstAttribute="centerX" secondItem="53B-sx-SQH" secondAttribute="centerX" id="z0B-PY-nrF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZUk-iw-haQ"/>
@@ -301,7 +315,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xwq-xD-E8P" customClass="CreateAccountForm" customModule="VibeChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="122"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbY-HL-21w" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbY-HL-21w" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -323,7 +337,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="kZV-DW-Mnt"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X8f-te-iH6" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X8f-te-iH6" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="62" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -367,12 +381,25 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiH-7O-USg">
+                                <rect key="frame" x="154" y="64" width="240" height="85"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Rw6-6J-ouD"/>
+                                    <constraint firstAttribute="height" constant="85" id="T4X-yT-0Bz"/>
+                                </constraints>
+                                <color key="textColor" red="0.97254901959999995" green="0.43921568630000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.80784313730000001" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="lZ4-L2-G8r" firstAttribute="trailing" secondItem="yiH-7O-USg" secondAttribute="trailing" constant="20" id="1hj-Q8-Cva"/>
                             <constraint firstItem="aPO-ex-3Pe" firstAttribute="top" secondItem="lZ4-L2-G8r" secondAttribute="top" constant="20" id="3b1-xR-HTL"/>
                             <constraint firstItem="0bq-F1-GqB" firstAttribute="centerX" secondItem="vLQ-Qy-SnO" secondAttribute="centerX" id="93V-UE-rGD"/>
                             <constraint firstItem="aPO-ex-3Pe" firstAttribute="leading" secondItem="lZ4-L2-G8r" secondAttribute="leading" constant="20" id="HW6-pR-48C"/>
+                            <constraint firstItem="yiH-7O-USg" firstAttribute="top" secondItem="lZ4-L2-G8r" secondAttribute="top" constant="20" id="Rx0-XN-W58"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lZ4-L2-G8r"/>
                     </view>
