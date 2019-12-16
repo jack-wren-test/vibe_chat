@@ -8,8 +8,6 @@
 
 import UIKit
 import Firebase
-import FirebaseAuth
-import FirebaseFirestore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,25 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        
-        // Check if there is a user logged in
-        // Retrive user data
-        // Pass to Home Controller
-        // Move to loading screen until callback is performed
-        // If it takes longer than 10 seconds, time out and display error to user
-        
-//        let storyboard = UIStoryboard.init(name: "Main.storyboard", bundle: .main)
-//        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        
         return true
     }
-    
-//    fileprivate func checkForUser() -> Bool {
-//        Authenticate.shared.checkForValidUser { (presentAuthenticateScreen) in
-//            if presentAuthenticateScreen {
-//            }
-//        }
-//    }
+
 
     // MARK: UISceneSession Lifecycle
 

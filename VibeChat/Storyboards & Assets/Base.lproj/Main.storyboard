@@ -713,6 +713,9 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="30"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.38395864693675902" green="0.78039215689999997" blue="0.5447075444382582" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="kb8-jH-eDX">
@@ -1046,7 +1049,6 @@
         <!--Navigation Controller-->
         <scene sceneID="qn3-ok-SwI">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H8T-0p-Z5o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Qm-HE-hvN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="fFd-bR-BkH">
@@ -1063,6 +1065,7 @@
                         <segue destination="cYF-7X-AsV" kind="relationship" relationship="rootViewController" id="hEL-Pp-8Df"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H8T-0p-Z5o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-620" y="127"/>
         </scene>

@@ -8,6 +8,11 @@
 
 import FirebaseFirestore
 
+enum userField: String {
+    typealias RawValue = String
+    case name, email, uid, vibe, status, isOnline, profileImageUrl
+}
+
 final class UsersManager: FirestoreManager {
     
     // MARK:- Singleton Setup
@@ -20,6 +25,8 @@ final class UsersManager: FirestoreManager {
     private func Init() {}
     
     // MARK:- Methods
+    
+    // REFACTOR TO TAKE IN USERS RATHER THAN DATA AS TO ADHERE TO DEPENDENCY INJECTION
     
     // MAKE THIS AN OBSERVER
     
@@ -70,6 +77,14 @@ final class UsersManager: FirestoreManager {
                 self.fetchUserData(uid: uid) { (user) in
                     completion(user)
                 }
+            }
+        }
+    }
+    
+    public func toggleIsOnline(user: User) {
+        collectionReference.document(user.uid).updateData([userField.isOnline.rawValue: user.isOnline]) { (error) in
+            if let error = error {
+                print("Error updating online status: \(error.localizedDescription)")
             }
         }
     }

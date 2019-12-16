@@ -41,6 +41,7 @@ class AuthenticationManager {
             }
             if let uid = result?.user.uid {
                 UsersManager.shared.fetchUserData(uid: uid) { (user) in
+                    user?.isOnline = true
                     completion(user)
                 }
             }
@@ -60,6 +61,7 @@ class AuthenticationManager {
         if let uid = Auth.auth().currentUser?.uid {
             UsersManager.shared.fetchUserData(uid: uid) { (user) in
                 if let user = user {
+                    user.isOnline = true
                     DispatchQueue.main.async {
                         completion(user)
                     }

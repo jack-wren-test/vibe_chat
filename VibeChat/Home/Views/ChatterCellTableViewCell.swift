@@ -21,6 +21,7 @@ class ChatterCellTableViewCell: UITableViewCell {
     var user : User? {
         didSet {
             guard let user = user else {return}
+            profileImageView.layer.borderWidth = user.isOnline ? 3 : 0
             nameLabel.text = user.name
             statusLabel.text = user.status ?? ""
             user.imageFromChacheOrDb { (image) in
@@ -38,4 +39,23 @@ class ChatterCellTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
     
+}
+
+@IBDesignable
+class ProfileImageView: UIImageView {
+
+    override public var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
+    }
+    
+    @IBInspectable
+    var borderColor: UIColor? {
+        get {
+            return UIColor(cgColor: layer.borderColor!)
+        }
+        set {
+            layer.borderColor = newValue?.cgColor
+        }
+    }
+
 }

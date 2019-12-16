@@ -113,6 +113,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+// MARK:- Delegate Protocol Methods
+
 extension HomeController: HomeDelegate {
     func updateChatters(chatters: [User]) {
         self.chatters = chatters
@@ -122,6 +124,8 @@ extension HomeController: HomeDelegate {
     }
     func performLogOut() {
         AuthenticationManager.shared.logOut {
+            self.user?.isOnline = false
+            self.user = nil
             self.presentAuthenticationScreen()
         }
     }
