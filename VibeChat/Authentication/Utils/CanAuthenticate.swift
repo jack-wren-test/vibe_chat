@@ -14,7 +14,7 @@ protocol CanAuthenticate {
     func performAuthentication()
     func addTextFieldDidChangeActions()
     func enableAuthenticateButtonIfNeeded()
-    func presentHomeScreen(_ user: User)
+    func presentHomeScreen()
 }
 
 extension CanAuthenticate {

@@ -18,7 +18,9 @@
 		6175874E239E74BB002ED670 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874D239E74BB002ED670 /* MessagesController.swift */; };
 		61A470F723A000AD003DD758 /* DateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470F623A000AD003DD758 /* DateHeader.swift */; };
 		61A470FA23A25138003DD758 /* LaunchScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470F923A25138003DD758 /* LaunchScreenController.swift */; };
-		61A470FF23A7AD31003DD758 /* currentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470FE23A7AD31003DD758 /* currentUser.swift */; };
+		61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470FE23A7AD31003DD758 /* CurrentUser.swift */; };
+		61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710023A8E4C2003DD758 /* Conversation.swift */; };
+		61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710323A8F8AD003DD758 /* NewConversationController.swift */; };
 		61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */; };
 		61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D902398020300EEEEB0 /* SceneDelegate.swift */; };
 		61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D922398020300EEEEB0 /* HomeController.swift */; };
@@ -66,7 +68,9 @@
 		6175874D239E74BB002ED670 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		61A470F623A000AD003DD758 /* DateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeader.swift; sourceTree = "<group>"; };
 		61A470F923A25138003DD758 /* LaunchScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenController.swift; sourceTree = "<group>"; };
-		61A470FE23A7AD31003DD758 /* currentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentUser.swift; sourceTree = "<group>"; };
+		61A470FE23A7AD31003DD758 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		61A4710023A8E4C2003DD758 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		61A4710323A8F8AD003DD758 /* NewConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationController.swift; sourceTree = "<group>"; };
 		61BB8D8B2398020300EEEEB0 /* VibeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VibeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BB8D902398020300EEEEB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				61758749239E743E002ED670 /* Message.swift */,
+				61A4710023A8E4C2003DD758 /* Conversation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,9 +205,17 @@
 		61A470FD23A7AD0E003DD758 /* Current User */ = {
 			isa = PBXGroup;
 			children = (
-				61A470FE23A7AD31003DD758 /* currentUser.swift */,
+				61A470FE23A7AD31003DD758 /* CurrentUser.swift */,
 			);
 			path = "Current User";
+			sourceTree = "<group>";
+		};
+		61A4710223A8F814003DD758 /* New Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				61A4710323A8F8AD003DD758 /* NewConversationController.swift */,
+			);
+			path = "New Conversation";
 			sourceTree = "<group>";
 		};
 		61BB8D822398020300EEEEB0 = {
@@ -234,6 +247,7 @@
 				61A470F823A2511D003DD758 /* Launch Screen */,
 				61BB8DB32398052000EEEEB0 /* Authentication */,
 				61BB8DC523980AAF00EEEEB0 /* Home */,
+				61A4710223A8F814003DD758 /* New Conversation */,
 				616B2E5E239A56E900E9B0B2 /* Profile */,
 				616B2E5F239A56F500E9B0B2 /* Messaging */,
 				61BB8DC623980AB700EEEEB0 /* Delegates */,
@@ -567,16 +581,18 @@
 				61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */,
 				61BB8DB52398053900EEEEB0 /* AuthenticationController.swift in Sources */,
 				61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */,
+				61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */,
 				61A470FA23A25138003DD758 /* LaunchScreenController.swift in Sources */,
 				61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
+				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,
 				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
 				61E3922C239FA37E00BAAD21 /* BubbleView.swift in Sources */,
 				61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */,
 				616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */,
 				6175874E239E74BB002ED670 /* MessagesController.swift in Sources */,
 				61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */,
-				61A470FF23A7AD31003DD758 /* currentUser.swift in Sources */,
+				61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */,
 				616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

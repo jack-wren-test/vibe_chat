@@ -19,6 +19,7 @@ class User {
     public var email: String
     public var isOnline: Bool {
         didSet {
+            print("Is online value: \(isOnline)")
             UsersManager.shared.toggleIsOnline(user: self)
         }
     }
@@ -55,10 +56,6 @@ class User {
     }
     
     // MARK:- Methods
-    
-    public func toggleIsOnline(_ isOnline: Bool) {
-        self.isOnline = isOnline
-    }
     
     public func toDict() -> [String: Any] {
         var dict: [String: Any] = ["name": name,

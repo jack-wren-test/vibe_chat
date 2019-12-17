@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("Will terminate called...")
+        CurrentUser.shared.user?.isOnline = false
+    }
 
 
     // MARK: UISceneSession Lifecycle

@@ -21,7 +21,7 @@ class MessageCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            guard let user = user else {return}
+            guard let user = CurrentUser.shared.user else {return}
             guard let message = message else {return}
             messageLabel.text = message.text
             let isOutgoingMessage = message.fromUid == user.uid
@@ -35,9 +35,6 @@ class MessageCell: UITableViewCell {
     override func awakeFromNib() {
         configureCell()
     }
-    
-    // A message cell probably shouldn't have a user
-    var user: User?
     
     // MARK:- Methods
     

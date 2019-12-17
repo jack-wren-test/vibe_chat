@@ -13,7 +13,7 @@ final class MessagesManager: FirestoreManager {
     // MARK:- Singleton Setup
     
     static let shared = MessagesManager()
-    private let collectionReference = FirestoreManager.db.collection(dbCollection.messageThreads.rawValue)
+    private let collectionReference = FirestoreManager.db.collection(dbCollection.messaging.rawValue)
     
     // MARK:- Private Init (Force Singleton)
     
@@ -21,18 +21,20 @@ final class MessagesManager: FirestoreManager {
     
     // MARK:- Methods
     
-    public func uploadMessage(message: Message, completion: @escaping (_ success: Bool)->()) {
-        collectionReference.document(message.threadId).collection(dbCollection.messages.rawValue).addDocument(data: message.toDict()) { (error) in
+    public func uploadMessage(message: Message) {
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(message.threadId).collection(dbCollection.messages.rawValue).addDocument(data: message.toDict()) { (error) in
             if let error = error {
                 print("Error uploading message: \(error.localizedDescription)")
-                completion(false)
+                return
             }
-            completion(true)
+            self.updateConversationStatus(threadUid: message.threadId, lastMessageTime: Date(), isReadStatus: false)
         }
     }
     
     public func listenForMessages(onThread: String, completion: @escaping ([Message]?)->()) {
-        collectionReference.document(onThread).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
+       guard let uid = CurrentUser.shared.user?.uid else {return}
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(onThread).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
                 completion(nil)
@@ -43,10 +45,53 @@ final class MessagesManager: FirestoreManager {
         }
     }
     
-    public func createMessageThreadIfNeeded(userUid: String, chatterUid: String, completion: @escaping (_ threadId: String?)->()) {
+    public func listenForConversationChanges(onThread: String, completion: @escaping (Conversation?)->()) {
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(onThread).addSnapshotListener { (snapshot, error) in
+            if let error = error {
+                print("Error adding listener to thread: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            if let snapshotData = snapshot?.data() {
+                let thread = Conversation(withDictionary: snapshotData)
+                completion(thread)
+            }
+        }
+    }
+    
+    public func listenToConversationsForCurrentUser(completion: @escaping ([Conversation]?)->()) {
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
+            if let error = error {
+                print("Error adding listener to user conversations: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            if let documentChanges = snapshot?.documentChanges {
+                var conversations = [Conversation]()
+                for documentChange in documentChanges {
+                    conversations.append(Conversation(withDictionary: documentChange.document.data()))
+                }
+                completion(conversations)
+            }
+        }
+    }
+    
+    public func updateConversationStatus(threadUid: String, lastMessageTime: Date?, isReadStatus: Bool) {
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        var data: [String: Any] = ["isReadStatus": isReadStatus]
+        if let lastMessageTime = lastMessageTime {
+            data["lastMessageTime"] = Timestamp(date: lastMessageTime)
+        }
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(threadUid).setData(data, merge: true)
+    }
+    
+    public func createMessageThreadIfNeeded(chatterUid: String, completion: @escaping (_ threadId: String?)->()) {
+        guard let uid = CurrentUser.shared.user?.uid else {return}
         var foundMatch: Bool = false
-        let potentialThreadIds = [userUid+"_"+chatterUid, chatterUid+"_"+userUid]
-        collectionReference.getDocuments { (snapshot, error) in
+        let potentialThreadIds = [uid+"_"+chatterUid, chatterUid+"_"+uid]
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error checking for message threads: \(error.localizedDescription)")
                 completion(nil)
@@ -74,19 +119,28 @@ final class MessagesManager: FirestoreManager {
     
     fileprivate func createMessageThread(withThreadId: String, completion: @escaping (_ threadId: String?)->()) {
         let seperatedText = withThreadId.split(separator: "_")
-        let firstId = seperatedText.first
-        let secondId = seperatedText.last
+        let firstId = String(seperatedText.first!)
+        let secondId = String(seperatedText.last!)
         let data: [String: Any] = ["userUids": [firstId, secondId],
-                                   "type": "private"]
-        collectionReference.document(withThreadId).setData(data) { (error) in
+                                   "type": "private",
+                                   "isReadStatus": true,
+                                   "lastMessageTime": Timestamp(date: Date()),
+                                   "threadUid": withThreadId]
+        collectionReference.document(firstId).collection(dbCollection.conversations.rawValue).document(withThreadId).setData(data) { (error) in
             if let error = error {
                 print("Error creating message thread: \(error.localizedDescription)")
                 completion(nil)
                 return
-            } else {
-                completion(withThreadId)
             }
         }
+        collectionReference.document(secondId).collection(dbCollection.conversations.rawValue).document(withThreadId).setData(data) { (error) in
+            if let error = error {
+                print("Error creating message thread: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+        }
+        
     }
     
     // CHANGE THIS TO GENERIC DATA ARRAY FOR USE WITH USERS TOO? THEN COULD PUT IN DATABASEMANAGERCLASS

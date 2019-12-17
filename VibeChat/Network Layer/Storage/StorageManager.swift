@@ -14,7 +14,7 @@ enum storageLocation: String {
     case profileImages
 }
 
-class StorageManager {
+final class StorageManager {
     
     // MARK:- Singleton Setup
     static let shared = StorageManager()

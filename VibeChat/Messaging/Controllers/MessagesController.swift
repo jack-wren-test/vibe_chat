@@ -15,7 +15,7 @@ class MessagesController:   UIViewController,
     // MARK:- IBOutlets
     
     @IBOutlet weak var chatterNameLabel: UILabel!
-    @IBOutlet weak var chatterProfileImageView: ProfileImageView!
+    @IBOutlet weak var chatterProfileImageView: CircularImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextField: AuthenticationTextField!
     @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
@@ -31,14 +31,13 @@ class MessagesController:   UIViewController,
         }
     }
     
-    var user: User?
     var chatter: User? {
         didSet {
             guard let chatter = chatter else {return}
-            guard let user = user else {return}
-            MessagesManager.shared.createMessageThreadIfNeeded(userUid: user.uid, chatterUid: chatter.uid) { (threadId) in
+            MessagesManager.shared.createMessageThreadIfNeeded(chatterUid: chatter.uid) { (threadId) in
                 if let threadId = threadId {
                     self.threadId = threadId
+                    MessagesManager.shared.updateConversationStatus(threadUid: threadId, lastMessageTime: nil, isReadStatus: true)
                 }
             }
         }
@@ -48,8 +47,8 @@ class MessagesController:   UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         guard let chatter = chatter else {return}
+        chatterProfileImageView.layer.borderWidth = chatter.isOnline ? 2 : 0
         chatterProfileImageView.image = chatter.profileImage
         chatterNameLabel.text = chatter.name
         
@@ -180,7 +179,6 @@ class MessagesController:   UIViewController,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId) as! MessageCell
-        cell.user = user
         cell.message = messages[indexPath.section][indexPath.row]
         return cell
     }
@@ -197,14 +195,10 @@ class MessagesController:   UIViewController,
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         if messageTextField.text != "" {
-            if let text = messageTextField.text, let toUid = chatter?.uid, let fromUid = user?.uid {
+            if let text = messageTextField.text, let toUid = chatter?.uid, let fromUid = CurrentUser.shared.user?.uid {
                 messageTextField.text = ""
-                let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), type: "text", threadId: threadId!)
-                MessagesManager.shared.uploadMessage(message: message) { (success) in
-                    if success {
-                        print("Message succesfully uploaded")
-                    }
-                }
+                let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: threadId!)
+                MessagesManager.shared.uploadMessage(message: message)
             }
         }
     }

@@ -10,8 +10,9 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
+    // REFACTOR THIS UGLY!!
+    
     var window: UIWindow?
-    var user: User?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -30,15 +31,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         AuthenticationManager.shared.checkForValidUser { (user) in
             let homeController = storyboard.instantiateViewController(identifier: "HomeController") as! HomeController
-            if user != nil {
-                self.user = user
-                UsersManager.shared.fetchChatters(ommitingCurrentUser: self.user!) { (chatters) in
+            if let user = user {
+                CurrentUser.shared.setNewUser(user)
+                UsersManager.shared.fetchChatters() { (chatters) in
                     if let chatters = chatters {
                         homeController.chatters = chatters
-                        homeController.user = self.user
-                        homeController.authenticationNeeded = false
+                        MessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
+                            guard let conversations = conversations else {return}
+                            homeController.updateConversations(conversations: conversations)
+                        }
                     }
                 }
+                homeController.authenticationNeeded = false
             }
             if initialTimer == nil {
                 navController.popViewController(animated: true)
@@ -54,15 +58,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        user?.isOnline = false
+        CurrentUser.shared.user?.isOnline = false
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        user?.isOnline = true
+        CurrentUser.shared.user?.isOnline = true
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        user?.isOnline = false
+        CurrentUser.shared.user?.isOnline = false
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        CurrentUser.shared.user?.isOnline = false
+    }
+    
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        CurrentUser.shared.user?.isOnline = true
     }
     
 }

@@ -100,25 +100,11 @@ extension LogInController: CanAuthenticate {
         }
     }
     
-    func presentHomeScreen(_ user: User) {
-        let navController = self.presentingViewController?.presentingViewController as! UINavigationController
-        homeDelegate?.updateUserData(data: user)
-        UsersManager.shared.fetchChatters(ommitingCurrentUser: user) { (chatters) in
-            if let chatters = chatters {
-                self.homeDelegate?.updateChatters(chatters: chatters)
-                navController.dismiss(animated: true)
-            }
-        }
-    }
-    
     func performAuthentication() {
         if let email = emailTF.text,
             let password = passwordTF.text {
-            AuthenticationManager.shared.logIn(email: email, password: password) { (user) in
-                if let user = user {
-                    print("Authenticated with user: \(user.name)")
-                    self.presentHomeScreen(user)
-                }
+            CurrentUser.shared.logIn(withEmail: email, andPassword: password) {
+                self.presentHomeScreen()
             }
         }
     }

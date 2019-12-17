@@ -96,24 +96,14 @@ extension CreateAccountController: CanAuthenticate {
         }
     }
     
-    func presentHomeScreen(_ user: User) {
-        let navController = self.presentingViewController?.presentingViewController as! UINavigationController
-        homeDelegate?.updateUserData(data: user)
-        UsersManager.shared.fetchChatters(ommitingCurrentUser: user) { (chatters) in
-            if let chatters = chatters {
-                self.homeDelegate?.updateChatters(chatters: chatters)
-                navController.dismiss(animated: true)
-            }
-        }
-    }
-    
     func performAuthentication() {
         if let name = nameTF.text,
             let email = emailTF.text,
             let password = passwordTF.text {
             AuthenticationManager.shared.createAccount(name: name, email: email, password: password) { (user) in
                 if let user = user {
-                    self.presentHomeScreen(user)
+                    CurrentUser.shared.setNewUser(user)
+                    self.presentHomeScreen()
                 }
             }
         }

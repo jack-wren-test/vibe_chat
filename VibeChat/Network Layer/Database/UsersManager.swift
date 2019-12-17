@@ -27,11 +27,10 @@ final class UsersManager: FirestoreManager {
     // MARK:- Methods
     
     // REFACTOR TO TAKE IN USERS RATHER THAN DATA AS TO ADHERE TO DEPENDENCY INJECTION
-    
-    // MAKE THIS AN OBSERVER
-    
-    public func fetchChatters(ommitingCurrentUser: User, completion: @escaping ([User]?)->()) {
-        collectionReference.getDocuments { (snapshot, error) in
+
+    public func fetchChatters(completion: @escaping ([User]?)->()) {
+        collectionReference.addSnapshotListener { (snapshot, error) in
+            print("Change in chatters...")
             if let error = error {
                 print("Error fetching users: \(error.localizedDescription)")
                 completion(nil)
@@ -41,7 +40,7 @@ final class UsersManager: FirestoreManager {
                 snapshotArray.forEach { (snapshot) in
                     let userData = snapshot.data()
                     let uid = userData["uid"] as! String
-                    if uid != ommitingCurrentUser.uid {
+                    if uid != CurrentUser.shared.user?.uid {
                         let user = User(withDictionary: userData)
                         users.append(user)
                     }
@@ -67,7 +66,7 @@ final class UsersManager: FirestoreManager {
         let data : [String: Any] = ["name" : name,
                                     "uid" : uid,
                                     "email" : email,
-                                    "status": "I just joined the vibe ~!~",
+                                    "status": "I just joined the vibe ~~~",
                                     "vibe": "Free for All Friday 🥳"]
         FirestoreManager.db.collection("users").document(uid).setData(data) { (error) in
             if let error = error {
@@ -88,8 +87,6 @@ final class UsersManager: FirestoreManager {
             }
         }
     }
-    
-    // MAKE THIS AN OBSERVER
     
     public func fetchUserData(uid: String, completion: @escaping (User?)->()) {
         collectionReference.document(uid).getDocument { (snapshot, error) in

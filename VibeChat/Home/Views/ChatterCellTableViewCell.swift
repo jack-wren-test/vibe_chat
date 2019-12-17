@@ -15,16 +15,23 @@ class ChatterCellTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var isReadStatusIndicator: CircularImageView!
     
     // MARK:- Properties
     
-    var user : User? {
+    var isReadStatus: Bool? {
         didSet {
-            guard let user = user else {return}
-            profileImageView.layer.borderWidth = user.isOnline ? 3 : 0
-            nameLabel.text = user.name
-            statusLabel.text = user.status ?? ""
-            user.imageFromChacheOrDb { (image) in
+            guard let isRead = isReadStatus else {return}
+            isReadStatusIndicator.isHidden = isRead
+        }
+    }
+    var chatter: User? {
+        didSet {
+            guard let chatter = chatter else {return}
+            profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
+            nameLabel.text = chatter.name
+            statusLabel.text = chatter.status ?? ""
+            chatter.imageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {
                     self.profileImageView.image = image
                 }
@@ -42,7 +49,7 @@ class ChatterCellTableViewCell: UITableViewCell {
 }
 
 @IBDesignable
-class ProfileImageView: UIImageView {
+class CircularImageView: UIImageView {
 
     override public var intrinsicContentSize: CGSize {
         return CGSize(width: 70, height: 70)

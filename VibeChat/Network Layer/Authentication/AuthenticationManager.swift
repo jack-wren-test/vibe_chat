@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseAuth
 
-class AuthenticationManager {
+final class AuthenticationManager {
     
     // MARK:- Singleton Setup
     
