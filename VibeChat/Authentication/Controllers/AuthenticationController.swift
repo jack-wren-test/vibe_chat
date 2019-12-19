@@ -32,9 +32,11 @@ class AuthenticationController: UIViewController {
         UsersManager.shared.fetchChatters() { (chatters) in
             if let chatters = chatters {
                 self.homeDelegate?.updateChatters(chatters: chatters)
-                MessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
+                UserMessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
                     guard let conversations = conversations else {return}
-                    self.homeDelegate?.updateConversations(conversations: conversations)
+                    DispatchQueue.main.async {
+                        self.homeDelegate?.updateConversations(conversations: conversations)
+                    }
                 }
             }
         }

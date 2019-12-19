@@ -31,6 +31,8 @@ class ChatterCellTableViewCell: UITableViewCell {
             profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
             nameLabel.text = chatter.name
             statusLabel.text = chatter.status ?? ""
+            nameLabel.backgroundColor = .clear
+            statusLabel.backgroundColor = .clear
             chatter.imageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {
                     self.profileImageView.image = image

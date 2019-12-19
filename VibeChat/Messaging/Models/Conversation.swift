@@ -22,35 +22,58 @@ class Conversation {
     
     var type:               String
     var lastMessageTime:    Date
-    var threadUid:          String
+    var uid:                String
     var userUids:           [String]
+    var userNames:          [String]
     var chatter:            User?
     var isReadStatus:       Bool {
         didSet {
-            MessagesManager.shared.updateConversationStatus(threadUid: threadUid,
-                                                      lastMessageTime: lastMessageTime,
-                                                      isReadStatus: isReadStatus)
+            UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self,
+                                                                              toIsRead: isReadStatus,
+                                                                              withNewMessageTime: lastMessageTime)
         }
     }
     
     // MARK:- Init
+    
+    init(withChatter: User) {
+        type = "private"
+        lastMessageTime = Date()
+        uid = CurrentUser.shared.user!.uid+"_"+withChatter.uid
+        userUids = [CurrentUser.shared.user!.uid, withChatter.uid]
+        userNames = [CurrentUser.shared.user!.name, withChatter.name]
+        chatter = withChatter
+        isReadStatus = false
+    }
     
     init(withDictionary: [String: Any]) {
         type = withDictionary["type"] as! String
         isReadStatus = withDictionary["isReadStatus"] as! Bool
         lastMessageTime = (withDictionary["lastMessageTime"] as! Timestamp).dateValue()
         userUids = withDictionary["userUids"] as! [String]
-        threadUid = withDictionary["threadUid"] as! String
-        fetchChatter()
+        userNames = withDictionary["userNames"] as! [String]
+        uid = withDictionary["uid"] as! String
+        fetchChatter{}
     }
     
     // MARK:- Methods
     
-    fileprivate func fetchChatter() {
+    public func toDict() -> [String: Any] {
+        let data: [String: Any] = ["userNames": [CurrentUser.shared.user?.name, chatter?.name],
+                                   "userUids": [CurrentUser.shared.user?.uid, chatter?.uid],
+                                   "type": "private",
+                                   "isReadStatus": true,
+                                   "lastMessageTime": Timestamp(date: Date()),
+                                   "uid": uid]
+        return data
+    }
+    
+    public func fetchChatter(completion: @escaping ()->()) {
         let chatterUid = CurrentUser.shared.user?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
             if let user = user {
                 self.chatter = user
+                completion()
             }
         }
     }

@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 UsersManager.shared.fetchChatters() { (chatters) in
                     if let chatters = chatters {
                         homeController.chatters = chatters
-                        MessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
+                        UserMessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
                             guard let conversations = conversations else {return}
                             homeController.updateConversations(conversations: conversations)
                         }

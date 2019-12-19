@@ -30,7 +30,6 @@ final class UsersManager: FirestoreManager {
 
     public func fetchChatters(completion: @escaping ([User]?)->()) {
         collectionReference.addSnapshotListener { (snapshot, error) in
-            print("Change in chatters...")
             if let error = error {
                 print("Error fetching users: \(error.localizedDescription)")
                 completion(nil)

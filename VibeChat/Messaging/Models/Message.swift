@@ -17,7 +17,7 @@ class Message {
     var toUid:      String
     var fromUid:    String
     var timestamp:  Date
-    var threadId:   String
+    var conversationId:   String
     
     // MARK:- Initializers
     
@@ -27,14 +27,14 @@ class Message {
         self.toUid = toUid
         self.fromUid = fromUid
         self.timestamp = timestamp
-        self.threadId = threadId
+        self.conversationId = threadId
     }
     
     init(withDictionary: [String: Any]) {
         text = withDictionary["text"] as! String
         toUid = withDictionary["toUid"] as! String
         fromUid = withDictionary["fromUid"] as! String
-        threadId = withDictionary["threadId"] as! String
+        conversationId = withDictionary["threadId"] as! String
         timestamp = (withDictionary["timestamp"] as! Timestamp).dateValue()
     }
     
@@ -45,7 +45,7 @@ class Message {
         let dict: [String: Any] = ["text": text,
                                    "toUid": toUid,
                                    "fromUid": fromUid,
-                                   "threadId": threadId,
+                                   "threadId": conversationId,
                                    "timestamp": tStamp]
         return dict
     }

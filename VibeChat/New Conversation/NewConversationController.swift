@@ -39,14 +39,13 @@ class NewConversationController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let conversation = Conversation(withChatter: chatters[indexPath.row])
         dismiss(animated: true) {
-            self.homeDelegate?.presentNewChatWindow(chatter: self.chatters[indexPath.row])
+            self.homeDelegate?.presentNewChatWindow(conversation: conversation)
         }
     }
     
     // MARK:- Methods
-    
-    
     
 
 }

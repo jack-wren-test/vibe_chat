@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 enum dbCollection: String {
     typealias RawValue = String
-    case users, messaging, conversations, messages, groups
+    case users, messaging, conversations, messages, groups, userMessages
 }
 
 class FirestoreManager {

@@ -21,6 +21,7 @@
 		61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470FE23A7AD31003DD758 /* CurrentUser.swift */; };
 		61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710023A8E4C2003DD758 /* Conversation.swift */; };
 		61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710323A8F8AD003DD758 /* NewConversationController.swift */; };
+		61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */; };
 		61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */; };
 		61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D902398020300EEEEB0 /* SceneDelegate.swift */; };
 		61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D922398020300EEEEB0 /* HomeController.swift */; };
@@ -38,10 +39,10 @@
 		61BB8DD6239923DD00EEEEB0 /* ChatterCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DD5239923DD00EEEEB0 /* ChatterCellTableViewCell.swift */; };
 		61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D16FCC239AB55F006435C2 /* StorageManager.swift */; };
 		61E3922C239FA37E00BAAD21 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3922B239FA37E00BAAD21 /* BubbleView.swift */; };
-		61E39233239FBE3100BAAD21 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39232239FBE3100BAAD21 /* MessagesManager.swift */; };
+		61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39232239FBE3100BAAD21 /* MessagingManager.swift */; };
 		61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39234239FBE4600BAAD21 /* GroupsManager.swift */; };
 		61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39236239FBED400BAAD21 /* UsersManager.swift */; };
-		61E39239239FC74700BAAD21 /* MessageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39238239FC74700BAAD21 /* MessageManagerTests.swift */; };
+		61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */; };
 		E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		61A470FE23A7AD31003DD758 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		61A4710023A8E4C2003DD758 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		61A4710323A8F8AD003DD758 /* NewConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationController.swift; sourceTree = "<group>"; };
+		61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesManager.swift; sourceTree = "<group>"; };
 		61BB8D8B2398020300EEEEB0 /* VibeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VibeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BB8D902398020300EEEEB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,10 +94,10 @@
 		61BB8DD5239923DD00EEEEB0 /* ChatterCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterCellTableViewCell.swift; sourceTree = "<group>"; };
 		61D16FCC239AB55F006435C2 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		61E3922B239FA37E00BAAD21 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
-		61E39232239FBE3100BAAD21 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
+		61E39232239FBE3100BAAD21 /* MessagingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManager.swift; sourceTree = "<group>"; };
 		61E39234239FBE4600BAAD21 /* GroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsManager.swift; sourceTree = "<group>"; };
 		61E39236239FBED400BAAD21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
-		61E39238239FC74700BAAD21 /* MessageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManagerTests.swift; sourceTree = "<group>"; };
+		61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManagerTests.swift; sourceTree = "<group>"; };
 		6E3C3FD3DB807EB252E0B1D1 /* Pods-VibeChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat.release.xcconfig"; path = "Target Support Files/Pods-VibeChat/Pods-VibeChat.release.xcconfig"; sourceTree = "<group>"; };
 		76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChatTests.release.xcconfig"; path = "Target Support Files/Pods-VibeChatTests/Pods-VibeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,7 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				61BB8DA72398020400EEEEB0 /* Info.plist */,
-				61E39238239FC74700BAAD21 /* MessageManagerTests.swift */,
+				61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */,
 			);
 			path = VibeChatTests;
 			sourceTree = "<group>";
@@ -362,7 +364,8 @@
 			isa = PBXGroup;
 			children = (
 				61271C212399562100F1EE1B /* FirestoreManager.swift */,
-				61E39232239FBE3100BAAD21 /* MessagesManager.swift */,
+				61E39232239FBE3100BAAD21 /* MessagingManager.swift */,
+				61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */,
 				61E39234239FBE4600BAAD21 /* GroupsManager.swift */,
 				61E39236239FBED400BAAD21 /* UsersManager.swift */,
 			);
@@ -566,11 +569,12 @@
 			files = (
 				61BB8DD6239923DD00EEEEB0 /* ChatterCellTableViewCell.swift in Sources */,
 				61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */,
+				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
 				61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */,
 				61BB8DBE239806FD00EEEEB0 /* AuthenticationButton.swift in Sources */,
 				61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */,
 				61BB8DD02399120900EEEEB0 /* UIViewController+.swift in Sources */,
-				61E39233239FBE3100BAAD21 /* MessagesManager.swift in Sources */,
+				61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */,
 				6175874A239E743E002ED670 /* Message.swift in Sources */,
 				61BB8DBA239805E900EEEEB0 /* LogInController.swift in Sources */,
 				61BB8DBC239806E100EEEEB0 /* CreateAccountController.swift in Sources */,
@@ -601,7 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61E39239239FC74700BAAD21 /* MessageManagerTests.swift in Sources */,
+				61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

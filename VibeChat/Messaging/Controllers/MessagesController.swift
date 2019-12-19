@@ -25,21 +25,9 @@ class MessagesController:   UIViewController,
     let reuseId = "MessageCell"
     var messages = [[Message]]()
     
-    var threadId: String? {
+    var conversation: Conversation? {
         didSet {
             setupMessageListener()
-        }
-    }
-    
-    var chatter: User? {
-        didSet {
-            guard let chatter = chatter else {return}
-            MessagesManager.shared.createMessageThreadIfNeeded(chatterUid: chatter.uid) { (threadId) in
-                if let threadId = threadId {
-                    self.threadId = threadId
-                    MessagesManager.shared.updateConversationStatus(threadUid: threadId, lastMessageTime: nil, isReadStatus: true)
-                }
-            }
         }
     }
     
@@ -47,7 +35,7 @@ class MessagesController:   UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let chatter = chatter else {return}
+        guard let chatter = conversation?.chatter else {return}
         chatterProfileImageView.layer.borderWidth = chatter.isOnline ? 2 : 0
         chatterProfileImageView.image = chatter.profileImage
         chatterNameLabel.text = chatter.name
@@ -85,7 +73,7 @@ class MessagesController:   UIViewController,
     }
     
     fileprivate func setupMessageListener() {
-        MessagesManager.shared.listenForMessages(onThread: threadId!) { (messages) in
+        MessagingManager.shared.listenForMessages(onConversation: conversation!) { (messages) in
             guard let messages = messages else {return}
             let daysOfMessagesCount = self.messages.count
             if let sortedMessages = self.groupMessagesByDate(messages) {
@@ -194,11 +182,17 @@ class MessagesController:   UIViewController,
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
+        guard let conversation = conversation else {return}
         if messageTextField.text != "" {
-            if let text = messageTextField.text, let toUid = chatter?.uid, let fromUid = CurrentUser.shared.user?.uid {
+            if let text = messageTextField.text, let toUid = conversation.chatter?.uid, let fromUid = CurrentUser.shared.user?.uid {
                 messageTextField.text = ""
-                let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: threadId!)
-                MessagesManager.shared.uploadMessage(message: message)
+                UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
+                    let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)
+                    MessagingManager.shared.uploadMessage(message: message) {
+                        UserMessagesManager.shared.updateConversationStatusForChatter(conversation: conversation, toIsRead: false, withNewMessageTime: Date())
+                        UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: conversation, toIsRead: true, withNewMessageTime: Date())
+                    }
+                }
             }
         }
     }

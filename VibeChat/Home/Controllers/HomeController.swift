@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HomeDelegate {
-    func presentNewChatWindow(chatter: User)
+    func presentNewChatWindow(conversation: Conversation)
     func updateChatters(chatters: [User])
     func updateConversations(conversations: [Conversation])
     func performLogOut()
@@ -26,16 +26,20 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK:- Properties
     
+    var addingConversation = 2
+    var loadedFromStoryboard: Bool = false
     var authenticationNeeded: Bool = true
-    var chatters = [User]()                 // <- All potential chatters - move to new conversation controller
+    var chatters = [User]()                         // <- All potential chatters - move to new conversation controller
     var conversations: [String: Conversation]?      // <- All this users conversations
-    var orderedKeysForConversations: [String]?
+    var orderedConversations: [Conversation]?
+//    var orderedKeysForConversations: [String]?
     let reuseIdentifier = "ChatterCell"
     
     // MARK:- ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadedFromStoryboard = true
         navigationController?.isNavigationBarHidden = true
         
         tableView.delegate = self
@@ -62,29 +66,25 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ChatterCellTableViewCell
-        if let orderedKeys = orderedKeysForConversations {
-            let threadIsRead = conversations?[orderedKeys[indexPath.row]]?.isReadStatus
-            cell.chatter = conversations?[orderedKeys[indexPath.row]]?.chatter
-            cell.isReadStatus = threadIsRead
+        if let orderedConvos = self.orderedConversations {
+            let conversationIsRead = orderedConvos[indexPath.row].isReadStatus
+            cell.chatter = orderedConvos[indexPath.row].chatter
+            cell.isReadStatus = conversationIsRead
         }
+        print("Index Path: (\(indexPath.row) \(indexPath.section)) --> \(cell.chatter?.name ?? "")")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let orderedKeys = orderedKeysForConversations else {return}
-        conversations?[orderedKeys[indexPath.row]]?.isReadStatus = true
+        self.orderedConversations?[indexPath.row].isReadStatus = true
         performSegue(withIdentifier: "MessagesSegue", sender: self)
     }
     
     // MARK:- Methods
     
-    fileprivate func orderConversationKeysByLatestMesage(conversations: [String: Conversation]) -> [String] {
+    fileprivate func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
         let orderedConversations = conversations.values.sorted { $0.lastMessageTime > $1.lastMessageTime }
-        var orderedKeys = [String]()
-        for conversation in orderedConversations {
-            orderedKeys.append(conversation.threadUid)
-        }
-        return orderedKeys
+        return orderedConversations
     }
     
     fileprivate func presentAuthenticationScreen() {
@@ -109,15 +109,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if segue.identifier == "NewConversationSegue" {
             print("Preparing for new conversation segue")
             if let vc = segue.destination as? NewConversationController {
-                print("Preparing for new conversation segue")
                 vc.homeDelegate = self
                 vc.chatters = chatters
             }
         } else if segue.identifier == "MessagesSegue" {
             if let vc = segue.destination as? MessagesController {
                 if let indexPath = tableView.indexPathForSelectedRow {
-                    guard let orderedKeys = orderedKeysForConversations else {return}
-                    vc.chatter = self.conversations?[orderedKeys[indexPath.row]]?.chatter
+                    guard let orderedConvos = orderedConversations else {return}
+                    vc.conversation = orderedConvos[indexPath.row]
                 }
             }
         }
@@ -136,7 +135,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     fileprivate func getDictionaryOfConversations(conversations: [Conversation]) -> [String: Conversation] {
         var dict = [String: Conversation]()
         for conversation in conversations {
-            dict[conversation.threadUid] = conversation
+            dict[conversation.uid] = conversation
         }
         return dict
     }
@@ -147,30 +146,54 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 // MARK:- Delegate Protocol Methods
 
 extension HomeController: HomeDelegate {
-    func presentNewChatWindow(chatter: User) {
+    
+    func presentNewChatWindow(conversation: Conversation) {
         let vc = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "MessagesController") as! MessagesController
-        vc.chatter = chatter
+        vc.conversation = conversation
         navigationController?.pushViewController(vc, animated: true)
     }
+    
     func updateChatters(chatters: [User]) {
         self.chatters = chatters
     }
+    
     func updateConversations(conversations: [Conversation]) {
+
         if self.conversations?.count == nil {
             let dictConversations = getDictionaryOfConversations(conversations: conversations)
-            let orderedKeys = orderConversationKeysByLatestMesage(conversations:  dictConversations)
+            self.orderedConversations = orderConversationsByLatestMesage(conversations:  dictConversations)
             self.conversations = dictConversations
-            self.orderedKeysForConversations = orderedKeys
-        } else {
-            let dictConversations = getDictionaryOfConversations(conversations: conversations)
-            for key in dictConversations.keys {
-                self.conversations?[key] = dictConversations[key]
+        } else if conversations.count == 1, let currentConvos = self.conversations, currentConvos[conversations[0].uid] == nil {
+            addingConversation = 0
+            let newConversation = conversations[0]
+            newConversation.fetchChatter {
+                self.conversations?[newConversation.uid] = newConversation
+                self.orderedConversations = self.orderConversationsByLatestMesage(conversations:  self.conversations!)
+                if self.tableView.numberOfSections == 0 {
+                    self.tableView.insertSections(IndexSet([0]), with: .top)
+                } else {
+                    if self.orderedConversations?.count != self.tableView.numberOfRows(inSection: 0) {
+                        self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
+                    }
+                }
             }
-            let orderedKeys = orderConversationKeysByLatestMesage(conversations:  self.conversations!)
-            self.orderedKeysForConversations = orderedKeys
+        } else if let changedConversation = conversations.first, loadedFromStoryboard {
+            if addingConversation < 2 {
+                addingConversation += 1
+            } else {
+                changedConversation.fetchChatter {
+                    self.conversations?[changedConversation.uid] = changedConversation
+                    self.orderedConversations = self.orderConversationsByLatestMesage(conversations:  self.conversations!)
+                    if self.loadedFromStoryboard { self.tableView.reloadData() }
+                }
+            }
         }
     }
+    
     func performLogOut() {
+        self.conversations = nil
+        self.orderedConversations = nil
+        self.tableView.reloadData()
         self.presentAuthenticationScreen()
         CurrentUser.shared.logOut()
     }
