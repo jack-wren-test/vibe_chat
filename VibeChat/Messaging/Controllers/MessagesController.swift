@@ -26,6 +26,7 @@ class MessagesController:   UIViewController,
     let reuseId = "MessageCell"
     var messages = [[Message]]()
     var conversationListener: ListenerRegistration?
+    var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
     
     // MARK:- ViewDidLoad
@@ -34,9 +35,8 @@ class MessagesController:   UIViewController,
         super.viewDidLoad()
         
         tableViewConfig()
-        if conversation != nil {
-            setupMessageListener()
-        }
+        setupMessageListener()
+        setupConverstationStatusListener()
         
         guard let chatter = conversation?.chatter else {return}
         chatterProfileImageView.layer.borderWidth = chatter.isOnline ? 2 : 0
@@ -50,6 +50,7 @@ class MessagesController:   UIViewController,
     
     override func viewDidDisappear(_ animated: Bool) {
         conversationListener?.remove()
+        conversationStatusListener?.remove()
     }
     
     // MARK:- Methods
@@ -79,8 +80,20 @@ class MessagesController:   UIViewController,
         }
     }
     
+    fileprivate func setupConverstationStatusListener() {
+        conversationStatusListener = UserMessagesManager.shared.listenForConversationChanges(conversaion: conversation!, completion: { (conversation) in
+            if let conversation = conversation, self.isViewLoaded {
+                conversation.fetchChatter{
+                    guard let isOnline = conversation.chatter?.isOnline else {return}
+                    self.chatterProfileImageView.layer.borderWidth = isOnline ? 2 : 0
+                }
+            }
+        })
+    }
+    
     fileprivate func setupMessageListener() {
-        conversationListener = MessagingManager.shared.listenForMessages(onConversation: conversation!) { (messages) in
+        guard let conversation = conversation else {return}
+        conversationListener = MessagingManager.shared.listenForMessages(onConversation: conversation) { (messages) in
             guard let messages = messages else {return}
             let daysOfMessagesCount = self.messages.count
             if let sortedMessages = self.groupMessagesByDate(messages) {
@@ -88,14 +101,15 @@ class MessagesController:   UIViewController,
                 if self.isViewLoaded {
                     self.tableView.reloadData()
                     self.scrollToBottomOfMessages()
-//                    UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self.conversation!, toIsRead: true, withNewMessageTime: nil)
+                    if conversation.hasDbCounterpart {self.conversation!.isReadStatus = true}
+                    self.conversation!.isReadStatus = true
                 }
             } else {
                 if self.isViewLoaded {
                     let isSection = self.messages.count != daysOfMessagesCount
                     self.animateAddNewMessage(isSection)
                     self.scrollToBottomOfMessages()
-//                    UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self.conversation!, toIsRead: true, withNewMessageTime: nil)
+                    if conversation.hasDbCounterpart {self.conversation!.isReadStatus = true}
                 }
             }
         }
@@ -201,9 +215,8 @@ class MessagesController:   UIViewController,
                 messageTextField.text = ""
                 UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
                     let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)
-                    MessagingManager.shared.uploadMessage(message: message) {
-                        UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
-                        }
+                    UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
+                        MessagingManager.shared.uploadMessage(message: message) {}
                     }
                 }
             }

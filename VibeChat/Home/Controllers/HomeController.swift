@@ -156,13 +156,11 @@ extension HomeController: HomeDelegate {
     }
     
     func updateConversations(conversations: [Conversation]) {
-        print("Trying to update conversations in home controller...")
         if self.conversations?.count == nil {
             let dictConversations = getDictionaryOfConversations(conversations: conversations)
             self.orderedConversations = orderConversationsByLatestMesage(conversations:  dictConversations)
             self.conversations = dictConversations
         } else if conversations.count == 1, let currentConvos = self.conversations, currentConvos[conversations[0].uid] == nil {
-            print("Recognised that this is a new conversation...")
             addingConversationIgnoreNextChanges = 0
             let newConversation = conversations[0]
             newConversation.fetchChatter {
@@ -177,6 +175,7 @@ extension HomeController: HomeDelegate {
                 }
             }
         } else if let changedConversation = conversations.first {
+//            print("Got conversation change in home controller, read status: \(changedConversation.isReadStatus)")
             if addingConversationIgnoreNextChanges < 2 {
                 addingConversationIgnoreNextChanges += 1
             } else {
