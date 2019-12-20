@@ -33,6 +33,7 @@ class MessagesController:   UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableViewConfig()
         if conversation != nil {
             setupMessageListener()
         }
@@ -42,7 +43,6 @@ class MessagesController:   UIViewController,
         chatterProfileImageView.image = chatter.profileImage
         chatterNameLabel.text = chatter.name
         
-        tableViewConfig()
         registerForKeyboardWillShow()
         registerForKeyboardWillHide()
         setupTapToDismissKeyboard()
@@ -58,7 +58,7 @@ class MessagesController:   UIViewController,
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.rowHeight = 44
+        tableView.register(MessageCell.self, forCellReuseIdentifier: reuseId)
     }
     
     fileprivate func scrollToBottomOfMessages() {

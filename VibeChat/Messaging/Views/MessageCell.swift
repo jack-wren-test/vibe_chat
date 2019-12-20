@@ -12,12 +12,22 @@ import UIKit
 
 class MessageCell: UITableViewCell {
     
-    // MARK:- IBOutlets
-    
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var bubbleView: BubbleView!
-    
     // MARK:- Properties
+    
+    let messageLabel : UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let bubbleView : UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     var message: Message? {
         didSet {
@@ -32,23 +42,33 @@ class MessageCell: UITableViewCell {
     var incomingXConstraint: NSLayoutConstraint?
     var outgoingXConstraint: NSLayoutConstraint?
     
-    override func awakeFromNib() {
+    // MARK:- Init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureCell()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK:- Methods
     
     fileprivate func configureCell() {
         
+        backgroundColor = .clear
+        addSubview(bubbleView)
+        addSubview(messageLabel)
         selectionStyle = .none
         
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
-        messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
+        
         incomingXConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
         outgoingXConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         
-        bubbleView.translatesAutoresizingMaskIntoConstraints = false
         bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -10).isActive = true
         bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -10).isActive = true
         bubbleView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 10).isActive = true

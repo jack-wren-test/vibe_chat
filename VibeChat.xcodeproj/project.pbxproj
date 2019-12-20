@@ -38,7 +38,6 @@
 		61BB8DD02399120900EEEEB0 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */; };
 		61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */; };
 		61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D16FCC239AB55F006435C2 /* StorageManager.swift */; };
-		61E3922C239FA37E00BAAD21 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3922B239FA37E00BAAD21 /* BubbleView.swift */; };
 		61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39232239FBE3100BAAD21 /* MessagingManager.swift */; };
 		61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39234239FBE4600BAAD21 /* GroupsManager.swift */; };
 		61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39236239FBED400BAAD21 /* UsersManager.swift */; };
@@ -94,7 +93,6 @@
 		61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		61D16FCC239AB55F006435C2 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		61E3922B239FA37E00BAAD21 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		61E39232239FBE3100BAAD21 /* MessagingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManager.swift; sourceTree = "<group>"; };
 		61E39234239FBE4600BAAD21 /* GroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsManager.swift; sourceTree = "<group>"; };
 		61E39236239FBED400BAAD21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				6175874B239E7459002ED670 /* MessageCell.swift */,
-				61E3922B239FA37E00BAAD21 /* BubbleView.swift */,
 				61A470F623A000AD003DD758 /* DateHeader.swift */,
 			);
 			path = Views;
@@ -610,7 +607,6 @@
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,
 				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
-				61E3922C239FA37E00BAAD21 /* BubbleView.swift in Sources */,
 				61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */,
 				61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */,
 				616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */,
@@ -771,14 +767,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6JFATDAPA6;
+				DEVELOPMENT_TEAM = XY9CSH3M45;
 				INFOPLIST_FILE = VibeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChat;
+				PRODUCT_BUNDLE_IDENTIFIER = "wrenkitchens.Vibe-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -791,14 +787,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6JFATDAPA6;
+				DEVELOPMENT_TEAM = XY9CSH3M45;
 				INFOPLIST_FILE = VibeChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChat;
+				PRODUCT_BUNDLE_IDENTIFIER = "wrenkitchens.Vibe-Chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
