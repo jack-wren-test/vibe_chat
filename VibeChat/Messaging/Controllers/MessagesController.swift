@@ -74,7 +74,7 @@ class MessagesController:   UIViewController,
         let row = messages[messages.count-1].count-1
         let section = messages.count-1
         if isNewSection {
-            tableView.insertSections([section], with: .automatic)
+            tableView.insertSections([section], with: .fade)
         } else {
             tableView.insertRows(at: [IndexPath(row: row, section: section)], with: .bottom)
         }
