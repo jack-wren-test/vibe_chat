@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatterCellTableViewCell: UITableViewCell {
+class ConversationCell: UITableViewCell {
 
     // MARK:- Outlets
 
@@ -25,14 +25,18 @@ class ChatterCellTableViewCell: UITableViewCell {
             isReadStatusIndicator.isHidden = isRead
         }
     }
-    var chatter: User? {
+    
+    var conversation: Conversation? {
         didSet {
-            guard let chatter = chatter else {return}
+            guard let conversation = conversation else {return}
+            guard let chatter = conversation.chatter else {return}
+            
             profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
             nameLabel.text = chatter.name
             statusLabel.text = chatter.status ?? ""
             nameLabel.backgroundColor = .clear
             statusLabel.backgroundColor = .clear
+            
             chatter.imageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {
                     self.profileImageView.image = image

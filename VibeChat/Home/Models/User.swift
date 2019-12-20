@@ -19,7 +19,6 @@ class User {
     public var email: String
     public var isOnline: Bool {
         didSet {
-            print("Is online value: \(isOnline)")
             UsersManager.shared.toggleIsOnline(user: self)
         }
     }

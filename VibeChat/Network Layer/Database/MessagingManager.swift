@@ -32,9 +32,9 @@ final class MessagingManager: FirestoreManager {
         }
     }
     
-    public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->()) {
+    public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->()) -> ListenerRegistration {
         let conversationId = onConversation.uid
-        collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
+        let listener = collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
                 completion(nil)
@@ -43,6 +43,7 @@ final class MessagingManager: FirestoreManager {
                 self.snapshotDocumentsToMessageArray(snapshot, completion: completion)
             }
         }
+        return listener
     }
     
     public func createConversationInMessaging(conversationData: [String: Any], completion: @escaping ()->()) {

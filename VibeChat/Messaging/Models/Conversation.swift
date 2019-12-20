@@ -25,12 +25,25 @@ class Conversation {
     var uid:                String
     var userUids:           [String]
     var userNames:          [String]
-    var chatter:            User?
+    var chatter:            User? {
+        didSet {
+//            guard let chatter = chatter else {return}
+//            print("Chatter: \(chatter.name) is online: \(chatter.isOnline)")
+//            chatterIsOnline = chatter.isOnline
+        }
+    }
+    var chatterIsOnline:    Bool? {
+        didSet {
+//            print("Chatter is online did set called...")
+//            UserMessagesManager.shared.toggleChatterIsOnline(conversation: self)
+        }
+    }
     var isReadStatus:       Bool {
         didSet {
-            UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self,
-                                                                              toIsRead: isReadStatus,
-                                                                              withNewMessageTime: lastMessageTime)
+//            print("isRead status did set called...")
+//            UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self,
+//                                                                              toIsRead: isReadStatus,
+//                                                                              withNewMessageTime: lastMessageTime)
         }
     }
     
@@ -43,6 +56,7 @@ class Conversation {
         userUids = [CurrentUser.shared.user!.uid, withChatter.uid]
         userNames = [CurrentUser.shared.user!.name, withChatter.name]
         chatter = withChatter
+        chatterIsOnline = withChatter.isOnline
         isReadStatus = false
     }
     
@@ -62,9 +76,10 @@ class Conversation {
         let data: [String: Any] = ["userNames": [CurrentUser.shared.user?.name, chatter?.name],
                                    "userUids": [CurrentUser.shared.user?.uid, chatter?.uid],
                                    "type": "private",
-                                   "isReadStatus": true,
+                                   "isReadStatus": false,
                                    "lastMessageTime": Timestamp(date: Date()),
-                                   "uid": uid]
+                                   "uid": uid,
+                                   "isChatterOnline": chatterIsOnline ?? false]
         return data
     }
     
@@ -72,8 +87,10 @@ class Conversation {
         let chatterUid = CurrentUser.shared.user?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
             if let user = user {
-                self.chatter = user
-                completion()
+                UsersManager.shared.listenToUserData(user: user) { (user) in
+                    self.chatter = user
+                    completion()
+                }
             }
         }
     }

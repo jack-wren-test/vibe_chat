@@ -22,6 +22,7 @@ final class UserMessagesManager {
     // MARK:- Methods
     
     public func createConversationIfNeeded(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
+        
         guard let uid = CurrentUser.shared.user?.uid else {return}
         guard let chatter = conversation.chatter else {return}
         var foundMatch: Bool = false
@@ -52,6 +53,7 @@ final class UserMessagesManager {
     }
     
     fileprivate func createConversation(conversation: Conversation, andChatterName: String, completion: @escaping (_ conversation: Conversation?)->()) {
+        print("Create conversation called...")
         let group = DispatchGroup()
         group.enter()
         group.enter()
@@ -100,25 +102,68 @@ final class UserMessagesManager {
             if let documentChanges = snapshot?.documentChanges {
                 var conversations = [Conversation]()
                 for documentChange in documentChanges {
-                    conversations.append(Conversation(withDictionary: documentChange.document.data()))
+                    let data = documentChange.document.data()
+                    let conversation = Conversation(withDictionary: data)
+                    print("Trying to add conversation: \(conversation.uid)")
+                    conversations.append(conversation)
                 }
                 completion(conversations)
             }
         }
     }
     
+    public func toggleChatterIsOnline(conversation: Conversation) {
+        print("Toggle chatter is online called")
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
+        let data: [String: Any] = ["chatterIsOnline": conversation.chatterIsOnline!]
+    collectionReference.document(chatterUid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true)
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true)
+    }
+    
+    public func updateConversationStatus(conversation: Conversation, userIsRead: Bool, chatterIsRead: Bool, withNewMessageTime: Date?, completion: @escaping ()->()) {
+        print("Update conversation status called")
+        guard let uid = CurrentUser.shared.user?.uid else {return}
+        let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
+
+        var data: [String: Any] = ["isReadStatus": userIsRead]
+        if let lastMessageTime = withNewMessageTime {
+            data["lastMessageTime"] = Timestamp(date: lastMessageTime)
+        }
+
+        let group = DispatchGroup()
+        group.enter()
+        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true) { (error) in
+            if let error = error {print("Error uploading message: \(error.localizedDescription)"); return}
+            group.leave()
+        }
+
+        data["isReadStatus"] = chatterIsRead
+        group.enter()
+        collectionReference.document(chatterUid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true) { (error) in
+            if let error = error {print("Error uploading message: \(error.localizedDescription)"); return}
+            group.leave()
+        }
+        DispatchQueue.main.async {
+            completion()
+        }
+    }
+    
     public func updateConversationStatusForChatter(conversation: Conversation, toIsRead: Bool, withNewMessageTime: Date?) {
+        print("Update conversation status for chatter called...")
         guard let uid = CurrentUser.shared.user?.uid else {return}
         let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
         updateConversationStatus(conversation, toIsRead, withNewMessageTime, chatterUid)
     }
-    
-    public func updateConversationStatusForCurrentUser(conversation: Conversation, toIsRead: Bool, withNewMessageTime: Date?) {
-        guard let uid = CurrentUser.shared.user?.uid else {return}
-        updateConversationStatus(conversation, toIsRead, withNewMessageTime, uid)
-    }
-    
+
+//    public func updateConversationStatusForCurrentUser(conversation: Conversation, toIsRead: Bool, withNewMessageTime: Date?) {
+//        print("Update conversation status for current user called...")
+//        guard let uid = CurrentUser.shared.user?.uid else {return}
+//        updateConversationStatus(conversation, toIsRead, withNewMessageTime, uid)
+//    }
+
     fileprivate func updateConversationStatus(_ conversation: Conversation, _ toIsRead: Bool, _ withNewMessageTime: Date?, _ forUid: String) {
+        print("Update conversation status 2 called...")
         var data: [String: Any] = ["isReadStatus": toIsRead]
         if let lastMessageTime = withNewMessageTime {
             data["lastMessageTime"] = Timestamp(date: lastMessageTime)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class MessagesController:   UIViewController,
                             UITableViewDelegate,
@@ -24,17 +25,18 @@ class MessagesController:   UIViewController,
     
     let reuseId = "MessageCell"
     var messages = [[Message]]()
-    
-    var conversation: Conversation? {
-        didSet {
-            setupMessageListener()
-        }
-    }
+    var conversationListener: ListenerRegistration?
+    var conversation: Conversation?
     
     // MARK:- ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if conversation != nil {
+            setupMessageListener()
+        }
+        
         guard let chatter = conversation?.chatter else {return}
         chatterProfileImageView.layer.borderWidth = chatter.isOnline ? 2 : 0
         chatterProfileImageView.image = chatter.profileImage
@@ -46,12 +48,17 @@ class MessagesController:   UIViewController,
         setupTapToDismissKeyboard()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        conversationListener?.remove()
+    }
+    
     // MARK:- Methods
     
     fileprivate func tableViewConfig() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.rowHeight = 44
     }
     
     fileprivate func scrollToBottomOfMessages() {
@@ -73,17 +80,23 @@ class MessagesController:   UIViewController,
     }
     
     fileprivate func setupMessageListener() {
-        MessagingManager.shared.listenForMessages(onConversation: conversation!) { (messages) in
+        conversationListener = MessagingManager.shared.listenForMessages(onConversation: conversation!) { (messages) in
             guard let messages = messages else {return}
             let daysOfMessagesCount = self.messages.count
             if let sortedMessages = self.groupMessagesByDate(messages) {
                 self.messages = sortedMessages
-                self.tableView.reloadData()
-                self.scrollToBottomOfMessages()
+                if self.isViewLoaded {
+                    self.tableView.reloadData()
+                    self.scrollToBottomOfMessages()
+//                    UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self.conversation!, toIsRead: true, withNewMessageTime: nil)
+                }
             } else {
-                let isSection = self.messages.count != daysOfMessagesCount
-                self.animateAddNewMessage(isSection)
-                self.scrollToBottomOfMessages()
+                if self.isViewLoaded {
+                    let isSection = self.messages.count != daysOfMessagesCount
+                    self.animateAddNewMessage(isSection)
+                    self.scrollToBottomOfMessages()
+//                    UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: self.conversation!, toIsRead: true, withNewMessageTime: nil)
+                }
             }
         }
     }
@@ -189,8 +202,8 @@ class MessagesController:   UIViewController,
                 UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
                     let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)
                     MessagingManager.shared.uploadMessage(message: message) {
-                        UserMessagesManager.shared.updateConversationStatusForChatter(conversation: conversation, toIsRead: false, withNewMessageTime: Date())
-                        UserMessagesManager.shared.updateConversationStatusForCurrentUser(conversation: conversation, toIsRead: true, withNewMessageTime: Date())
+                        UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
+                        }
                     }
                 }
             }

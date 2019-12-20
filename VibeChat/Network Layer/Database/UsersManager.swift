@@ -100,4 +100,17 @@ final class UsersManager: FirestoreManager {
         }
     }
     
+    public func listenToUserData(user: User, completion: @escaping (User?)->()) {
+        collectionReference.document(user.uid).addSnapshotListener { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
+                completion(nil)
+            }
+            if let userData = snapshot?.data() {
+                let user = User(withDictionary: userData)
+                completion(user)
+            }
+        }
+    }
+    
 }

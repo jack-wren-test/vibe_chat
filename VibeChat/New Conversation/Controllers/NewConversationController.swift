@@ -33,7 +33,7 @@ class NewConversationController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ChatterCellTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! NewConversationCell
         cell.chatter = chatters[indexPath.row]
         return cell
     }

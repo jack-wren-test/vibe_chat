@@ -26,24 +26,24 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK:- Properties
     
-    var addingConversation = 2
-    var loadedFromStoryboard: Bool = false
+    var addingConversationIgnoreNextChanges = 2
     var authenticationNeeded: Bool = true
-    var chatters = [User]()                         // <- All potential chatters - move to new conversation controller
-    var conversations: [String: Conversation]?      // <- All this users conversations
+    var chatters = [User]()
+    var conversations: [String: Conversation]?
     var orderedConversations: [Conversation]?
-//    var orderedKeysForConversations: [String]?
+    
     let reuseIdentifier = "ChatterCell"
     
     // MARK:- ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadedFromStoryboard = true
+        
         navigationController?.isNavigationBarHidden = true
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = 80
         
         if authenticationNeeded {
             presentAuthenticationScreen()
@@ -65,13 +65,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ChatterCellTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ConversationCell
         if let orderedConvos = self.orderedConversations {
             let conversationIsRead = orderedConvos[indexPath.row].isReadStatus
-            cell.chatter = orderedConvos[indexPath.row].chatter
+            cell.conversation = orderedConvos[indexPath.row]
             cell.isReadStatus = conversationIsRead
         }
-        print("Index Path: (\(indexPath.row) \(indexPath.section)) --> \(cell.chatter?.name ?? "")")
         return cell
     }
     
@@ -107,7 +106,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         if segue.identifier == "NewConversationSegue" {
-            print("Preparing for new conversation segue")
             if let vc = segue.destination as? NewConversationController {
                 vc.homeDelegate = self
                 vc.chatters = chatters
@@ -158,13 +156,14 @@ extension HomeController: HomeDelegate {
     }
     
     func updateConversations(conversations: [Conversation]) {
-
+        print("Trying to update conversations in home controller...")
         if self.conversations?.count == nil {
             let dictConversations = getDictionaryOfConversations(conversations: conversations)
             self.orderedConversations = orderConversationsByLatestMesage(conversations:  dictConversations)
             self.conversations = dictConversations
         } else if conversations.count == 1, let currentConvos = self.conversations, currentConvos[conversations[0].uid] == nil {
-            addingConversation = 0
+            print("Recognised that this is a new conversation...")
+            addingConversationIgnoreNextChanges = 0
             let newConversation = conversations[0]
             newConversation.fetchChatter {
                 self.conversations?[newConversation.uid] = newConversation
@@ -177,14 +176,14 @@ extension HomeController: HomeDelegate {
                     }
                 }
             }
-        } else if let changedConversation = conversations.first, loadedFromStoryboard {
-            if addingConversation < 2 {
-                addingConversation += 1
+        } else if let changedConversation = conversations.first {
+            if addingConversationIgnoreNextChanges < 2 {
+                addingConversationIgnoreNextChanges += 1
             } else {
                 changedConversation.fetchChatter {
                     self.conversations?[changedConversation.uid] = changedConversation
                     self.orderedConversations = self.orderConversationsByLatestMesage(conversations:  self.conversations!)
-                    if self.loadedFromStoryboard { self.tableView.reloadData() }
+                    if self.view.window != nil { self.tableView.reloadData() }
                 }
             }
         }
