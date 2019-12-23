@@ -30,9 +30,9 @@ class DateHeader: UILabel {
     fileprivate func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
-        backgroundColor = .appHighlight1
+        backgroundColor = UIColor(named: "decoration")
         text = formatDate()
-        textColor = .white
+        textColor = UIColor(named: "background")
         textAlignment = .center
         font = .systemFont(ofSize: 14, weight: .light)
     }
