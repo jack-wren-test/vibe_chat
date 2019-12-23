@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         print("Will terminate called...")
-        CurrentUser.shared.user?.isOnline = false
+        CurrentUser.shared.data?.isOnline = false
     }
 
 

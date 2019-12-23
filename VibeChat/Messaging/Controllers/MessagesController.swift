@@ -76,7 +76,7 @@ class MessagesController:   UIViewController,
         if isNewSection {
             tableView.insertSections([section], with: .fade)
         } else {
-            tableView.insertRows(at: [IndexPath(row: row, section: section)], with: .bottom)
+            tableView.insertRows(at: [IndexPath(row: row, section: section)], with: .fade)
         }
     }
     
@@ -211,7 +211,7 @@ class MessagesController:   UIViewController,
     @IBAction func sendButtonPressed(_ sender: UIButton) {
         guard let conversation = conversation else {return}
         if messageTextField.text != "" {
-            if let text = messageTextField.text, let toUid = conversation.chatter?.uid, let fromUid = CurrentUser.shared.user?.uid {
+            if let text = messageTextField.text, let toUid = conversation.chatter?.uid, let fromUid = CurrentUser.shared.data?.uid {
                 messageTextField.text = ""
                 UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
                     let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)

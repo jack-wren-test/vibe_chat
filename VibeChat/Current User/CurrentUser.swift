@@ -15,7 +15,7 @@ final class CurrentUser {
     // MARK:- Singleton Setup
     
     static var shared = CurrentUser()
-    public var user: User?
+    public var data: User?
     
     // MARK:- Private Init (Force Singleton)
     
@@ -39,18 +39,18 @@ final class CurrentUser {
     }
     
     public func setNewUser(_ newUser: User) {
-        user?.isOnline = true
-        user = newUser
+        data?.isOnline = true
+        data = newUser
     }
     
     public func nullifyUser() {
-        user?.isOnline = false
-        user = nil
+        data?.isOnline = false
+        data = nil
     }
     
     public func updateUserDataInDb(completion: @escaping ()->()) {
-        guard let user = user else {return}
-        UsersManager.shared.updateUserData(toUserUid: user.uid, withData: user.toDict()) {
+        guard let data = data else {return}
+        UsersManager.shared.updateUserData(toUserUid: data.uid, withData: data.toDict()) {
             completion()
         }
     }

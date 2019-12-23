@@ -23,7 +23,7 @@ final class UserMessagesManager {
     
     public func createConversationIfNeeded(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
         
-        guard let uid = CurrentUser.shared.user?.uid else {return}
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         guard let chatter = conversation.chatter else {return}
         var foundMatch: Bool = false
         let potentialConversationIds = [uid+"_"+chatter.uid, chatter.uid+"_"+uid]
@@ -74,7 +74,7 @@ final class UserMessagesManager {
     }
 
     public func listenForConversationChanges(conversaion: Conversation, completion: @escaping (Conversation?)->()) -> ListenerRegistration {
-        let uid = CurrentUser.shared.user!.uid
+        let uid = CurrentUser.shared.data!.uid
         let conversationId = conversaion.uid
         let listener = collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversationId).addSnapshotListener { (snapshot, error) in
             if let error = error {
@@ -91,7 +91,7 @@ final class UserMessagesManager {
     }
     
     public func listenToConversationsForCurrentUser(completion: @escaping ([Conversation]?)->()) {
-        guard let uid = CurrentUser.shared.user?.uid else {return}
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         collectionReference.document(uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error adding listener to user conversations: \(error.localizedDescription)")
@@ -113,7 +113,7 @@ final class UserMessagesManager {
     
     public func updateConversationStatus(conversation: Conversation, userIsRead: Bool, chatterIsRead: Bool, withNewMessageTime: Date?, completion: @escaping ()->()) {
 //        print("Update conversation status called")
-        guard let uid = CurrentUser.shared.user?.uid else {return}
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
 
         var data: [String: Any] = ["isReadStatus": userIsRead]
@@ -141,14 +141,14 @@ final class UserMessagesManager {
     
     public func updateConversationStatusForChatter(conversation: Conversation, toIsRead: Bool, withNewMessageTime: Date?) {
 //        print("Update conversation status for chatter called...")
-        guard let uid = CurrentUser.shared.user?.uid else {return}
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
         updateConversationStatus(conversation, toIsRead, withNewMessageTime, chatterUid)
     }
 
     public func updateConversationStatusForCurrentUser(conversation: Conversation, toIsRead: Bool, withNewMessageTime: Date?) {
 //        print("Update conversation status for current user called...")
-        guard let uid = CurrentUser.shared.user?.uid else {return}
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         updateConversationStatus(conversation, toIsRead, withNewMessageTime, uid)
     }
 

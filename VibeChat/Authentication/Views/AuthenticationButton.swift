@@ -20,9 +20,9 @@ public class AuthenticationButton: UIButton {
     public override func titleColor(for state: UIControl.State) -> UIColor? {
         switch state {
         case .disabled:
-            return UIColor.lightGray
+            return UIColor.systemGray2
         default:
-            return UIColor.appDark
+            return UIColor(named: "text_alt")
         }
     }
     
@@ -36,14 +36,14 @@ public class AuthenticationButton: UIButton {
     // MARK:- Methods
     
     fileprivate func layoutUI() {
-        setTitleColor(.appDark, for: .normal)
-        setTitleColor(.lightGray, for: .disabled)
-        layer.borderColor = self.isEnabled ? UIColor.appDark.cgColor : UIColor.lightGray.cgColor
+        setTitleColor(UIColor(named: "text_alt"), for: .normal)
+        setTitleColor(UIColor.systemGray2, for: .disabled)
+        layer.borderColor = isEnabled ? UIColor(named: "text_alt")?.cgColor : UIColor.systemGray2.cgColor
     }
     
     public func toggleEnabledDisabled(isEnabled: Bool) {
         self.isEnabled = isEnabled
-        layer.borderColor = isEnabled ? UIColor.appDark.cgColor : UIColor.lightGray.cgColor
+        layer.borderColor = isEnabled ? UIColor(named: "text_alt")?.cgColor : UIColor.systemGray2.cgColor
     }
 
 }

@@ -58,23 +58,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        CurrentUser.shared.user?.isOnline = false
+        CurrentUser.shared.data?.isOnline = false
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        CurrentUser.shared.user?.isOnline = true
+        CurrentUser.shared.data?.isOnline = true
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        CurrentUser.shared.user?.isOnline = false
+        CurrentUser.shared.data?.isOnline = false
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
-        CurrentUser.shared.user?.isOnline = false
+        CurrentUser.shared.data?.isOnline = false
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        CurrentUser.shared.user?.isOnline = true
+        CurrentUser.shared.data?.isOnline = true
     }
     
 }

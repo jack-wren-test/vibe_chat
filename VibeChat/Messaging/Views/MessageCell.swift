@@ -31,7 +31,7 @@ class MessageCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            guard let user = CurrentUser.shared.user else {return}
+            guard let user = CurrentUser.shared.data else {return}
             guard let message = message else {return}
             messageLabel.text = message.text
             let isOutgoingMessage = message.fromUid == user.uid
@@ -78,13 +78,13 @@ class MessageCell: UITableViewCell {
     
     fileprivate func layoutMessage(_ isOutgoingMessage: Bool) {
         if isOutgoingMessage {
-            bubbleView.backgroundColor = UIColor.appDark
-            messageLabel.textColor = UIColor.white
+            bubbleView.backgroundColor = UIColor(named: "background")
+            messageLabel.textColor = UIColor(named: "text")
             incomingXConstraint?.isActive = false
             outgoingXConstraint?.isActive = true
         } else {
-            bubbleView.backgroundColor = UIColor.white
-            messageLabel.textColor = UIColor.appDark
+            bubbleView.backgroundColor = UIColor.systemGray3
+            messageLabel.textColor = UIColor(named: "text")
             outgoingXConstraint?.isActive = false
             incomingXConstraint?.isActive = true
         }

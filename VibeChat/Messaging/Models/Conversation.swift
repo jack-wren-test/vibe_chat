@@ -42,9 +42,9 @@ class Conversation {
     init(withChatter: User) {
         type = "private"
         lastMessageTime = Date()
-        uid = CurrentUser.shared.user!.uid+"_"+withChatter.uid
-        userUids = [CurrentUser.shared.user!.uid, withChatter.uid]
-        userNames = [CurrentUser.shared.user!.name, withChatter.name]
+        uid = CurrentUser.shared.data!.uid+"_"+withChatter.uid
+        userUids = [CurrentUser.shared.data!.uid, withChatter.uid]
+        userNames = [CurrentUser.shared.data!.name, withChatter.name]
         chatter = withChatter
         isReadStatus = false
     }
@@ -63,8 +63,8 @@ class Conversation {
     // MARK:- Methods
     
     public func toDict() -> [String: Any] {
-        let data: [String: Any] = ["userNames": [CurrentUser.shared.user?.name, chatter?.name],
-                                   "userUids": [CurrentUser.shared.user?.uid, chatter?.uid],
+        let data: [String: Any] = ["userNames": [CurrentUser.shared.data?.name, chatter?.name],
+                                   "userUids": [CurrentUser.shared.data?.uid, chatter?.uid],
                                    "type": "private",
                                    "isReadStatus": false,
                                    "lastMessageTime": Timestamp(date: Date()),
@@ -73,7 +73,7 @@ class Conversation {
     }
     
     public func fetchChatter(completion: @escaping ()->()) {
-        let chatterUid = CurrentUser.shared.user?.uid == userUids[0] ? userUids[1] : userUids[0]
+        let chatterUid = CurrentUser.shared.data?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
             if let user = user {
                 UsersManager.shared.listenToUserData(user: user) { (user) in

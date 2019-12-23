@@ -39,7 +39,7 @@ final class UsersManager: FirestoreManager {
                 snapshotArray.forEach { (snapshot) in
                     let userData = snapshot.data()
                     let uid = userData["uid"] as! String
-                    if uid != CurrentUser.shared.user?.uid {
+                    if uid != CurrentUser.shared.data?.uid {
                         let user = User(withDictionary: userData)
                         users.append(user)
                     }

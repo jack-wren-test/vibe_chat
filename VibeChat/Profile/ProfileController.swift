@@ -43,11 +43,11 @@ class ProfileController: UIViewController, UINavigationControllerDelegate {
     }
     
     fileprivate func setInitialFormValues() {
-        nameTF.text = CurrentUser.shared.user?.name
-        statusTF.text = CurrentUser.shared.user?.status
-        vibeTF.text = CurrentUser.shared.user?.vibe
-        emailTF.text = CurrentUser.shared.user?.email
-        profileImageView.image = CurrentUser.shared.user?.profileImage
+        nameTF.text = CurrentUser.shared.data?.name
+        statusTF.text = CurrentUser.shared.data?.status
+        vibeTF.text = CurrentUser.shared.data?.vibe
+        emailTF.text = CurrentUser.shared.data?.email
+        profileImageView.image = CurrentUser.shared.data?.profileImage
         profileImageView.tintColor = .white        
     }
     
@@ -81,19 +81,19 @@ class ProfileController: UIViewController, UINavigationControllerDelegate {
         switch sender {
         case let tf where sender == nameTF:
             if let text = tf.text {
-                CurrentUser.shared.user?.name = text
+                CurrentUser.shared.data?.name = text
             }
         case let tf where sender == statusTF:
             if let text = tf.text {
-                CurrentUser.shared.user?.status = text
+                CurrentUser.shared.data?.status = text
             }
         case let tf where sender == vibeTF:
             if let text = tf.text {
-                CurrentUser.shared.user?.vibe = text
+                CurrentUser.shared.data?.vibe = text
             }
         case let tf where sender == emailTF:
             if let text = tf.text {
-                CurrentUser.shared.user?.email = text
+                CurrentUser.shared.data?.email = text
             }
         default:
             break
@@ -128,13 +128,13 @@ extension ProfileController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
             DispatchQueue.main.async {
-                CurrentUser.shared.user?.profileImage = image
+                CurrentUser.shared.data?.profileImage = image
                 self.profileImageView.image = image
                 self.imagePickerController?.dismiss(animated: true)
             }
-            guard let uid = CurrentUser.shared.user?.uid else {return}
+            guard let uid = CurrentUser.shared.data?.uid else {return}
             StorageManager.shared.uploadProfileImageDataUnderUid(uid: uid, image: image) { (url) in
-                CurrentUser.shared.user?.profileImageUrl = url
+                CurrentUser.shared.data?.profileImageUrl = url
             }
         }
         imagePickerController?.dismiss(animated: true)
