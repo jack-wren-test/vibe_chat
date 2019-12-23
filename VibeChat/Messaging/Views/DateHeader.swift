@@ -35,6 +35,7 @@ class DateHeader: UILabel {
         textColor = UIColor(named: "background")
         textAlignment = .center
         font = .systemFont(ofSize: 14, weight: .light)
+        
     }
     
     fileprivate func formatDate() -> String {

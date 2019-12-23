@@ -20,6 +20,8 @@ class MessagesController:   UIViewController,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextField: AuthenticationTextField!
     @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var specialMessageLeadingConstraint: NSLayoutConstraint!
     
     // MARK:- Properties
     
@@ -151,6 +153,8 @@ class MessagesController:   UIViewController,
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             UIView.animate(withDuration: 0.5) {
+                self.specialMessageLeadingConstraint.constant = 0
+                self.specialMessageViewWidthConstraint.constant = 0
                 self.textEntryBottomConstraint.constant = -keyboardHeight
                 self.view.layoutIfNeeded()
             }
@@ -160,6 +164,8 @@ class MessagesController:   UIViewController,
     
     override func keyboardWillHide(_ notification: Notification) {
         UIView.animate(withDuration: 0.5) {
+            self.specialMessageLeadingConstraint.constant = 10
+            self.specialMessageViewWidthConstraint.constant = 92
             self.textEntryBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }

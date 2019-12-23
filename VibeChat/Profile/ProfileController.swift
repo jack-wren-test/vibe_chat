@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ProfileController: UIViewController, UINavigationControllerDelegate {
+class ProfileController: UIViewController,
+                         UINavigationControllerDelegate,
+                         UITextFieldDelegate {
     
     // MARK:- IBOutlets
     
@@ -42,15 +44,6 @@ class ProfileController: UIViewController, UINavigationControllerDelegate {
         
     }
     
-    fileprivate func setInitialFormValues() {
-        nameTF.text = CurrentUser.shared.data?.name
-        statusTF.text = CurrentUser.shared.data?.status
-        vibeTF.text = CurrentUser.shared.data?.vibe
-        emailTF.text = CurrentUser.shared.data?.email
-        profileImageView.image = CurrentUser.shared.data?.profileImage
-        profileImageView.tintColor = .white        
-    }
-    
     // MARK:- IBActions
     
     @IBAction func logOutButtonPressed(_ sender: UIButton) {
@@ -69,10 +62,20 @@ class ProfileController: UIViewController, UINavigationControllerDelegate {
     
     // MARK:- Methods
     
+    fileprivate func setInitialFormValues() {
+        nameTF.text = CurrentUser.shared.data?.name
+        statusTF.text = CurrentUser.shared.data?.status
+        vibeTF.text = CurrentUser.shared.data?.vibe
+        emailTF.text = CurrentUser.shared.data?.email
+        profileImageView.image = CurrentUser.shared.data?.profileImage
+        profileImageView.tintColor = .white
+    }
+    
     fileprivate func addTextFieldDidChangeActions() {
         form.subviews.forEach { (view) in
             if let tf = view as? AuthenticationTextField {
                 tf.addTarget(self, action: #selector(updateUserData(_:)), for: .editingChanged)
+                tf.delegate = self
             }
         }
     }
@@ -112,6 +115,18 @@ class ProfileController: UIViewController, UINavigationControllerDelegate {
         if let imagePicker = imagePickerController {
             present(imagePicker, animated: true)
         }
+    }
+    
+    // MARK:- UITextField Delegate Methods
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 30
     }
 
 
