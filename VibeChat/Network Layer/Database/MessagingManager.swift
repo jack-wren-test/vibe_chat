@@ -21,8 +21,9 @@ final class MessagingManager: FirestoreManager {
     
     // MARK:- Methods
     
-    public func uploadMessage(message: Message, completion: @escaping ()->()) {
-        collectionReference.document(message.conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.toDict()) { (error) in
+    public func uploadMessage(message: Message, completion: @escaping ()->() = {}) {
+        guard let conversationId = message.conversationId else {return}
+        collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.toDict()) { (error) in
             if let error = error {
                 print("Error uploading message: \(error.localizedDescription)")
                 completion()
@@ -39,8 +40,10 @@ final class MessagingManager: FirestoreManager {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
                 completion(nil)
             }
-            if let snapshot = snapshot?.documentChanges {
-                self.snapshotDocumentsToMessageArray(snapshot, completion: completion)
+            DispatchQueue.main.async {
+                if let snapshot = snapshot?.documentChanges {
+                    self.snapshotDocumentsToMessageArray(snapshot, completion: completion)
+                }
             }
         }
         return listener
@@ -55,12 +58,18 @@ final class MessagingManager: FirestoreManager {
         var messages = [Message]()
         documentChange.forEach { (document) in
             let messageData = document.document.data()
-            let message = Message(withDictionary: messageData)
-            messages.append(message)
+            if messageData["imageUrl"] != nil {
+                let imageMessage = ImageMessage(withDictionary: messageData)
+                messages.append(imageMessage)
+            } else if messageData["giphId"] != nil {
+                let giphyMessage = GiphyMessage(withDictionary: messageData)
+                messages.append(giphyMessage)
+            } else {
+                let message = Message(withDictionary: messageData)
+                messages.append(message)
+            }
         }
-        DispatchQueue.main.async {
-            completion(messages)
-        }
+        completion(messages)
     }
     
 }

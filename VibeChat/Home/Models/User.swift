@@ -72,7 +72,7 @@ class User {
         if let image = imageCache.object(forKey: url as NSString) {
             completion(image)
         } else {
-            StorageManager.shared.downloadProfileImageForUrl(url: url) { [weak self] (image) in
+            StorageManager.shared.downloadImageFromUrl(url: url) { [weak self] (image) in
                 if let image = image {
                     completion(image)
                     self?.imageCache.setObject(image, forKey: url as NSString)

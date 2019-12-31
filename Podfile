@@ -15,6 +15,7 @@ target 'VibeChat' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
+  pod 'Giphy'
 
   target 'VibeChatTests' do
     inherit! :search_paths

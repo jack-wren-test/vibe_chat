@@ -1,16 +1,14 @@
 //
-//  MessageCell.swift
+//  TextMessageCell.swift
 //  VibeChat
 //
-//  Created by Jack Smith on 09/12/2019.
+//  Created by Jack Smith on 30/12/2019.
 //  Copyright © 2019 Jack Smith. All rights reserved.
 //
 
 import UIKit
 
-// IS IT WORTH HAVING A VIEWMODEL FOR THIS CLASS DUE TO SEVERAL MODELS COMBINING? OR DEAL WITH IN MESSAGE CLASS
-
-class MessageCell: UITableViewCell {
+class TextMessageCell: MessageCell {
     
     // MARK:- Properties
     
@@ -39,44 +37,43 @@ class MessageCell: UITableViewCell {
         }
     }
     
-    var incomingXConstraint: NSLayoutConstraint?
-    var outgoingXConstraint: NSLayoutConstraint?
-    
     // MARK:- Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureCell()
+        configureViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        message = nil
+    }
+    
     // MARK:- Methods
     
-    fileprivate func configureCell() {
+    private func configureViews() {
         
-        backgroundColor = .clear
         addSubview(bubbleView)
         addSubview(messageLabel)
-        selectionStyle = .none
+        
+        incomingXConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+        outgoingXConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
         messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         
-        incomingXConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
-        outgoingXConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-        
         bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -10).isActive = true
         bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -10).isActive = true
         bubbleView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 10).isActive = true
         bubbleView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10).isActive = true
-        
     }
     
-    fileprivate func layoutMessage(_ isOutgoingMessage: Bool) {
+    override func layoutMessage(_ isOutgoingMessage: Bool) {
+        
         if isOutgoingMessage {
             bubbleView.backgroundColor = UIColor(named: "background")
             messageLabel.textColor = UIColor(named: "text")
@@ -88,8 +85,8 @@ class MessageCell: UITableViewCell {
             outgoingXConstraint?.isActive = false
             incomingXConstraint?.isActive = true
         }
+        
     }
     
-    // TODO: Add ability to react to messages with a long/force press
-    
 }
+

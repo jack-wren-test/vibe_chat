@@ -43,6 +43,13 @@
 		61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39236239FBED400BAAD21 /* UsersManager.swift */; };
 		61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */; };
 		61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */; };
+		61EA8E9523BA017400FC7B87 /* ImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */; };
+		61EA8E9823BA073200FC7B87 /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9723BA073200FC7B87 /* ImageMessage.swift */; };
+		61EA8E9A23BA18AA00FC7B87 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */; };
+		61EA8E9C23BA22D800FC7B87 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */; };
+		61EA8E9E23BA40F600FC7B87 /* GiphyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */; };
+		61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */; };
+		61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */; };
 		E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +105,13 @@
 		61E39236239FBED400BAAD21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManagerTests.swift; sourceTree = "<group>"; };
 		61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
+		61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageCell.swift; sourceTree = "<group>"; };
+		61EA8E9723BA073200FC7B87 /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
+		61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
+		61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessage.swift; sourceTree = "<group>"; };
+		61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessageCell.swift; sourceTree = "<group>"; };
+		61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyManager.swift; sourceTree = "<group>"; };
 		6E3C3FD3DB807EB252E0B1D1 /* Pods-VibeChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat.release.xcconfig"; path = "Target Support Files/Pods-VibeChat/Pods-VibeChat.release.xcconfig"; sourceTree = "<group>"; };
 		76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChatTests.release.xcconfig"; path = "Target Support Files/Pods-VibeChatTests/Pods-VibeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +158,7 @@
 		61271C202399560B00F1EE1B /* Network Layer */ = {
 			isa = PBXGroup;
 			children = (
+				61EA8EA223BB45E900FC7B87 /* Giphy Interface */,
 				61E39231239FBDFB00BAAD21 /* Storage */,
 				61E39230239FBDEC00BAAD21 /* Authentication */,
 				61E3922F239FBDDC00BAAD21 /* Database */,
@@ -180,7 +195,7 @@
 		61758747239E73F6002ED670 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6175874B239E7459002ED670 /* MessageCell.swift */,
+				61EA8E9323BA011600FC7B87 /* Message Cells */,
 				61A470F623A000AD003DD758 /* DateHeader.swift */,
 			);
 			path = Views;
@@ -189,8 +204,8 @@
 		61758748239E7408002ED670 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				61758749239E743E002ED670 /* Message.swift */,
-				61A4710023A8E4C2003DD758 /* Conversation.swift */,
+				61EA8EA523BB4E8000FC7B87 /* Conversations */,
+				61EA8E9623BA069D00FC7B87 /* Messages */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -275,6 +290,7 @@
 				61BB8DB12398025F00EEEEB0 /* UIColor+Decorator.swift */,
 				61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */,
 				616B2E64239A649F00E9B0B2 /* TextView.swift */,
+				61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -402,6 +418,43 @@
 				61A4710323A8F8AD003DD758 /* NewConversationController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		61EA8E9323BA011600FC7B87 /* Message Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6175874B239E7459002ED670 /* MessageCell.swift */,
+				61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */,
+				61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */,
+				61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */,
+			);
+			path = "Message Cells";
+			sourceTree = "<group>";
+		};
+		61EA8E9623BA069D00FC7B87 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				61758749239E743E002ED670 /* Message.swift */,
+				61EA8E9723BA073200FC7B87 /* ImageMessage.swift */,
+				61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		61EA8EA223BB45E900FC7B87 /* Giphy Interface */ = {
+			isa = PBXGroup;
+			children = (
+				61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */,
+			);
+			path = "Giphy Interface";
+			sourceTree = "<group>";
+		};
+		61EA8EA523BB4E8000FC7B87 /* Conversations */ = {
+			isa = PBXGroup;
+			children = (
+				61A4710023A8E4C2003DD758 /* Conversation.swift */,
+			);
+			path = Conversations;
 			sourceTree = "<group>";
 		};
 		9B4E0B06E9C0744AFB4ABEA9 /* Pods */ = {
@@ -587,8 +640,11 @@
 				61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */,
 				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
 				61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */,
+				61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */,
 				61BB8DBE239806FD00EEEEB0 /* AuthenticationButton.swift in Sources */,
 				61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */,
+				61EA8E9A23BA18AA00FC7B87 /* UIImageView+.swift in Sources */,
+				61EA8E9E23BA40F600FC7B87 /* GiphyMessage.swift in Sources */,
 				61BB8DD02399120900EEEEB0 /* UIViewController+.swift in Sources */,
 				61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */,
 				6175874A239E743E002ED670 /* Message.swift in Sources */,
@@ -596,18 +652,22 @@
 				61BB8DBC239806E100EEEEB0 /* CreateAccountController.swift in Sources */,
 				61BB8DB22398025F00EEEEB0 /* UIColor+Decorator.swift in Sources */,
 				61BB8DCC239904FD00EEEEB0 /* AuthenticationTextField.swift in Sources */,
+				61EA8E9C23BA22D800FC7B87 /* TextMessageCell.swift in Sources */,
 				61A470F723A000AD003DD758 /* DateHeader.swift in Sources */,
 				6175874C239E7459002ED670 /* MessageCell.swift in Sources */,
 				61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */,
 				61BB8DB52398053900EEEEB0 /* AuthenticationController.swift in Sources */,
+				61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */,
 				61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */,
 				61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */,
 				61A470FA23A25138003DD758 /* LaunchScreenController.swift in Sources */,
 				61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,
+				61EA8E9823BA073200FC7B87 /* ImageMessage.swift in Sources */,
 				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
 				61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */,
+				61EA8E9523BA017400FC7B87 /* ImageMessageCell.swift in Sources */,
 				61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */,
 				616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */,
 				6175874E239E74BB002ED670 /* MessagesController.swift in Sources */,

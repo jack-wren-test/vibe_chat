@@ -57,7 +57,7 @@ class Conversation {
         userNames = withDictionary["userNames"] as! [String]
         uid = withDictionary["uid"] as! String
         hasDbCounterpart = true
-        fetchChatter{}
+        fetchChatter()
     }
     
     // MARK:- Methods
@@ -72,7 +72,7 @@ class Conversation {
         return data
     }
     
-    public func fetchChatter(completion: @escaping ()->()) {
+    public func fetchChatter(completion: @escaping ()->() = {}) {
         let chatterUid = CurrentUser.shared.data?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
             if let user = user {
