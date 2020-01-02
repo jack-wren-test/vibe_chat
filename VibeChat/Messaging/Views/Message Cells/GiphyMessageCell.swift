@@ -22,7 +22,6 @@ class GiphyMessageCell : MessageCell {
             GiphyManager.shared.requestGif(withId: giphyMessage.giphId!) { (media) in
                 if let media = media {
                     self.giphyMediaView.setMedia(media)
-                    self.setAspectRatio(media.aspectRatio)
                     self.layoutMessage(isOutgoingMessage)
                 }
             }
@@ -31,6 +30,7 @@ class GiphyMessageCell : MessageCell {
     
     let giphyMediaView : GPHMediaView = {
         let view = GPHMediaView()
+        view.contentMode = .scaleToFill
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
@@ -62,12 +62,8 @@ class GiphyMessageCell : MessageCell {
         
         giphyMediaView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
         giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2).isActive = true
-        giphyMediaView.widthAnchor.constraint(equalToConstant: 250).isActive = true
-        heightAnchor.constraint(equalToConstant: 254).isActive = true
-    }
-    
-    private func setAspectRatio(_ aspectRatio: CGFloat) {
-//        heightAnchor.constraint(equalToConstant: (250/aspectRatio)+4).isActive = true
+        giphyMediaView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        heightAnchor.constraint(equalToConstant: 204).isActive = true
     }
     
 }

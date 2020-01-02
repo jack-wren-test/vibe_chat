@@ -13,19 +13,19 @@ class ImageMessage: Message {
     
     // MARK:- Properties
     
-    var imageUrl: String?
+    var url: String?
     
     // MARK:- Init
     
-    init(imageUrl: String, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+    init(url: String, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         super.init(text: nil, toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        self.imageUrl = imageUrl
+        self.url = url
     }
     
     override init(withDictionary: [String: Any]) {
         super.init(withDictionary: withDictionary)
         if let imageUrl = withDictionary["imageUrl"] as? String {
-            self.imageUrl = imageUrl
+            self.url = imageUrl
         }
     }
     
@@ -38,7 +38,7 @@ class ImageMessage: Message {
                                    "fromUid": fromUid ?? "",
                                    "threadId": conversationId ?? "",
                                    "timestamp": tStamp]
-        if let imageUrl = self.imageUrl {
+        if let imageUrl = self.url {
             dict["imageUrl"] = imageUrl
         }
         return dict

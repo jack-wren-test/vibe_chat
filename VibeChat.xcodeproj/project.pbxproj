@@ -11,6 +11,8 @@
 		61271C1C23992E8C00F1EE1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61271C1B23992E8C00F1EE1B /* GoogleService-Info.plist */; };
 		61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C1E23993A6C00F1EE1B /* CanAuthenticate.swift */; };
 		61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C212399562100F1EE1B /* FirestoreManager.swift */; };
+		61445FE723BB742400452FBB /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE623BB742400452FBB /* VideoMessage.swift */; };
+		61445FE923BB743400452FBB /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE823BB743400452FBB /* VideoMessageCell.swift */; };
 		616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* ProfileController.swift */; };
 		616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E64239A649F00E9B0B2 /* TextView.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
@@ -69,6 +71,8 @@
 		61271C1B23992E8C00F1EE1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61271C1E23993A6C00F1EE1B /* CanAuthenticate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanAuthenticate.swift; sourceTree = "<group>"; };
 		61271C212399562100F1EE1B /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		61445FE623BB742400452FBB /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
+		61445FE823BB743400452FBB /* VideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		616B2E64239A649F00E9B0B2 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -426,6 +430,7 @@
 				6175874B239E7459002ED670 /* MessageCell.swift */,
 				61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */,
 				61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */,
+				61445FE823BB743400452FBB /* VideoMessageCell.swift */,
 				61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */,
 			);
 			path = "Message Cells";
@@ -435,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				61758749239E743E002ED670 /* Message.swift */,
+				61445FE623BB742400452FBB /* VideoMessage.swift */,
 				61EA8E9723BA073200FC7B87 /* ImageMessage.swift */,
 				61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */,
 			);
@@ -641,6 +647,7 @@
 				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
 				61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */,
 				61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */,
+				61445FE923BB743400452FBB /* VideoMessageCell.swift in Sources */,
 				61BB8DBE239806FD00EEEEB0 /* AuthenticationButton.swift in Sources */,
 				61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */,
 				61EA8E9A23BA18AA00FC7B87 /* UIImageView+.swift in Sources */,
@@ -673,6 +680,7 @@
 				6175874E239E74BB002ED670 /* MessagesController.swift in Sources */,
 				61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */,
 				61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */,
+				61445FE723BB742400452FBB /* VideoMessage.swift in Sources */,
 				616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

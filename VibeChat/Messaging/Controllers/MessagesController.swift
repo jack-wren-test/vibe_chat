@@ -10,6 +10,8 @@ import UIKit
 import GiphyUISDK
 import GiphyCoreSDK
 import FirebaseFirestore
+import MobileCoreServices
+import AVFoundation
 
 protocol messagesControllerDelegate {
     func imageMessageTapped(_ imageView: UIImageView)
@@ -226,7 +228,7 @@ class MessagesController:   UIViewController,
             cell.controllerDelegate = self
             return cell
         } else if let giphyMessage = messages[indexPath.section][indexPath.row] as? GiphyMessage {
-            let cell = tableView.dequeueReusableCell(withIdentifier: giphyReuseId) as! GiphyMessageCell
+            let cell = GiphyMessageCell(style: .default, reuseIdentifier: giphyReuseId)
             cell.giphyMessage = giphyMessage
             return cell
         } else {
@@ -253,6 +255,7 @@ class MessagesController:   UIViewController,
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
         present(imagePickerController, animated: true)
     }
     
@@ -291,6 +294,16 @@ extension MessagesController: UIImagePickerControllerDelegate,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        if let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+            handleVideoSelected(videoUrl)
+        } else {
+            handleImageSelected(info)
+        }
+        dismiss(animated: true)
+        
+    }
+    
+    fileprivate func handleImageSelected(_ info: [UIImagePickerController.InfoKey : Any]) {
         var selectedImageFromPicker: UIImage?
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             selectedImageFromPicker = editedImage
@@ -305,15 +318,28 @@ extension MessagesController: UIImagePickerControllerDelegate,
                 }
             }
         }
-        
-        dismiss(animated: true)
-        
+    }
+    
+    fileprivate func handleVideoSelected(_ videoUrl: URL) {
+        do {
+            let videoData = try Data(contentsOf: videoUrl)
+            let uploadTask = StorageManager.shared.uploadVideoMessage(video: videoData) { (url) in
+                if let url = url {
+                    print("Video url: \(url.absoluteString)")
+                }
+            }
+            uploadTask.observe(.progress) { (snapshot) in
+                print(snapshot.progress?.completedUnitCount)
+            }
+        } catch {
+            print("Error loading video to data object: \(error.localizedDescription)")
+        }
     }
     
     fileprivate func sendMessageWithImageUrl(url: URL) {
         guard let conversation = conversation else {return}
         UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
-            let message = ImageMessage(imageUrl: url.absoluteString, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
+            let message = ImageMessage(url: url.absoluteString, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message)
             }

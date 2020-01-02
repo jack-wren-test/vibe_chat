@@ -9,6 +9,8 @@
 import Foundation
 import Firebase
 
+// TODO:- Break out text message into subclass
+
 class Message: NSObject {
     
     // MARK:- Properties

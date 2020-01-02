@@ -16,11 +16,13 @@ class ImageMessageCell: MessageCell {
         didSet {
             guard let imageMessage = imageMessage else {return}
             guard let user = CurrentUser.shared.data else {return}
-            guard let url = imageMessage.imageUrl else {return}
+            guard let url = imageMessage.url else {return}
             imageMessageView.loadImageUsingCacheWithUrlString(urlString: url) { (image) in
-                if image != nil {
+                if let image = image {
                     let isOutgoingMessage = imageMessage.fromUid == user.uid
                     self.layoutMessage(isOutgoingMessage)
+                    let aspectRatio = image.size.height/image.size.width
+                    self.adjustImageWidth(aspectRatio)
                 }
             }
         }
@@ -61,9 +63,13 @@ class ImageMessageCell: MessageCell {
         incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         imageMessageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageMessageView.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
+//        imageMessageView.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
         imageMessageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         heightAnchor.constraint(equalToConstant: 254).isActive = true
+    }
+    
+    private func adjustImageWidth(_ aspectRatio: CGFloat) {
+        imageMessageView.widthAnchor.constraint(equalToConstant: imageMessageView.frame.height*aspectRatio).isActive = true
     }
     
     @objc private func handleImageTap() {

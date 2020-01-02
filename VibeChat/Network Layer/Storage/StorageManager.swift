@@ -11,7 +11,7 @@ import Firebase
 
 enum storageLocation: String {
     typealias RawValue = String
-    case profileImages, messageImages
+    case profileImages, messageImages, videos
 }
 
 final class StorageManager {
@@ -24,12 +24,38 @@ final class StorageManager {
     private let ref = Storage.storage().reference()
     private lazy var profileImagesRef = ref.child(storageLocation.profileImages.rawValue)
     private lazy var messageImagesRef = ref.child(storageLocation.messageImages.rawValue)
+    private lazy var videosRef = ref.child(storageLocation.videos.rawValue)
     
     // MARK:- Private Init (Force Singleton)
     
     private func Init() {}
     
     // MARK:- Methods
+    
+    public func uploadVideoMessage(video: Data, completion: @escaping (URL?)->()) -> StorageUploadTask {
+        var videoName = NSUUID().uuidString
+        videoName.append(contentsOf: ".mov")
+        let videoRef = videosRef.child(videoName)
+        let task = videoRef.putData(video, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Error uploading video: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            videoRef.downloadURL { (url, error) in
+                if let error = error {
+                    print("Error downloading video url: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+                if let url = url {
+                    print("Success, url: \(url.absoluteString)")
+                    completion(url.absoluteURL)
+                }
+            }
+        }
+        return task
+    }
     
     public func uploadProfileImageDataUnderUid(uid: String, image: UIImage, completion: @escaping (String?)->()) {
         guard let data = image.jpegData(compressionQuality: 0.1) else {
@@ -41,6 +67,7 @@ final class StorageManager {
             if let error = error {
                 print("Error uploading image data: \(error.localizedDescription)")
                 completion(nil)
+                return
             }
             self.downloadImageUrl(forReference: imageRef) { (url) in
                 completion(url?.absoluteString)
