@@ -541,7 +541,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxC-AR-Ja8">
                                                         <rect key="frame" x="0.0" y="0.0" width="70" height="63"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="NPI-sf-QAG" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NPI-sf-QAG" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
                                                                 <rect key="frame" x="10" y="6.5" width="50" height="50"/>
                                                                 <color key="backgroundColor" red="0.97254901959999995" green="0.43921568630000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="tintColor" name="text_alt"/>
@@ -651,7 +651,6 @@
                         <outlet property="chatterNameLabel" destination="cVg-SF-izD" id="c7z-Mp-Uvy"/>
                         <outlet property="chatterProfileImageView" destination="NPI-sf-QAG" id="Oye-Ve-Kg6"/>
                         <outlet property="messageTextField" destination="MDT-Kj-KwY" id="hEz-2t-wOO"/>
-                        <outlet property="progressBar" destination="neO-HK-Nfd" id="mtD-SY-4F6"/>
                         <outlet property="progressBarWidthAnchor" destination="tkK-ot-YaH" id="Qt5-iP-Gp4"/>
                         <outlet property="specialMessageLeadingConstraint" destination="xAH-zG-xsw" id="ouD-Qr-Bjy"/>
                         <outlet property="specialMessageViewWidthConstraint" destination="YvE-JF-Ctf" id="ujJ-pZ-bAI"/>

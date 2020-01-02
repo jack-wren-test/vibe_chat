@@ -55,20 +55,14 @@ final class UserMessagesManager {
     fileprivate func createConversation(conversation: Conversation, andChatterName: String, completion: @escaping (_ conversation: Conversation?)->()) {
         let group = DispatchGroup()
         group.enter()
-        group.enter()
         publishConversation(conversation.userUids[0], conversation.uid, conversation.toDict()) { (success) in
-            if success {
-//                print("Pulished conversation for: \(conversation.userUids[0])")
-            }
             group.leave()
         }
+        group.enter()
         publishConversation(conversation.userUids[1], conversation.uid, conversation.toDict()) { (success) in
-            if success {
-//                print("Pulished conversation for: \(conversation.userUids[1])")
-            }
             group.leave()
         }
-        DispatchQueue.main.async {
+        group.notify(queue: .main) {
             completion(conversation)
         }
     }
@@ -134,7 +128,7 @@ final class UserMessagesManager {
             if let error = error {print("Error uploading message: \(error.localizedDescription)"); return}
             group.leave()
         }
-        DispatchQueue.main.async {
+        group.notify(queue: .main) {
             completion()
         }
     }

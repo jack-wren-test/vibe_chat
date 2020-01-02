@@ -13,6 +13,7 @@
 		61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C212399562100F1EE1B /* FirestoreManager.swift */; };
 		61445FE723BB742400452FBB /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE623BB742400452FBB /* VideoMessage.swift */; };
 		61445FE923BB743400452FBB /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE823BB743400452FBB /* VideoMessageCell.swift */; };
+		61445FEB23BE3DB600452FBB /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEA23BE3DB600452FBB /* UIImage+.swift */; };
 		616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* ProfileController.swift */; };
 		616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E64239A649F00E9B0B2 /* TextView.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
@@ -73,6 +74,7 @@
 		61271C212399562100F1EE1B /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		61445FE623BB742400452FBB /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		61445FE823BB743400452FBB /* VideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
+		61445FEA23BE3DB600452FBB /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		616B2E64239A649F00E9B0B2 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */,
 				616B2E64239A649F00E9B0B2 /* TextView.swift */,
 				61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */,
+				61445FEA23BE3DB600452FBB /* UIImage+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,
+				61445FEB23BE3DB600452FBB /* UIImage+.swift in Sources */,
 				61EA8E9823BA073200FC7B87 /* ImageMessage.swift in Sources */,
 				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
 				61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */,

@@ -11,7 +11,7 @@ import Firebase
 
 enum storageLocation: String {
     typealias RawValue = String
-    case profileImages, messageImages, videos
+    case profileImages, messageImages, videos, videoThumbnails
 }
 
 final class StorageManager {
@@ -25,6 +25,7 @@ final class StorageManager {
     private lazy var profileImagesRef = ref.child(storageLocation.profileImages.rawValue)
     private lazy var messageImagesRef = ref.child(storageLocation.messageImages.rawValue)
     private lazy var videosRef = ref.child(storageLocation.videos.rawValue)
+    private lazy var videoThumbnailsRef = ref.child(storageLocation.videoThumbnails.rawValue)
     
     // MARK:- Private Init (Force Singleton)
     
@@ -57,7 +58,7 @@ final class StorageManager {
         return task
     }
     
-    public func uploadProfileImageDataUnderUid(uid: String, image: UIImage, completion: @escaping (String?)->()) {
+    public func uploadProfileImageDataUnderUid(uid: String, image: UIImage, completion: @escaping (URL?)->()) {
         guard let data = image.jpegData(compressionQuality: 0.1) else {
             print("Error parsing image to Data object...")
             return
@@ -70,30 +71,42 @@ final class StorageManager {
                 return
             }
             self.downloadImageUrl(forReference: imageRef) { (url) in
-                completion(url?.absoluteString)
-            }
-        }
-    }
-    
-    public func uploadImageMessage(image: UIImage, completion: @escaping (URL?)->()) {
-        let imageName = NSUUID().uuidString
-        let imageRef = messageImagesRef.child(imageName)
-        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
-        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
-                print("Error occured uploading image message: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            self.downloadImageUrl(forReference: imageRef) { (url) in
                 completion(url)
             }
         }
     }
     
-    public func downloadImageFromUrl(url: String, completion: @escaping (UIImage?)->()) {
-        let imageUrl = URL(string: url)
-        guard let url = imageUrl else {return}
+    public func uploadImageMessage(image: UIImage, completion: @escaping (URL?)->()) {
+        let imageRef = messageImagesRef.child(NSUUID().uuidString)
+        uploadImage(image: image, toReference: imageRef) { (url) in
+            if let url = url { completion(url); return }
+            completion(nil)
+        }
+    }
+    
+    public func uploadVideoThumbnail(image: UIImage, completion: @escaping (URL?)->()) {
+        let imageRef = videoThumbnailsRef.child(NSUUID().uuidString)
+        uploadImage(image: image, toReference: imageRef) { (url) in
+            if let url = url { completion(url); return }
+            completion(nil)
+        }
+    }
+    
+    private func uploadImage(image: UIImage, toReference: StorageReference, completion: @escaping (URL?)->()) {
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
+        toReference.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Error occured uploading image message: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            self.downloadImageUrl(forReference: toReference) { (url) in
+                completion(url)
+            }
+        }
+    }
+    
+    public func downloadImageFromUrl(url: URL, completion: @escaping (UIImage?)->()) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print("Error downloading image: \(error)")

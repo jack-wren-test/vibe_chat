@@ -25,7 +25,7 @@ class User {
     
     public let imageCache = NSCache<NSString, UIImage>()
     public var profileImage = UIImage(imageLiteralResourceName: "profile").withRenderingMode(.alwaysTemplate)
-    public var profileImageUrl: String? {
+    public var profileImageUrl: URL? {
         didSet {
             imageFromChacheOrDb { (image) in
                 self.profileImage = image
@@ -42,8 +42,8 @@ class User {
         vibe = withDictionary["vibe"] as? String
         status = withDictionary["status"] as? String
         isOnline = withDictionary["isOnline"] as! Bool
-        if let profileImageUrl = withDictionary["profileImageUrl"] as? String {
-            self.profileImageUrl = profileImageUrl
+        if let profileImageUrlString = withDictionary["profileImageUrl"] as? String {
+            self.profileImageUrl = URL(string: profileImageUrlString)
             imageFromChacheOrDb { (image) in
                 self.profileImage = image
             }
@@ -69,13 +69,13 @@ class User {
     
     public func imageFromChacheOrDb(completion: @escaping (_ image: UIImage)->()) {
         guard let url = profileImageUrl else {return}
-        if let image = imageCache.object(forKey: url as NSString) {
+        if let image = imageCache.object(forKey: url.absoluteString as NSString) {
             completion(image)
         } else {
             StorageManager.shared.downloadImageFromUrl(url: url) { [weak self] (image) in
                 if let image = image {
                     completion(image)
-                    self?.imageCache.setObject(image, forKey: url as NSString)
+                    self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                 }
             }
         }

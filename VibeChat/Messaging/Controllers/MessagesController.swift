@@ -30,13 +30,13 @@ class MessagesController:   UIViewController,
     @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var specialMessageLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var progressBar: UIView!
     @IBOutlet weak var progressBarWidthAnchor: NSLayoutConstraint!
     
     // MARK:- Properties
     
     let textReuseId = "textMessageCell"
     let imageReuseId = "imageMessageCell"
+    let videoReuseId = "videoMessageCell"
     let giphyReuseId = "giphyMessageCell"
     
     var messages = [[Message]]()
@@ -229,6 +229,11 @@ class MessagesController:   UIViewController,
             cell.imageMessage = imageMessage
             cell.controllerDelegate = self
             return cell
+        } else if let videoMessage = messages[indexPath.section][indexPath.row] as? VideoMessage {
+            let cell = VideoMessageCell(style: .default, reuseIdentifier: videoReuseId)
+            cell.videoMessage = videoMessage
+            cell.controllerDelegate = self
+            return cell
         } else if let giphyMessage = messages[indexPath.section][indexPath.row] as? GiphyMessage {
             let cell = GiphyMessageCell(style: .default, reuseIdentifier: giphyReuseId)
             cell.giphyMessage = giphyMessage
@@ -248,7 +253,6 @@ class MessagesController:   UIViewController,
         if self.traitCollection.userInterfaceStyle == .dark {
             giphy.theme = .dark
         }
-        
         present(giphy, animated: true)
     }
     
@@ -316,18 +320,37 @@ extension MessagesController: UIImagePickerControllerDelegate,
         if let image = selectedImageFromPicker {
             StorageManager.shared.uploadImageMessage(image: image) { (url) in
                 if let url = url {
-                    self.sendMessageWithImageUrl(url: url)
+                    self.sendImageMessageWithUrl(url: url)
                 }
             }
         }
     }
     
-    fileprivate func handleVideoSelected(_ videoUrl: URL) {
+    fileprivate func sendImageMessageWithUrl(url: URL) {
+        guard let conversation = conversation else {return}
+        UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
+            let message = ImageMessage(imageUrl: url, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
+            UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
+                MessagingManager.shared.uploadMessage(message: message)
+            }
+        }
+    }
+    
+    fileprivate func handleVideoSelected(_ videoFileUrl: URL) {
         do {
-            let videoData = try Data(contentsOf: videoUrl)
-            let uploadTask = StorageManager.shared.uploadVideoMessage(video: videoData) { (url) in
-                if let url = url {
-                    print("Video url: \(url.absoluteString)")
+            let videoData = try Data(contentsOf: videoFileUrl)
+            let uploadTask = StorageManager.shared.uploadVideoMessage(video: videoData) { (uploadedVideoUrl) in
+                if let uploadedVideoUrl = uploadedVideoUrl {
+                    if let thumbnailImage = self.thumbnailImageForVideoUrl(videoFileUrl: videoFileUrl) {
+                        StorageManager.shared.uploadVideoThumbnail(image: thumbnailImage) { (url) in
+                            if let thumbnailImageUrl = url {
+                                let aspectRatio = thumbnailImage.size.width / thumbnailImage.size.height
+                                self.sendVideoMessageWithUrl(videoUrl: uploadedVideoUrl,
+                                                             thumbnailUrl: thumbnailImageUrl,
+                                                             aspectRatio: aspectRatio)
+                            }
+                        }
+                    }
                 }
             }
             var progressBarPercentage: Float = 0
@@ -347,10 +370,22 @@ extension MessagesController: UIImagePickerControllerDelegate,
         }
     }
     
-    fileprivate func sendMessageWithImageUrl(url: URL) {
+    fileprivate func thumbnailImageForVideoUrl(videoFileUrl: URL) -> UIImage? {
+        let asset = AVAsset(url: videoFileUrl)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(value: 1, timescale: 60), actualTime: nil)
+            return UIImage(cgImage: thumbnailCGImage).rotate(radians: .pi/2)
+        } catch {
+            print("Error getting thumbnail image: \(error.localizedDescription)")
+        }
+        return nil
+    }
+    
+    fileprivate func sendVideoMessageWithUrl(videoUrl: URL, thumbnailUrl: URL, aspectRatio: CGFloat) {
         guard let conversation = conversation else {return}
         UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
-            let message = ImageMessage(url: url.absoluteString, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
+            let message = VideoMessage(videoUrl: videoUrl, thumbnailImageUrl: thumbnailUrl, aspectRatio: aspectRatio, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message)
             }
@@ -416,7 +451,6 @@ extension MessagesController: messagesControllerDelegate {
             keywindow.addSubview(backgroundView!)
             keywindow.addSubview(zoomingImageView)
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-
                 self.backgroundView!.alpha = 1
                 let height = self.imageStartingFrame!.height / self.imageStartingFrame!.width * keywindow.frame.width
                 zoomingImageView.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)

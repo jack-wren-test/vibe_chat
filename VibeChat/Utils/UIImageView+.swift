@@ -12,16 +12,16 @@ let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
     
-    public func loadImageUsingCacheWithUrlString(urlString: String, completion: @escaping (_ image: UIImage?)->() = {_ in }) {
+    public func loadImageUsingCacheWithUrl(url: URL, completion: @escaping (_ image: UIImage?)->() = {_ in }) {
         self.image = nil
-        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
             self.image = cachedImage
             completion(cachedImage)
             return
         }
-        StorageManager.shared.downloadImageFromUrl(url: urlString) { (image) in
+        StorageManager.shared.downloadImageFromUrl(url: url) { (image) in
             if let image = image {
-                imageCache.setObject(image, forKey: urlString as NSString)
+                imageCache.setObject(image, forKey: url.absoluteString as NSString)
                 self.image = image
                 completion(image)
                 return

@@ -53,7 +53,6 @@ final class MessagingManager: FirestoreManager {
         collectionReference.document(conversationData["uid"] as! String).collection(dbCollection.messages.rawValue)
     }
     
-    // CHANGE THIS TO GENERIC DATA ARRAY FOR USE WITH USERS TOO? THEN COULD PUT IN DATABASEMANAGERCLASS
     fileprivate func snapshotDocumentsToMessageArray(_ documentChange: [DocumentChange], completion: @escaping ([Message]?)->()) {
         var messages = [Message]()
         documentChange.forEach { (document) in
@@ -61,6 +60,9 @@ final class MessagingManager: FirestoreManager {
             if messageData["imageUrl"] != nil {
                 let imageMessage = ImageMessage(withDictionary: messageData)
                 messages.append(imageMessage)
+            } else  if messageData["videoUrl"] != nil {
+                let videoMessage = VideoMessage(withDictionary: messageData)
+                messages.append(videoMessage)
             } else if messageData["giphId"] != nil {
                 let giphyMessage = GiphyMessage(withDictionary: messageData)
                 messages.append(giphyMessage)
