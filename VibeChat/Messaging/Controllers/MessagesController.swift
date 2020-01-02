@@ -30,6 +30,8 @@ class MessagesController:   UIViewController,
     @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var specialMessageLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var progressBar: UIView!
+    @IBOutlet weak var progressBarWidthAnchor: NSLayoutConstraint!
     
     // MARK:- Properties
     
@@ -328,8 +330,17 @@ extension MessagesController: UIImagePickerControllerDelegate,
                     print("Video url: \(url.absoluteString)")
                 }
             }
-            uploadTask.observe(.progress) { (snapshot) in
-                print(snapshot.progress?.completedUnitCount)
+            var progressBarPercentage: Float = 0
+            uploadTask.observe(.progress) { [unowned self] (snapshot) in
+                if (snapshot.progress?.completedUnitCount) != nil {
+                    if progressBarPercentage < 75 {
+                        progressBarPercentage += 15
+                        self.updateProgressBar(percentageComplete: progressBarPercentage)
+                    }
+                }
+            }
+            uploadTask.observe(.success) { [unowned self] (snapshot) in
+                self.updateProgressBar(percentageComplete: 100)
             }
         } catch {
             print("Error loading video to data object: \(error.localizedDescription)")
@@ -342,6 +353,22 @@ extension MessagesController: UIImagePickerControllerDelegate,
             let message = ImageMessage(url: url.absoluteString, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message)
+            }
+        }
+    }
+    
+    fileprivate func updateProgressBar(percentageComplete: Float) {
+        let phoneWidth = view.frame.width
+        let newWidth = CGFloat(percentageComplete/100)*phoneWidth
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+            self.progressBarWidthAnchor.constant = newWidth
+            self.view.layoutIfNeeded()
+        }) { (_) in
+            if percentageComplete == 100 {
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                    self.progressBarWidthAnchor.constant = newWidth
+                    self.view.layoutIfNeeded()
+                }) {(_) in self.progressBarWidthAnchor.constant = 0}
             }
         }
     }

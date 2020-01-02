@@ -595,19 +595,31 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Id-8X-HyI">
-                                        <rect key="frame" x="0.0" y="89" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="88" width="414" height="2"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neO-HK-Nfd">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="2"/>
+                                                <color key="backgroundColor" red="0.38395864689999998" green="0.78039215689999997" blue="0.54470754440000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" id="tkK-ot-YaH"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" name="text"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="t2F-Mf-csz"/>
+                                            <constraint firstItem="neO-HK-Nfd" firstAttribute="leading" secondItem="9Id-8X-HyI" secondAttribute="leading" id="7gU-5i-4uo"/>
+                                            <constraint firstItem="neO-HK-Nfd" firstAttribute="top" secondItem="9Id-8X-HyI" secondAttribute="top" id="WdW-hd-pP4"/>
+                                            <constraint firstAttribute="height" constant="2" id="t2F-Mf-csz"/>
+                                            <constraint firstItem="neO-HK-Nfd" firstAttribute="centerY" secondItem="9Id-8X-HyI" secondAttribute="centerY" id="tQA-TO-8KS"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" name="background"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="9Id-8X-HyI" firstAttribute="centerX" secondItem="9Xi-bZ-nEu" secondAttribute="centerX" id="0YY-h6-m6N"/>
                                     <constraint firstItem="9Xi-bZ-nEu" firstAttribute="leading" secondItem="5eE-d9-z5r" secondAttribute="leading" constant="20" id="1au-cg-78H"/>
                                     <constraint firstItem="9Id-8X-HyI" firstAttribute="leading" secondItem="5eE-d9-z5r" secondAttribute="leading" id="DsF-ak-Q1b"/>
-                                    <constraint firstAttribute="trailing" secondItem="9Id-8X-HyI" secondAttribute="trailing" id="Lfe-dd-cse"/>
                                     <constraint firstItem="9Xi-bZ-nEu" firstAttribute="centerY" secondItem="5eE-d9-z5r" secondAttribute="centerY" id="MRm-sE-2gO"/>
                                     <constraint firstAttribute="trailing" secondItem="9Xi-bZ-nEu" secondAttribute="trailing" constant="20" id="N7v-AT-ngK"/>
                                     <constraint firstAttribute="height" constant="90" id="Vm5-PI-BuA"/>
@@ -639,6 +651,8 @@
                         <outlet property="chatterNameLabel" destination="cVg-SF-izD" id="c7z-Mp-Uvy"/>
                         <outlet property="chatterProfileImageView" destination="NPI-sf-QAG" id="Oye-Ve-Kg6"/>
                         <outlet property="messageTextField" destination="MDT-Kj-KwY" id="hEz-2t-wOO"/>
+                        <outlet property="progressBar" destination="neO-HK-Nfd" id="mtD-SY-4F6"/>
+                        <outlet property="progressBarWidthAnchor" destination="tkK-ot-YaH" id="Qt5-iP-Gp4"/>
                         <outlet property="specialMessageLeadingConstraint" destination="xAH-zG-xsw" id="ouD-Qr-Bjy"/>
                         <outlet property="specialMessageViewWidthConstraint" destination="YvE-JF-Ctf" id="ujJ-pZ-bAI"/>
                         <outlet property="tableView" destination="Dqc-s2-XbJ" id="afh-2m-9T7"/>
@@ -699,10 +713,10 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wWz-tP-fWw">
-                                        <rect key="frame" x="0.0" y="89" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="88" width="414" height="2"/>
                                         <color key="backgroundColor" name="text"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="bMB-WQ-sq7"/>
+                                            <constraint firstAttribute="height" constant="2" id="bMB-WQ-sq7"/>
                                         </constraints>
                                     </view>
                                 </subviews>
