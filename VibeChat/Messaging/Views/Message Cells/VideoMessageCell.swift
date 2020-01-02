@@ -48,6 +48,12 @@ class VideoMessageCell: MessageCell {
         return button
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .whiteLarge)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     var controllerDelegate: messagesControllerDelegate?
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -66,6 +72,7 @@ class VideoMessageCell: MessageCell {
     override func prepareForReuse() {
         videoMessage = nil
         playerLayer?.removeFromSuperlayer()
+        activityIndicator.stopAnimating()
     }
     
     // MARK:- Methods
@@ -86,6 +93,12 @@ class VideoMessageCell: MessageCell {
         playButton.heightAnchor.constraint(equalToConstant: 75).isActive = true
         playButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
         
+        thumbnailImageView.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: thumbnailImageView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: thumbnailImageView.centerYAnchor).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
         heightAnchor.constraint(equalToConstant: (16*16)+4).isActive = true
     }
     
@@ -100,6 +113,10 @@ class VideoMessageCell: MessageCell {
             playerLayer!.frame = thumbnailImageView.bounds
             thumbnailImageView.layer.addSublayer(playerLayer!)
             player?.play()
+            
+            playButton.isHidden = true
+            
+            activityIndicator.startAnimating()
         }
     }
     
