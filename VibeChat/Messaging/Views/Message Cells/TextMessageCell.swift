@@ -27,10 +27,10 @@ class TextMessageCell: MessageCell {
         return view
     }()
     
-    var message: Message? {
+    var textMessage: TextMessage? {
         didSet {
             guard let user = CurrentUser.shared.data else {return}
-            guard let message = message else {return}
+            guard let message = textMessage else {return}
             messageLabel.text = message.text
             let isOutgoingMessage = message.fromUid == user.uid
             layoutMessage(isOutgoingMessage)
@@ -49,7 +49,7 @@ class TextMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
-        message = nil
+        textMessage = nil
     }
     
     // MARK:- Methods

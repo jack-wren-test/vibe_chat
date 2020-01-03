@@ -49,7 +49,7 @@ class VideoMessageCell: MessageCell {
     }()
     
     let activityIndicator: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .whiteLarge)
+        let view = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

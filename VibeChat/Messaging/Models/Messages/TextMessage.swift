@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TextMessage: Message {
+final class TextMessage: Message {
     
     // MARK:- Properties
     
@@ -18,13 +18,13 @@ class TextMessage: Message {
     
     init(text: String, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
+        setType(type: .textMessage)
         self.text = text
-        self.type = .textMessage
     }
     
     override init(withDictionary: [String: Any]) {
         super.init(withDictionary: withDictionary)
-        self.type = .textMessage
+        setType(type: .textMessage)
         if let text = withDictionary["text"] as? String {
             self.text = text
         }
@@ -32,7 +32,7 @@ class TextMessage: Message {
     
     // MARK:- Methods
     
-    public func toDict() -> [String: Any] {
+    override func toDict() -> [String: Any] {
         var dict = dictionaryRepresentation()
         if let text = self.text {
             dict["text"] = text

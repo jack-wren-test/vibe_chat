@@ -43,6 +43,10 @@ class Message: NSObject {
     
     // MARK:- Methods
     
+    public func setType(type: MessageType) {
+        self.type = type
+    }
+    
     public func dictionaryRepresentation() -> [String: Any] {
         let tStamp = Timestamp.init(date: timestamp ?? Date())
         let dict: [String: Any] = ["toUid": toUid ?? "",
@@ -50,6 +54,10 @@ class Message: NSObject {
                                    "threadId": conversationId ?? "",
                                    "timestamp": tStamp]
         return dict
+    }
+    
+    public func toDict() -> [String: Any] {
+        return dictionaryRepresentation()
     }
     
 }

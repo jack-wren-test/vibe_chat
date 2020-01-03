@@ -19,13 +19,13 @@ class ImageMessage: Message {
     
     init(imageUrl: URL, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        self.type = .imageMessage
+        setType(type: .imageMessage)
         self.imageUrl = imageUrl
     }
     
     override init(withDictionary: [String: Any]) {
         super.init(withDictionary: withDictionary)
-        self.type = .imageMessage
+        setType(type: .imageMessage)
         if let imageUrlString = withDictionary["imageUrl"] as? String {
             self.imageUrl = URL(string: imageUrlString)
         }
@@ -33,7 +33,7 @@ class ImageMessage: Message {
     
     // MARK:- Handlers
     
-    public func toDict() -> [String : Any] {
+    override func toDict() -> [String : Any] {
         var dict = dictionaryRepresentation()
         if let imageUrl = self.imageUrl {
             dict["imageUrl"] = imageUrl.absoluteString

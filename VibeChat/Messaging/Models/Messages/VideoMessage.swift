@@ -21,7 +21,7 @@ class VideoMessage: Message {
     
     init(videoUrl: URL, thumbnailImageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        self.type = .videoMessage
+        setType(type: .videoMessage)
         self.videoUrl = videoUrl
         self.thumbnailImageUrl = thumbnailImageUrl
         self.aspectRatio = aspectRatio
@@ -29,7 +29,7 @@ class VideoMessage: Message {
     
     override init(withDictionary: [String: Any]) {
         super.init(withDictionary: withDictionary)
-        self.type = .videoMessage
+        setType(type: .videoMessage)
         if let videoUrlString = withDictionary["videoUrl"] as? String {
             self.videoUrl = URL(string: videoUrlString)
         }
@@ -43,7 +43,7 @@ class VideoMessage: Message {
     
     // MARK:- Methods
     
-    public func toDict() -> [String : Any] {
+    override func toDict() -> [String : Any] {
         var dict = dictionaryRepresentation()
         if let videoUrl = self.videoUrl { dict["videoUrl"] = videoUrl.absoluteString }
         if let thumbnailImageUrl = self.thumbnailImageUrl { dict["thumbnailImageUrl"] = thumbnailImageUrl.absoluteString }
