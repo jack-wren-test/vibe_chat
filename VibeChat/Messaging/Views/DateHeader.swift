@@ -8,7 +8,11 @@
 
 import UIKit
 
-class DateHeader: UILabel {
+class DateHeader: UICollectionView {
+    
+}
+
+class DateHeaderLabel: UILabel {
 
     // MARK:- Properties
     

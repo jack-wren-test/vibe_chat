@@ -8,9 +8,7 @@
 
 import UIKit
 
-// IS IT WORTH HAVING A VIEWMODEL FOR THIS CLASS DUE TO SEVERAL MODELS COMBINING? OR DEAL WITH IN MESSAGE CLASS
-
-class MessageCell: UITableViewCell {
+class MessageCell: UICollectionViewCell {
     
     // MARK:- Properties
     
@@ -19,14 +17,13 @@ class MessageCell: UITableViewCell {
     
     // MARK:- Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        backgroundColor = .clear
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .lightGray
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     public func layoutMessage(_ isOutgoingMessage: Bool) {

@@ -60,13 +60,13 @@ class VideoMessageCell: MessageCell {
     
     // MARK:- Init
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func prepareForReuse() {
@@ -82,10 +82,10 @@ class VideoMessageCell: MessageCell {
         incomingXConstraint = thumbnailImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = thumbnailImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         
-        thumbnailImageView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        thumbnailImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2).isActive = true
+        thumbnailImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        thumbnailImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         thumbnailImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        thumbnailImageView.widthAnchor.constraint(equalToConstant: 9*16).isActive = true
+        thumbnailImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         thumbnailImageView.addSubview(playButton)
         playButton.centerXAnchor.constraint(equalTo: thumbnailImageView.centerXAnchor).isActive = true
@@ -98,8 +98,6 @@ class VideoMessageCell: MessageCell {
         activityIndicator.centerYAnchor.constraint(equalTo: thumbnailImageView.centerYAnchor).isActive = true
         activityIndicator.heightAnchor.constraint(equalToConstant: 75).isActive = true
         activityIndicator.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        
-        heightAnchor.constraint(equalToConstant: (16*16)+4).isActive = true
     }
     
     @objc private func handleImageTap() {

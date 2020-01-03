@@ -461,8 +461,8 @@
 			children = (
 				61758749239E743E002ED670 /* Message.swift */,
 				61445FEC23BF436A00452FBB /* TextMessage.swift */,
-				61445FE623BB742400452FBB /* VideoMessage.swift */,
 				61EA8E9723BA073200FC7B87 /* ImageMessage.swift */,
+				61445FE623BB742400452FBB /* VideoMessage.swift */,
 				61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */,
 			);
 			path = Messages;

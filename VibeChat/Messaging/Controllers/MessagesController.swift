@@ -8,20 +8,20 @@
 
 import UIKit
 import FirebaseFirestore
+import GiphyUISDK
 
 protocol messagesControllerDelegate {
     func imageMessageTapped(_ imageView: UIImageView)
 }
 
-class MessagesController:   UIViewController,
-                            UITableViewDelegate,
-                            UITableViewDataSource {
+class MessagesController:   UIViewController {
+    
     
     // MARK:- IBOutlets
     
     @IBOutlet weak var chatterNameLabel: UILabel!
     @IBOutlet weak var chatterProfileImageView: CircularImageView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var messageTextField: AuthenticationTextField!
     @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
@@ -30,6 +30,7 @@ class MessagesController:   UIViewController,
     
     // MARK:- Properties
     
+    let headerReuseId = "headerView"
     let textReuseId = "textMessageCell"
     let imageReuseId = "imageMessageCell"
     let videoReuseId = "videoMessageCell"
@@ -44,14 +45,14 @@ class MessagesController:   UIViewController,
     var imageStartingFrame: CGRect?
     var backgroundView: UIView?
     
-    var isGiphyConfigured: Bool = false
-    
     // MARK:- ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableViewConfig()
+        GiphyUISDK.configure(apiKey: "vXS5bLeyzx4cOUgU9RVheieQLWXmVRoY")
+        
+        collectionViewConfig()
         setupMessageListener()
         setupConverstationStatusListener()
         

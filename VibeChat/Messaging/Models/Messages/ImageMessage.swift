@@ -9,26 +9,37 @@
 import Foundation
 import Firebase
 
-class ImageMessage: Message {
+protocol ImageBasedMessage {
+    var aspectRatio: CGFloat { get }
+}
+
+class ImageMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties
     
     var imageUrl: URL?
+    var aspectRatio: CGFloat
     
     // MARK:- Init
     
-    init(imageUrl: URL, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+    init(imageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+        self.imageUrl = imageUrl
+        self.aspectRatio = aspectRatio
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
         setType(type: .imageMessage)
-        self.imageUrl = imageUrl
     }
     
     override init(withDictionary: [String: Any]) {
-        super.init(withDictionary: withDictionary)
-        setType(type: .imageMessage)
+        if let aspectRatio = withDictionary["AspectRatio"] as? CGFloat {
+            self.aspectRatio = aspectRatio
+        } else {
+            self.aspectRatio = CGFloat(16/9)
+        }
         if let imageUrlString = withDictionary["imageUrl"] as? String {
             self.imageUrl = URL(string: imageUrlString)
         }
+        super.init(withDictionary: withDictionary)
+        setType(type: .imageMessage)
     }
     
     // MARK:- Handlers

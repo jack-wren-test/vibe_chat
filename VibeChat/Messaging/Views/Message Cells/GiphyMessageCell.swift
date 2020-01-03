@@ -39,13 +39,13 @@ class GiphyMessageCell : MessageCell {
     
     // MARK:- Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func prepareForReuse() {
@@ -60,10 +60,9 @@ class GiphyMessageCell : MessageCell {
         incomingXConstraint = giphyMediaView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = giphyMediaView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         
-        giphyMediaView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2).isActive = true
+        giphyMediaView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         giphyMediaView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        heightAnchor.constraint(equalToConstant: 204).isActive = true
     }
     
 }

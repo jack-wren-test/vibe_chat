@@ -39,18 +39,19 @@ extension MessagesController: UIImagePickerControllerDelegate,
         }
         
         if let image = selectedImageFromPicker {
+            let aspectRatio = image.size.width / image.size.height
             StorageManager.shared.uploadImageMessage(image: image) { (url) in
                 if let url = url {
-                    self.sendImageMessageWithUrl(url: url)
+                    self.sendImageMessageWithUrl(url: url, andAspectRatio: aspectRatio)
                 }
             }
         }
     }
     
-    fileprivate func sendImageMessageWithUrl(url: URL) {
+    fileprivate func sendImageMessageWithUrl(url: URL, andAspectRatio: CGFloat) {
         guard let conversation = conversation else {return}
         UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
-            let message = ImageMessage(imageUrl: url, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
+            let message = ImageMessage(imageUrl: url, aspectRatio: 2, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message)
             }

@@ -17,15 +17,15 @@ extension MessagesController: GiphyDelegate {
     func didDismiss(controller: GiphyViewController?) {}
     
     func didSelectMedia(giphyViewController: GiphyViewController, media: GPHMedia) {
-        sendGiphyMessage(withGiphId: media.id) {
+        sendGiphyMessage(withGiphId: media.id, andAspectRatio: media.aspectRatio) {
             giphyViewController.dismiss(animated: true)
         }
     }
     
-    fileprivate func sendGiphyMessage(withGiphId: String, completion: @escaping ()->()) {
+    fileprivate func sendGiphyMessage(withGiphId: String, andAspectRatio: CGFloat, completion: @escaping ()->()) {
         guard let conversation = conversation else {return}
         UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
-            let message = GiphyMessage(giphId: withGiphId, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
+            let message = GiphyMessage(giphId: withGiphId, aspectRatio: andAspectRatio, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message) {
                     completion()
@@ -36,13 +36,7 @@ extension MessagesController: GiphyDelegate {
     
     // MARK:- IBActions
     
-    @IBAction func giphyButtonPressed(_ sender: Any) {
-        
-        if !isGiphyConfigured {
-            GiphyUISDK.configure(apiKey: "vXS5bLeyzx4cOUgU9RVheieQLWXmVRoY")
-            isGiphyConfigured = !isGiphyConfigured
-        }
-        
+    @IBAction func giphyButtonPressed(_ sender: Any) {        
         let giphy = GiphyViewController()
         giphy.delegate = self
         if self.traitCollection.userInterfaceStyle == .dark {

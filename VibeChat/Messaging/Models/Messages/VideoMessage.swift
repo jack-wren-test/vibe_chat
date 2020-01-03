@@ -9,27 +9,25 @@
 import Foundation
 import Firebase
 
-class VideoMessage: Message {
+class VideoMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties
     
     var videoUrl:           URL?
     var thumbnailImageUrl:  URL?
-    var aspectRatio:        CGFloat?
+    var aspectRatio:        CGFloat
     
     // MARK:- Init
     
     init(videoUrl: URL, thumbnailImageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+        self.aspectRatio = aspectRatio
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
         setType(type: .videoMessage)
         self.videoUrl = videoUrl
         self.thumbnailImageUrl = thumbnailImageUrl
-        self.aspectRatio = aspectRatio
     }
     
     override init(withDictionary: [String: Any]) {
-        super.init(withDictionary: withDictionary)
-        setType(type: .videoMessage)
         if let videoUrlString = withDictionary["videoUrl"] as? String {
             self.videoUrl = URL(string: videoUrlString)
         }
@@ -38,7 +36,11 @@ class VideoMessage: Message {
         }
         if let aspectRatio = withDictionary["aspectRatio"] as? CGFloat {
             self.aspectRatio = aspectRatio
+        } else {
+            self.aspectRatio = CGFloat(16/9)
         }
+        super.init(withDictionary: withDictionary)
+        setType(type: .videoMessage)
     }
     
     // MARK:- Methods
@@ -47,7 +49,7 @@ class VideoMessage: Message {
         var dict = dictionaryRepresentation()
         if let videoUrl = self.videoUrl { dict["videoUrl"] = videoUrl.absoluteString }
         if let thumbnailImageUrl = self.thumbnailImageUrl { dict["thumbnailImageUrl"] = thumbnailImageUrl.absoluteString }
-        if let aspectRatio = self.aspectRatio { dict["aspectRatio"] = aspectRatio }
+        dict["aspectRatio"] = aspectRatio
         return dict
     }
     

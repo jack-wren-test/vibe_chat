@@ -18,11 +18,9 @@ class ImageMessageCell: MessageCell {
             guard let user = CurrentUser.shared.data else {return}
             guard let url = imageMessage.imageUrl else {return}
             imageMessageView.loadImageUsingCacheWithUrl(url: url) { (image) in
-                if let image = image {
+                if image != nil {
                     let isOutgoingMessage = imageMessage.fromUid == user.uid
                     self.layoutMessage(isOutgoingMessage)
-                    let aspectRatio = image.size.height/image.size.width
-                    self.adjustImageWidth(aspectRatio)
                 }
             }
         }
@@ -42,14 +40,14 @@ class ImageMessageCell: MessageCell {
     var controllerDelegate: messagesControllerDelegate?
     
     // MARK:- Init
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func prepareForReuse() {
@@ -60,15 +58,13 @@ class ImageMessageCell: MessageCell {
     
     private func configureViews() {
         addSubview(imageMessageView)
+        
         incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+        
+        imageMessageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         imageMessageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageMessageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        heightAnchor.constraint(equalToConstant: 254).isActive = true
-    }
-    
-    private func adjustImageWidth(_ aspectRatio: CGFloat) {
-        imageMessageView.widthAnchor.constraint(equalToConstant: imageMessageView.frame.height*aspectRatio).isActive = true
+        imageMessageView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
     }
     
     @objc private func handleImageTap() {

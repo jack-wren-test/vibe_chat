@@ -19,20 +19,23 @@ extension MessagesController {
         }
     }
     
-    func tableViewConfig() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.register(TextMessageCell.self, forCellReuseIdentifier: textReuseId)
-        tableView.register(ImageMessageCell.self, forCellReuseIdentifier: imageReuseId)
-        tableView.register(GiphyMessageCell.self, forCellReuseIdentifier: giphyReuseId)
+    func collectionViewConfig() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.register(MessageCell.self, forCellWithReuseIdentifier: "default")
+        collectionView.register(TextMessageCell.self, forCellWithReuseIdentifier: textReuseId)
+        collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: imageReuseId)
+        collectionView.register(GiphyMessageCell.self, forCellWithReuseIdentifier: giphyReuseId)
+        collectionView.register(VideoMessageCell.self, forCellWithReuseIdentifier: videoReuseId)
     }
     
     func scrollToBottomOfMessages() {
         if messages.count > 0 {
             let row = messages[messages.count-1].count-1
             let section = messages.count-1
-            tableView.scrollToRow(at: IndexPath(row: row, section: section), at: .bottom, animated: true)
+            collectionView.scrollToItem(at: IndexPath(row: row, section: section), at: .bottom, animated: true)
         }
     }
     
@@ -40,9 +43,9 @@ extension MessagesController {
         let row = messages[messages.count-1].count-1
         let section = messages.count-1
         if isNewSection {
-            tableView.insertSections([section], with: .fade)
+            collectionView.insertSections([section])
         } else {
-            tableView.insertRows(at: [IndexPath(row: row, section: section)], with: .fade)
+            collectionView.insertItems(at: [IndexPath(row: row, section: section)])
         }
     }
     
@@ -65,7 +68,7 @@ extension MessagesController {
             if let sortedMessages = self.groupMessagesByDate(messages) {
                 self.messages = sortedMessages
                 if self.isViewLoaded {
-                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                     self.scrollToBottomOfMessages()
                     if conversation.hasDbCounterpart {self.conversation!.isReadStatus = true}
                     self.conversation!.isReadStatus = true

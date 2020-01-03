@@ -39,13 +39,13 @@ class TextMessageCell: MessageCell {
     
     // MARK:- Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func prepareForReuse() {
@@ -63,8 +63,8 @@ class TextMessageCell: MessageCell {
         outgoingXConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         
         bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -10).isActive = true
         bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -10).isActive = true
