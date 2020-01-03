@@ -373,9 +373,10 @@ extension MessagesController: UIImagePickerControllerDelegate,
     fileprivate func thumbnailImageForVideoUrl(videoFileUrl: URL) -> UIImage? {
         let asset = AVAsset(url: videoFileUrl)
         let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
         do {
             let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(value: 1, timescale: 60), actualTime: nil)
-            return UIImage(cgImage: thumbnailCGImage).rotate(radians: .pi/2)
+            return UIImage(cgImage: thumbnailCGImage)
         } catch {
             print("Error getting thumbnail image: \(error.localizedDescription)")
         }
@@ -437,6 +438,7 @@ extension MessagesController: GiphyDelegate {
 extension MessagesController: messagesControllerDelegate {
     
     func imageMessageTapped(_ imageView: UIImageView) {
+        // Zoom video layer too?
         startingImageView = imageView
         startingImageView?.isHidden = true
         imageStartingFrame = imageView.superview?.convert(imageView.frame, to: nil)
