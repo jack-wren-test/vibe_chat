@@ -224,24 +224,28 @@ class MessagesController:   UIViewController,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let imageMessage = messages[indexPath.section][indexPath.row] as? ImageMessage {
-            let cell = tableView.dequeueReusableCell(withIdentifier: imageReuseId) as! ImageMessageCell
-            cell.imageMessage = imageMessage
-            cell.controllerDelegate = self
-            return cell
-        } else if let videoMessage = messages[indexPath.section][indexPath.row] as? VideoMessage {
-            let cell = VideoMessageCell(style: .default, reuseIdentifier: videoReuseId)
-            cell.videoMessage = videoMessage
-            cell.controllerDelegate = self
-            return cell
-        } else if let giphyMessage = messages[indexPath.section][indexPath.row] as? GiphyMessage {
-            let cell = GiphyMessageCell(style: .default, reuseIdentifier: giphyReuseId)
-            cell.giphyMessage = giphyMessage
-            return cell
-        } else {
+        let message = messages[indexPath.section][indexPath.row]
+        switch message {
+        case let message as TextMessage where message.type == .textMessage :
             let cell = tableView.dequeueReusableCell(withIdentifier: textReuseId) as! TextMessageCell
             cell.message = messages[indexPath.section][indexPath.row]
             return cell
+        case let message as ImageMessage where message.type == .imageMessage :
+            let cell = tableView.dequeueReusableCell(withIdentifier: imageReuseId) as! ImageMessageCell
+            cell.imageMessage = message
+            cell.controllerDelegate = self
+            return cell
+        case let message as GiphyMessage where message.type == .giphyMessage :
+            let cell = tableView.dequeueReusableCell(withIdentifier: giphyReuseId) as! GiphyMessageCell
+            cell.giphyMessage = message
+            return cell
+        case let message as VideoMessage where message.type == .videoMessage :
+            let cell = tableView.dequeueReusableCell(withIdentifier: videoReuseId) as! VideoMessageCell
+            cell.videoMessage = message
+            cell.controllerDelegate = self
+            return cell
+        default:
+            return UITableViewCell()
         }
     }
     
@@ -280,7 +284,7 @@ class MessagesController:   UIViewController,
             if let text = messageTextField.text, let toUid = conversation.chatter?.uid, let fromUid = CurrentUser.shared.data?.uid {
                 messageTextField.text = ""
                 UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
-                    let message = Message(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)
+                    let message = TextMessage(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)
                     UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                         MessagingManager.shared.uploadMessage(message: message)
                     }

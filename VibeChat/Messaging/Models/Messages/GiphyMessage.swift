@@ -18,29 +18,25 @@ class GiphyMessage: Message {
     // MARK:- Init
     
     init(giphId: String, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
-        super.init(text: nil, toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
+        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
+        self.type = .giphyMessage
         self.giphId = giphId
     }
     
     override init(withDictionary: [String : Any]) {
         super.init(withDictionary: withDictionary)
+        self.type = .giphyMessage
         giphId = withDictionary["giphId"] as? String
     }
     
     // MARK:- Methods
     
-    override func toDict() -> [String : Any] {
-        let tStamp = Timestamp.init(date: timestamp ?? Date())
-        var dict: [String: Any] = ["text": text ?? "",
-                                   "toUid": toUid ?? "",
-                                   "fromUid": fromUid ?? "",
-                                   "threadId": conversationId ?? "",
-                                   "timestamp": tStamp]
+    public func toDict() -> [String : Any] {
+        var dict = dictionaryRepresentation()
         if let giphId = self.giphId {
             dict["giphId"] = giphId
         }
         return dict
     }
-    
     
 }

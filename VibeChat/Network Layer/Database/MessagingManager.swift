@@ -67,7 +67,7 @@ final class MessagingManager: FirestoreManager {
                 let giphyMessage = GiphyMessage(withDictionary: messageData)
                 messages.append(giphyMessage)
             } else {
-                let message = Message(withDictionary: messageData)
+                let message = TextMessage(withDictionary: messageData)
                 messages.append(message)
             }
         }

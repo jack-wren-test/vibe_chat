@@ -14,6 +14,7 @@
 		61445FE723BB742400452FBB /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE623BB742400452FBB /* VideoMessage.swift */; };
 		61445FE923BB743400452FBB /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE823BB743400452FBB /* VideoMessageCell.swift */; };
 		61445FEB23BE3DB600452FBB /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEA23BE3DB600452FBB /* UIImage+.swift */; };
+		61445FED23BF436A00452FBB /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEC23BF436A00452FBB /* TextMessage.swift */; };
 		616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* ProfileController.swift */; };
 		616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E64239A649F00E9B0B2 /* TextView.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
@@ -75,6 +76,7 @@
 		61445FE623BB742400452FBB /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		61445FE823BB743400452FBB /* VideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
 		61445FEA23BE3DB600452FBB /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		61445FEC23BF436A00452FBB /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		616B2E64239A649F00E9B0B2 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				61758749239E743E002ED670 /* Message.swift */,
+				61445FEC23BF436A00452FBB /* TextMessage.swift */,
 				61445FE623BB742400452FBB /* VideoMessage.swift */,
 				61EA8E9723BA073200FC7B87 /* ImageMessage.swift */,
 				61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */,
@@ -647,6 +650,7 @@
 			files = (
 				61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */,
 				61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */,
+				61445FED23BF436A00452FBB /* TextMessage.swift in Sources */,
 				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
 				61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */,
 				61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */,

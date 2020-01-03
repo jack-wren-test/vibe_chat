@@ -9,22 +9,23 @@
 import Foundation
 import Firebase
 
-// TODO:- Break out text message into subclass
+enum MessageType {
+    case textMessage, videoMessage, imageMessage, giphyMessage
+}
 
 class Message: NSObject {
     
     // MARK:- Properties
     
-    var text:           String?
-    var toUid:          String?
-    var fromUid:        String?
-    var timestamp:      Date?
-    var conversationId: String?
+    private(set) var type:  MessageType?
+    var toUid:              String?
+    var fromUid:            String?
+    var timestamp:          Date?
+    var conversationId:     String?
     
     // MARK:- Initializers
     
-    init(text: String?, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
-        self.text = text
+    init(toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         self.toUid = toUid
         self.fromUid = fromUid
         self.timestamp = timestamp
@@ -32,7 +33,6 @@ class Message: NSObject {
     }
     
     init(withDictionary: [String: Any]) {
-        text = withDictionary["text"] as? String
         toUid = withDictionary["toUid"] as? String
         fromUid = withDictionary["fromUid"] as? String
         conversationId = withDictionary["threadId"] as? String
@@ -43,13 +43,13 @@ class Message: NSObject {
     
     // MARK:- Methods
     
-    public func toDict() -> [String: Any] {
+    public func dictionaryRepresentation() -> [String: Any] {
         let tStamp = Timestamp.init(date: timestamp ?? Date())
-        let dict: [String: Any] = ["text": text ?? "",
-                                   "toUid": toUid ?? "",
+        let dict: [String: Any] = ["toUid": toUid ?? "",
                                    "fromUid": fromUid ?? "",
                                    "threadId": conversationId ?? "",
                                    "timestamp": tStamp]
         return dict
     }
+    
 }
