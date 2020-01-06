@@ -22,6 +22,7 @@ extension MessagesController {
     func collectionViewConfig() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.register(DateHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseId)
         collectionView.register(TextMessageCell.self, forCellWithReuseIdentifier: textReuseId)
         collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: imageReuseId)
         collectionView.register(GiphyMessageCell.self, forCellWithReuseIdentifier: giphyReuseId)

@@ -9,9 +9,10 @@
 import UIKit
 import FirebaseFirestore
 import GiphyUISDK
+import AVFoundation
 
 protocol messagesControllerDelegate {
-    func imageMessageTapped(_ imageView: UIImageView)
+    func imageMessageTapped(_ imageView: UIImageView, _ videoLayer: AVPlayerLayer?, _ videoPlayer: AVPlayer?)
 }
 
 class MessagesController:   UIViewController {
@@ -45,6 +46,12 @@ class MessagesController:   UIViewController {
     var imageStartingFrame: CGRect?
     var backgroundView: UIView?
     
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    var playButton: UIButton?
+    var activityIndicator: UIActivityIndicatorView?
+    var zoomingImageView: UIImageView?
+    
     // MARK:- Lifecycle
     
     override func viewDidLoad() {
@@ -64,17 +71,6 @@ class MessagesController:   UIViewController {
         registerForKeyboardWillShow()
         registerForKeyboardWillHide()
         setupTapToDismissKeyboard()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        // Is nessesary?
-        
-//        let lastSection = messages.count-1
-//        let lastMessage = messages[lastSection].count
-//        print("Last section: \(lastSection), Last message: \(lastMessage)")
-//        let indexPath = IndexPath(item: lastMessage, section: lastSection)
-//        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

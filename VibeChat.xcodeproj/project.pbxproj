@@ -21,7 +21,6 @@
 		61445FF623BF650C00452FBB /* MessagesController+Giphy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF523BF650C00452FBB /* MessagesController+Giphy.swift */; };
 		61445FF823BF655400452FBB /* MessagesController+MessageInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF723BF655400452FBB /* MessagesController+MessageInteraction.swift */; };
 		616B2E63239A575700E9B0B2 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* ProfileController.swift */; };
-		616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E64239A649F00E9B0B2 /* TextView.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
 		6175874C239E7459002ED670 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874B239E7459002ED670 /* MessageCell.swift */; };
 		6175874E239E74BB002ED670 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874D239E74BB002ED670 /* MessagesController.swift */; };
@@ -48,7 +47,6 @@
 		61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */; };
 		61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D16FCC239AB55F006435C2 /* StorageManager.swift */; };
 		61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39232239FBE3100BAAD21 /* MessagingManager.swift */; };
-		61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39234239FBE4600BAAD21 /* GroupsManager.swift */; };
 		61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39236239FBED400BAAD21 /* UsersManager.swift */; };
 		61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */; };
 		61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */; };
@@ -88,7 +86,6 @@
 		61445FF523BF650C00452FBB /* MessagesController+Giphy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+Giphy.swift"; sourceTree = "<group>"; };
 		61445FF723BF655400452FBB /* MessagesController+MessageInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+MessageInteraction.swift"; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
-		616B2E64239A649F00E9B0B2 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		6175874B239E7459002ED670 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		6175874D239E74BB002ED670 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
@@ -119,7 +116,6 @@
 		61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		61D16FCC239AB55F006435C2 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		61E39232239FBE3100BAAD21 /* MessagingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManager.swift; sourceTree = "<group>"; };
-		61E39234239FBE4600BAAD21 /* GroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsManager.swift; sourceTree = "<group>"; };
 		61E39236239FBED400BAAD21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManagerTests.swift; sourceTree = "<group>"; };
 		61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
@@ -219,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				61EA8E9323BA011600FC7B87 /* Message Cells */,
-				61A470F623A000AD003DD758 /* DateHeader.swift */,
+				61DC11C323C375CA00892F4A /* Supplimentary Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,7 +308,6 @@
 			children = (
 				61BB8DB12398025F00EEEEB0 /* UIColor+Decorator.swift */,
 				61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */,
-				616B2E64239A649F00E9B0B2 /* TextView.swift */,
 				61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */,
 				61445FEA23BE3DB600452FBB /* UIImage+.swift */,
 			);
@@ -400,13 +395,20 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		61DC11C323C375CA00892F4A /* Supplimentary Views */ = {
+			isa = PBXGroup;
+			children = (
+				61A470F623A000AD003DD758 /* DateHeader.swift */,
+			);
+			path = "Supplimentary Views";
+			sourceTree = "<group>";
+		};
 		61E3922F239FBDDC00BAAD21 /* Database */ = {
 			isa = PBXGroup;
 			children = (
 				61271C212399562100F1EE1B /* FirestoreManager.swift */,
 				61E39232239FBE3100BAAD21 /* MessagingManager.swift */,
 				61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */,
-				61E39234239FBE4600BAAD21 /* GroupsManager.swift */,
 				61E39236239FBED400BAAD21 /* UsersManager.swift */,
 			);
 			path = Database;
@@ -703,8 +705,6 @@
 				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
 				61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */,
 				61EA8E9523BA017400FC7B87 /* ImageMessageCell.swift in Sources */,
-				61E39235239FBE4600BAAD21 /* GroupsManager.swift in Sources */,
-				616B2E65239A649F00E9B0B2 /* TextView.swift in Sources */,
 				6175874E239E74BB002ED670 /* MessagesController.swift in Sources */,
 				61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */,
 				61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */,

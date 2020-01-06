@@ -25,7 +25,7 @@ extension MessagesController:   UICollectionViewDelegate,
             return cell
         case let message as ImageMessage where message.type == .imageMessage :
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageReuseId, for: indexPath) as! ImageMessageCell
-            cell.imageMessage = message
+            cell.message = message
             cell.controllerDelegate = self
             return cell
         case let message as GiphyMessage where message.type == .giphyMessage :
@@ -34,7 +34,7 @@ extension MessagesController:   UICollectionViewDelegate,
             return cell
         case let message as VideoMessage where message.type == .videoMessage :
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoReuseId, for: indexPath) as! VideoMessageCell
-            cell.videoMessage = message
+            cell.message = message
             cell.controllerDelegate = self
             return cell
         default:
@@ -50,15 +50,20 @@ extension MessagesController:   UICollectionViewDelegate,
         let message = messages[indexPath.section][indexPath.item]
         switch message {
         case let message as TextMessage where message.type == .textMessage:
-            height = 50
+            height = estimatedFrameForText(text: message.text!).height+21.5
         default:
             if let message = message as? ImageBasedMessage {
                 height = 200/message.aspectRatio
             }
         }
-        print("Height for cell: \(height)")
         return CGSize(width: view.frame.width, height: height)
     }
+    
+    private func estimatedFrameForText(text: String) -> CGRect {
+            let size = CGSize(width: 250, height: 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light)], context: nil)
+        }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages[section].count
@@ -68,28 +73,15 @@ extension MessagesController:   UICollectionViewDelegate,
         return messages.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 50)
+    }
     
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-//    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let dateLabel = DateHeader()
-//        dateLabel.date = messages[section][0].timestamp
-//
-//        let containerView = UIView()
-//        containerView.addSubview(dateLabel)
-//        dateLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-//        dateLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-//
-//        return containerView
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 50
-//    }
-    
-    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        print("Attempting to return header view...")
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseId, for: indexPath) as! DateHeader
+        header.dateLabel.date = messages[indexPath.section][0].timestamp
+        return header
+    }
     
 }

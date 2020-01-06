@@ -57,12 +57,12 @@ final class MessagingManager: FirestoreManager {
         var messages = [Message]()
         documentChange.forEach { (document) in
             let messageData = document.document.data()
-            if messageData["imageUrl"] != nil {
-                let imageMessage = ImageMessage(withDictionary: messageData)
-                messages.append(imageMessage)
-            } else  if messageData["videoUrl"] != nil {
+            if messageData["videoUrl"] != nil {
                 let videoMessage = VideoMessage(withDictionary: messageData)
                 messages.append(videoMessage)
+            } else if messageData["imageUrl"] != nil {
+                let imageMessage = ImageMessage(withDictionary: messageData)
+                messages.append(imageMessage)
             } else if messageData["giphId"] != nil {
                 let giphyMessage = GiphyMessage(withDictionary: messageData)
                 messages.append(giphyMessage)

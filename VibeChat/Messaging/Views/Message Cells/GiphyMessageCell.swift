@@ -23,6 +23,7 @@ class GiphyMessageCell : MessageCell {
                 if let media = media {
                     self.giphyMediaView.setMedia(media)
                     self.layoutMessage(isOutgoingMessage)
+                    self.updateHeightAnchor(usingAspectRatio: giphyMessage.aspectRatio)
                 }
             }
         }
@@ -63,6 +64,12 @@ class GiphyMessageCell : MessageCell {
         giphyMediaView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         giphyMediaView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+    }
+    
+    private func updateHeightAnchor(usingAspectRatio: CGFloat) {
+        let viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
+        viewHeightAnchor.priority = UILayoutPriority.required
+        viewHeightAnchor.isActive = true
     }
     
 }

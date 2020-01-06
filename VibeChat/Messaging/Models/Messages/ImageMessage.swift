@@ -31,7 +31,7 @@ class ImageMessage: Message, ImageBasedMessage {
     }
     
     override init(withDictionary: [String: Any]) {
-        if let aspectRatio = withDictionary["AspectRatio"] as? CGFloat {
+        if let aspectRatio = withDictionary["aspectRatio"] as? CGFloat {
             self.aspectRatio = aspectRatio
         } else {
             self.aspectRatio = CGFloat(16/9)

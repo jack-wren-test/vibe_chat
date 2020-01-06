@@ -7,21 +7,23 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImageMessageCell: MessageCell {
     
     // MARK:- Properties
     
-    var imageMessage: ImageMessage? {
+    var message: ImageMessage? {
         didSet {
-            guard let imageMessage = imageMessage else {return}
+            guard let message = message else {return}
             guard let user = CurrentUser.shared.data else {return}
-            guard let url = imageMessage.imageUrl else {return}
+            guard let url = message.imageUrl else {return}
             imageMessageView.loadImageUsingCacheWithUrl(url: url) { (image) in
                 if image != nil {
-                    let isOutgoingMessage = imageMessage.fromUid == user.uid
+                    let isOutgoingMessage = message.fromUid == user.uid
                     self.layoutMessage(isOutgoingMessage)
-                    self.updateHeightAnchor(usingAspectRatio: imageMessage.aspectRatio)
+                    self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
+                    self.setupVideoLayerIfVideo()
                 }
             }
         }
@@ -39,6 +41,9 @@ class ImageMessageCell: MessageCell {
     }()
     
     var controllerDelegate: messagesControllerDelegate?
+    var viewHeightAnchor: NSLayoutConstraint?
+    var playerLayer: AVPlayerLayer?
+    var player: AVPlayer?
     
     // MARK:- Init
     
@@ -52,7 +57,7 @@ class ImageMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
-        imageMessage = nil
+        message = nil
     }
     
     // MARK:- Methods
@@ -69,11 +74,27 @@ class ImageMessageCell: MessageCell {
     }
     
     private func updateHeightAnchor(usingAspectRatio: CGFloat) {
-        heightAnchor.constraint(equalToConstant: 200/usingAspectRatio).isActive = true
+        let viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
+        viewHeightAnchor.priority = UILayoutPriority.required
+        viewHeightAnchor.isActive = true
     }
     
-    @objc private func handleImageTap() {
-        controllerDelegate?.imageMessageTapped(imageMessageView)
+    
+    fileprivate func setupVideoLayerIfVideo() {
+        if let message = message as? VideoMessage, let url = message.videoUrl {
+            player = AVPlayer(url: url)
+            playerLayer = AVPlayerLayer(player: player!)
+            playerLayer!.frame = imageMessageView.bounds
+            imageMessageView.layer.addSublayer(playerLayer!)
+        }
+    }
+    
+    @objc public func handleImageTap() {
+        if let player = player, let layer = playerLayer {
+            controllerDelegate?.imageMessageTapped(imageMessageView, layer, player)
+        } else {
+            controllerDelegate?.imageMessageTapped(imageMessageView, nil, nil)
+        }
     }
     
     
