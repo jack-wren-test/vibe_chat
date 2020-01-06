@@ -17,6 +17,7 @@ extension MessagesController: GiphyDelegate {
     func didDismiss(controller: GiphyViewController?) {}
     
     func didSelectMedia(giphyViewController: GiphyViewController, media: GPHMedia) {
+        print("Sending aspect ratio: \(media.aspectRatio)")
         sendGiphyMessage(withGiphId: media.id, andAspectRatio: media.aspectRatio) {
             giphyViewController.dismiss(animated: true)
         }
@@ -28,6 +29,7 @@ extension MessagesController: GiphyDelegate {
             let message = GiphyMessage(giphId: withGiphId, aspectRatio: andAspectRatio, toUid: conversation.chatter!.uid, fromUid: CurrentUser.shared.data!.uid, timestamp: Date(), threadId: conversation.uid)
             UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
                 MessagingManager.shared.uploadMessage(message: message) {
+                    print("Giphy message uploaded with gif ID: \(message.giphId!)")
                     completion()
                 }
             }

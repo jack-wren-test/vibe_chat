@@ -27,6 +27,7 @@ class ImageMessage: Message, ImageBasedMessage {
         self.aspectRatio = aspectRatio
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
         setType(type: .imageMessage)
+        updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
@@ -40,16 +41,16 @@ class ImageMessage: Message, ImageBasedMessage {
         }
         super.init(withDictionary: withDictionary)
         setType(type: .imageMessage)
+        updateDictionaryRepresentation()
     }
     
     // MARK:- Handlers
     
-    override func toDict() -> [String : Any] {
-        var dict = dictionaryRepresentation()
+    private func updateDictionaryRepresentation() {
         if let imageUrl = self.imageUrl {
-            dict["imageUrl"] = imageUrl.absoluteString
+            dictionaryRepresentation["imageUrl"] = imageUrl.absoluteString
         }
-        return dict
+        dictionaryRepresentation["aspectRatio"] = aspectRatio
     }
     
     

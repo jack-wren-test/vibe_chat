@@ -13,7 +13,7 @@ extension MessagesController:   UICollectionViewDelegate,
                                 UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -43,26 +43,21 @@ extension MessagesController:   UICollectionViewDelegate,
         }
     }
     
+    // try to delete
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat!
         let message = messages[indexPath.section][indexPath.item]
         switch message {
         case let message as TextMessage where message.type == .textMessage:
-            if let text = message.text {
-                height = estimatedFrameForText(text: text).height+20
-            }
+            height = 50
         default:
             if let message = message as? ImageBasedMessage {
                 height = 200/message.aspectRatio
             }
         }
+        print("Height for cell: \(height)")
         return CGSize(width: view.frame.width, height: height)
-    }
-    
-    private func estimatedFrameForText(text: String) -> CGRect {
-        let size = CGSize(width: 250, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light)], context: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -72,6 +67,8 @@ extension MessagesController:   UICollectionViewDelegate,
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return messages.count
     }
+    
+    
     
 //    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 //        collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)

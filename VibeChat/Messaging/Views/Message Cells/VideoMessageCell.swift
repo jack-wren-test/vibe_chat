@@ -23,6 +23,7 @@ class VideoMessageCell: MessageCell {
                     let isOutgoingMessage = videoMessage.fromUid == user.uid
                     self.thumbnailImageView.image = image
                     self.layoutMessage(isOutgoingMessage)
+                    self.updateHeightAnchor(usingAspectRatio: videoMessage.aspectRatio)
                 }
             }
         }
@@ -58,7 +59,7 @@ class VideoMessageCell: MessageCell {
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
-    // MARK:- Init
+    // MARK:- Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -98,6 +99,10 @@ class VideoMessageCell: MessageCell {
         activityIndicator.centerYAnchor.constraint(equalTo: thumbnailImageView.centerYAnchor).isActive = true
         activityIndicator.heightAnchor.constraint(equalToConstant: 75).isActive = true
         activityIndicator.widthAnchor.constraint(equalToConstant: 75).isActive = true
+    }
+    
+    private func updateHeightAnchor(usingAspectRatio: CGFloat) {
+        heightAnchor.constraint(equalToConstant: 200/usingAspectRatio).isActive = true
     }
     
     @objc private func handleImageTap() {

@@ -20,6 +20,7 @@ final class TextMessage: Message {
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
         setType(type: .textMessage)
         self.text = text
+        updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
@@ -28,16 +29,15 @@ final class TextMessage: Message {
         if let text = withDictionary["text"] as? String {
             self.text = text
         }
+        updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
-    override func toDict() -> [String: Any] {
-        var dict = dictionaryRepresentation()
+    private func updateDictionaryRepresentation() {
         if let text = self.text {
-            dict["text"] = text
+            dictionaryRepresentation["text"] = text
         }
-        return dict
     }
     
 }

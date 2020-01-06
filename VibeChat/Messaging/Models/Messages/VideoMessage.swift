@@ -25,6 +25,7 @@ class VideoMessage: Message, ImageBasedMessage {
         setType(type: .videoMessage)
         self.videoUrl = videoUrl
         self.thumbnailImageUrl = thumbnailImageUrl
+        updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
@@ -41,16 +42,21 @@ class VideoMessage: Message, ImageBasedMessage {
         }
         super.init(withDictionary: withDictionary)
         setType(type: .videoMessage)
+        updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
-    override func toDict() -> [String : Any] {
-        var dict = dictionaryRepresentation()
-        if let videoUrl = self.videoUrl { dict["videoUrl"] = videoUrl.absoluteString }
-        if let thumbnailImageUrl = self.thumbnailImageUrl { dict["thumbnailImageUrl"] = thumbnailImageUrl.absoluteString }
-        dict["aspectRatio"] = aspectRatio
-        return dict
+    private func updateDictionaryRepresentation() {
+        if let videoUrl = self.videoUrl {
+            dictionaryRepresentation["videoUrl"] = videoUrl.absoluteString
+            
+        }
+        if let thumbnailImageUrl = self.thumbnailImageUrl {
+            dictionaryRepresentation["thumbnailImageUrl"] = thumbnailImageUrl.absoluteString
+            
+        }
+        dictionaryRepresentation["aspectRatio"] = aspectRatio
     }
     
 }

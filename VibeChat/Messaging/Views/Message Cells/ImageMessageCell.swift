@@ -21,6 +21,7 @@ class ImageMessageCell: MessageCell {
                 if image != nil {
                     let isOutgoingMessage = imageMessage.fromUid == user.uid
                     self.layoutMessage(isOutgoingMessage)
+                    self.updateHeightAnchor(usingAspectRatio: imageMessage.aspectRatio)
                 }
             }
         }
@@ -65,6 +66,10 @@ class ImageMessageCell: MessageCell {
         imageMessageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         imageMessageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         imageMessageView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+    }
+    
+    private func updateHeightAnchor(usingAspectRatio: CGFloat) {
+        heightAnchor.constraint(equalToConstant: 200/usingAspectRatio).isActive = true
     }
     
     @objc private func handleImageTap() {

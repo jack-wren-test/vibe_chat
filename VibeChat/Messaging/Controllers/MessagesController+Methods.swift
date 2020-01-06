@@ -22,9 +22,6 @@ extension MessagesController {
     func collectionViewConfig() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.register(MessageCell.self, forCellWithReuseIdentifier: "default")
         collectionView.register(TextMessageCell.self, forCellWithReuseIdentifier: textReuseId)
         collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: imageReuseId)
         collectionView.register(GiphyMessageCell.self, forCellWithReuseIdentifier: giphyReuseId)
@@ -33,9 +30,9 @@ extension MessagesController {
     
     func scrollToBottomOfMessages() {
         if messages.count > 0 {
-            let row = messages[messages.count-1].count-1
             let section = messages.count-1
-            collectionView.scrollToItem(at: IndexPath(row: row, section: section), at: .bottom, animated: true)
+            let cell = messages[section].count-1
+            collectionView.scrollToItem(at: IndexPath(row: cell, section: section), at: .bottom, animated: true)
         }
     }
     

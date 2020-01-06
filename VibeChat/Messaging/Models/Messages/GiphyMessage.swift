@@ -23,6 +23,7 @@ class GiphyMessage: Message, ImageBasedMessage {
         self.aspectRatio = aspectRatio
         super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
         setType(type: .giphyMessage)
+        updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String : Any]) {
@@ -33,17 +34,17 @@ class GiphyMessage: Message, ImageBasedMessage {
             self.aspectRatio = CGFloat(16/9)
         }
         super.init(withDictionary: withDictionary)
-        setType(type: .videoMessage)
+        setType(type: .giphyMessage)
+        updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
-    override func toDict() -> [String : Any] {
-        var dict = dictionaryRepresentation()
+    private func updateDictionaryRepresentation() {
         if let giphId = self.giphId {
-            dict["giphId"] = giphId
+            dictionaryRepresentation["giphId"] = giphId
         }
-        return dict
+        dictionaryRepresentation["aspectRatio"] = aspectRatio
     }
     
 }

@@ -19,7 +19,8 @@ class MessageCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .lightGray
+        backgroundColor = .clear
+        layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {

@@ -45,7 +45,7 @@ class MessagesController:   UIViewController {
     var imageStartingFrame: CGRect?
     var backgroundView: UIView?
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +64,17 @@ class MessagesController:   UIViewController {
         registerForKeyboardWillShow()
         registerForKeyboardWillHide()
         setupTapToDismissKeyboard()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        // Is nessesary?
+        
+//        let lastSection = messages.count-1
+//        let lastMessage = messages[lastSection].count
+//        print("Last section: \(lastSection), Last message: \(lastMessage)")
+//        let indexPath = IndexPath(item: lastMessage, section: lastSection)
+//        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

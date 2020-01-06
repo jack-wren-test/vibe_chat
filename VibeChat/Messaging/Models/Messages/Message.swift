@@ -13,15 +13,16 @@ enum MessageType {
     case textMessage, videoMessage, imageMessage, giphyMessage
 }
 
-class Message: NSObject {
+class Message {
     
     // MARK:- Properties
     
-    private(set) var type:  MessageType?
-    var toUid:              String?
-    var fromUid:            String?
-    var timestamp:          Date?
-    var conversationId:     String?
+    private(set) var type: MessageType?
+    var dictionaryRepresentation: [String: Any]!
+    var toUid: String?
+    var fromUid: String?
+    var timestamp: Date?
+    var conversationId: String?
     
     // MARK:- Initializers
     
@@ -30,6 +31,7 @@ class Message: NSObject {
         self.fromUid = fromUid
         self.timestamp = timestamp
         self.conversationId = threadId
+        dictionaryRepresentation = toDict()
     }
     
     init(withDictionary: [String: Any]) {
@@ -39,6 +41,7 @@ class Message: NSObject {
         if let timestamp = withDictionary["timestamp"] as? Timestamp {
             self.timestamp = timestamp.dateValue()
         }
+        dictionaryRepresentation = toDict()
     }
     
     // MARK:- Methods
@@ -47,17 +50,13 @@ class Message: NSObject {
         self.type = type
     }
     
-    public func dictionaryRepresentation() -> [String: Any] {
+    private func toDict() -> [String: Any] {
         let tStamp = Timestamp.init(date: timestamp ?? Date())
         let dict: [String: Any] = ["toUid": toUid ?? "",
                                    "fromUid": fromUid ?? "",
                                    "threadId": conversationId ?? "",
                                    "timestamp": tStamp]
         return dict
-    }
-    
-    public func toDict() -> [String: Any] {
-        return dictionaryRepresentation()
     }
     
 }

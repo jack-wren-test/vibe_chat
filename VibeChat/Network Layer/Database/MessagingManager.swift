@@ -23,7 +23,7 @@ final class MessagingManager: FirestoreManager {
     
     public func uploadMessage(message: Message, completion: @escaping ()->() = {}) {
         guard let conversationId = message.conversationId else {return}
-        collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.toDict()) { (error) in
+        collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.dictionaryRepresentation) { (error) in
             if let error = error {
                 print("Error uploading message: \(error.localizedDescription)")
                 completion()
