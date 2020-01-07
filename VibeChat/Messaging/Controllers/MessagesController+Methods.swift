@@ -10,6 +10,10 @@ import UIKit
 
 extension MessagesController {
     
+    func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
     func sendTextMessage(_ conversation: Conversation, _ text: String, _ toUid: String, _ fromUid: String) {
         UserMessagesManager.shared.createConversationIfNeeded(conversation: conversation) { (_) in
             let message = TextMessage(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), threadId: conversation.uid)

@@ -11,10 +11,6 @@ import FirebaseFirestore
 import GiphyUISDK
 import AVFoundation
 
-protocol messagesControllerDelegate {
-    func imageMessageTapped(_ imageView: UIImageView, _ videoLayer: AVPlayerLayer?, _ videoPlayer: AVPlayer?)
-}
-
 class MessagesController:   UIViewController {
     
     
@@ -48,9 +44,17 @@ class MessagesController:   UIViewController {
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
+    var videoContainerView: UIImageView?
+    
     var playButton: UIButton?
-    var activityIndicator: UIActivityIndicatorView?
-    var zoomingImageView: UIImageView?
+    let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
     
     // MARK:- Lifecycle
     
@@ -71,6 +75,8 @@ class MessagesController:   UIViewController {
         registerForKeyboardWillShow()
         registerForKeyboardWillHide()
         setupTapToDismissKeyboard()
+        
+        setupObservers()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

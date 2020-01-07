@@ -40,7 +40,16 @@ class ImageMessageCell: MessageCell {
         return imageView
     }()
     
-    var controllerDelegate: messagesControllerDelegate?
+    lazy var playButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "playIcon").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleVideoPlayPause), for: .touchUpInside)
+        return button
+    }()
+    
+    var controllerDelegate: ImageMessageDelegate?
     var viewHeightAnchor: NSLayoutConstraint?
     var playerLayer: AVPlayerLayer?
     var player: AVPlayer?
@@ -57,6 +66,7 @@ class ImageMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
+        playerLayer?.removeFromSuperlayer()
         message = nil
     }
     
@@ -81,12 +91,19 @@ class ImageMessageCell: MessageCell {
     
     
     fileprivate func setupVideoLayerIfVideo() {
+        
         if let message = message as? VideoMessage, let url = message.videoUrl {
             player = AVPlayer(url: url)
             playerLayer = AVPlayerLayer(player: player!)
             playerLayer!.frame = imageMessageView.bounds
             imageMessageView.layer.addSublayer(playerLayer!)
         }
+        
+        imageMessageView.addSubview(playButton)
+        playButton.centerXAnchor.constraint(equalTo: imageMessageView.centerXAnchor).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: imageMessageView.centerYAnchor).isActive = true
+        playButton.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        playButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
     }
     
     @objc public func handleImageTap() {
@@ -97,5 +114,10 @@ class ImageMessageCell: MessageCell {
         }
     }
     
+    @objc private func handleVideoPlayPause() {
+        if let playerLayer = playerLayer {
+            controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer, imageMessageView: imageMessageView, playButton: playButton)
+        }
+    }
     
 }
