@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileController: UIViewController,
+class UserProfileController: UIViewController,
                          UINavigationControllerDelegate,
                          UITextFieldDelegate {
     
@@ -17,31 +17,37 @@ class ProfileController: UIViewController,
     @IBOutlet weak var profileImageView: CircularImageView!
     @IBOutlet weak var form: UIStackView!
     @IBOutlet weak var nameTF: AuthenticationTextField!
-    @IBOutlet weak var statusTF: AuthenticationTextField!
     @IBOutlet weak var vibeTF: AuthenticationTextField!
     @IBOutlet weak var emailTF: AuthenticationTextField!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var logOutButton: UIButton!
     
     // MARK:- Properties
+    
+    var chatter: User? {
+        didSet {
+            guard let user = chatter, let currentUser = CurrentUser.shared.data else {return}
+            isCurrentUsersProfile = currentUser.uid == user.uid
+        }
+    }
     
     var homeDelegate: HomeDelegate?
     var imagePickerController: UIImagePickerController?
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForKeyboardWillShow()
         registerForKeyboardWillChange()
         registerForKeyboardWillHide()
-        addTextFieldDidChangeActions()
         setupTapToDismissKeyboard()
         setInitialFormValues()
-        
         configureImagePickerController()
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
         profileImageView.addGestureRecognizer(tapGesture)
         
+        configureForChatterIfNeeded()
     }
     
     // MARK:- IBActions
@@ -52,55 +58,53 @@ class ProfileController: UIViewController,
         }
     }
     
-    
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        CurrentUser.shared.updateUserDataInDb() {
-            self.dismiss(animated: true)
+        updateUserData()
+        if let image = profileImageView.image, let currentUserData = CurrentUser.shared.data {
+            currentUserData.profileImage = image
+            StorageManager.shared.uploadProfileImageDataUnderUid(uid: currentUserData.uid, image: image) { (url) in
+                currentUserData.profileImageUrl = url
+            }
         }
+        CurrentUser.shared.updateUserDataInDb() { self.dismiss(animated: true) }
     }
     
     
     // MARK:- Methods
     
-    fileprivate func setInitialFormValues() {
-        nameTF.text = CurrentUser.shared.data?.name
-        statusTF.text = CurrentUser.shared.data?.status
-        vibeTF.text = CurrentUser.shared.data?.vibe
-        emailTF.text = CurrentUser.shared.data?.email
-        profileImageView.image = CurrentUser.shared.data?.profileImage
-        profileImageView.tintColor = .white
+    fileprivate func configureForChatterIfNeeded() {
+        if !isCurrentUsersProfile {
+            saveButton.isHidden = true
+            logOutButton.isHidden = true
+            disableAllFields()
+        }
     }
     
-    fileprivate func addTextFieldDidChangeActions() {
+    fileprivate func disableAllFields() {
         form.subviews.forEach { (view) in
-            if let tf = view as? AuthenticationTextField {
-                tf.addTarget(self, action: #selector(updateUserData(_:)), for: .editingChanged)
-                tf.delegate = self
-            }
+            view.isUserInteractionEnabled = false
         }
     }
     
-    @objc func updateUserData(_ sender: UITextField) {
-        switch sender {
-        case let tf where sender == nameTF:
-            if let text = tf.text {
-                CurrentUser.shared.data?.name = text
-            }
-        case let tf where sender == statusTF:
-            if let text = tf.text {
-                CurrentUser.shared.data?.status = text
-            }
-        case let tf where sender == vibeTF:
-            if let text = tf.text {
-                CurrentUser.shared.data?.vibe = text
-            }
-        case let tf where sender == emailTF:
-            if let text = tf.text {
-                CurrentUser.shared.data?.email = text
-            }
-        default:
-            break
+    fileprivate func setInitialFormValues() {
+        if isCurrentUsersProfile, let currentUserData = CurrentUser.shared.data {
+            nameTF.text = currentUserData.name
+            vibeTF.text = currentUserData.vibe
+            emailTF.text = currentUserData.email
+            profileImageView.image = currentUserData.profileImage
+        } else if let chatter = chatter {
+            nameTF.text = chatter.name
+            vibeTF.text = chatter.vibe
+            emailTF.text = chatter.email
+            profileImageView.image = chatter.profileImage
         }
+    }
+    
+    @objc func updateUserData() {
+        guard let currentUserData = CurrentUser.shared.data else {return}
+        if let text = nameTF.text { currentUserData.name = text }
+        if let text = vibeTF.text { currentUserData.vibe = text }
+        if let text = emailTF.text { currentUserData.email = text }
     }
     
     fileprivate func configureImagePickerController() {
@@ -112,7 +116,7 @@ class ProfileController: UIViewController,
     }
     
     @objc func handleProfileImageTapped() {
-        if let imagePicker = imagePickerController {
+        if isCurrentUsersProfile, let imagePicker = imagePickerController {
             present(imagePicker, animated: true)
         }
     }
@@ -126,13 +130,13 @@ class ProfileController: UIViewController,
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 30
+        return count <= 28
     }
 
 
 }
 
-extension ProfileController: UIImagePickerControllerDelegate {
+extension UserProfileController: UIImagePickerControllerDelegate {
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagePickerController?.dismiss(animated: true)
@@ -143,13 +147,8 @@ extension ProfileController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
             DispatchQueue.main.async {
-                CurrentUser.shared.data?.profileImage = image
                 self.profileImageView.image = image
                 self.imagePickerController?.dismiss(animated: true)
-            }
-            guard let uid = CurrentUser.shared.data?.uid else {return}
-            StorageManager.shared.uploadProfileImageDataUnderUid(uid: uid, image: image) { (url) in
-                CurrentUser.shared.data?.profileImageUrl = url
             }
         }
         imagePickerController?.dismiss(animated: true)

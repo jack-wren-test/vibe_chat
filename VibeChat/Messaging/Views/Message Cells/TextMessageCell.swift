@@ -75,13 +75,13 @@ class TextMessageCell: MessageCell {
     override func layoutMessage(_ isOutgoingMessage: Bool) {
         
         if isOutgoingMessage {
-            bubbleView.backgroundColor = UIColor(named: "background")
-            messageLabel.textColor = UIColor(named: "text")
+            bubbleView.backgroundColor = UIColor(named: "text_alt")
+            messageLabel.textColor = UIColor(named: "background")
             incomingXConstraint?.isActive = false
             outgoingXConstraint?.isActive = true
         } else {
-            bubbleView.backgroundColor = UIColor.systemGray3
-            messageLabel.textColor = UIColor(named: "text")
+            bubbleView.backgroundColor = UIColor.systemGray
+            messageLabel.textColor = UIColor(named: "background_alt")
             outgoingXConstraint?.isActive = false
             incomingXConstraint?.isActive = true
         }

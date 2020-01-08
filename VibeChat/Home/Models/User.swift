@@ -14,7 +14,6 @@ class User {
     
     public var name: String
     public var uid: String
-    public var status: String?
     public var vibe: String?
     public var email: String
     public var isOnline: Bool {
@@ -40,7 +39,6 @@ class User {
         uid = withDictionary["uid"] as! String
         email = withDictionary["email"] as! String
         vibe = withDictionary["vibe"] as? String
-        status = withDictionary["status"] as? String
         isOnline = withDictionary["isOnline"] as! Bool
         if let profileImageUrlString = withDictionary["profileImageUrl"] as? String {
             self.profileImageUrl = URL(string: profileImageUrlString)
@@ -61,8 +59,7 @@ class User {
                                    "uid": uid,
                                    "email": email,
                                    "isOnline": isOnline]
-        if let profileImageUrl = profileImageUrl {dict["profileImageUrl"] = profileImageUrl}
-        if let status = status {dict["status"] = status}
+        if let profileImageUrl = profileImageUrl {dict["profileImageUrl"] = profileImageUrl.absoluteString}
         if let vibe = vibe {dict["vibe"] = vibe}
         return dict
     }

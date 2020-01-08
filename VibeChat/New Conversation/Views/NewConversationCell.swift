@@ -14,7 +14,7 @@ class NewConversationCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: CircularImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var vibeLabel: UILabel!
     
     // MARK:- Properties
     
@@ -23,9 +23,9 @@ class NewConversationCell: UITableViewCell {
             
             guard let chatter = chatter else {return}
             nameLabel.text = chatter.name
-            statusLabel.text = chatter.status ?? ""
+            vibeLabel.text = chatter.vibe ?? ""
             nameLabel.backgroundColor = .clear
-            statusLabel.backgroundColor = .clear
+            vibeLabel.backgroundColor = .clear
             
             chatter.imageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {

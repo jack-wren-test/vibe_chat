@@ -101,7 +101,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         if segue.identifier == "ProfileSegue" {
-            if let vc = segue.destination as? ProfileController {
+            if let vc = segue.destination as? UserProfileController {
                 vc.homeDelegate = self
             }
         }

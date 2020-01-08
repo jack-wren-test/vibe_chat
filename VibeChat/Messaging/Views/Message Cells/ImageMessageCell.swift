@@ -15,9 +15,7 @@ class ImageMessageCell: MessageCell {
     
     var message: ImageMessage? {
         didSet {
-            guard let message = message else {return}
-            guard let user = CurrentUser.shared.data else {return}
-            guard let url = message.imageUrl else {return}
+            guard let message = message, let user = CurrentUser.shared.data, let url = message.imageUrl else {return}
             imageMessageView.loadImageUsingCacheWithUrl(url: url) { (image) in
                 if image != nil {
                     let isOutgoingMessage = message.fromUid == user.uid
@@ -53,6 +51,7 @@ class ImageMessageCell: MessageCell {
     var viewHeightAnchor: NSLayoutConstraint?
     var playerLayer: AVPlayerLayer?
     var player: AVPlayer?
+    var initialVideoMessageFrame: CGRect?
     
     // MARK:- Init
     
@@ -104,6 +103,8 @@ class ImageMessageCell: MessageCell {
         playButton.centerYAnchor.constraint(equalTo: imageMessageView.centerYAnchor).isActive = true
         playButton.heightAnchor.constraint(equalToConstant: 75).isActive = true
         playButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        initialVideoMessageFrame = playerLayer?.frame
     }
     
     @objc public func handleImageTap() {
@@ -116,7 +117,7 @@ class ImageMessageCell: MessageCell {
     
     @objc private func handleVideoPlayPause() {
         if let playerLayer = playerLayer {
-            controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer, imageMessageView: imageMessageView, playButton: playButton)
+            controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer, imageMessageView: imageMessageView, playButton: playButton, frame: initialVideoMessageFrame!)
         }
     }
     

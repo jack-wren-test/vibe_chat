@@ -14,7 +14,7 @@ class ConversationCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var vibeLabel: UILabel!
     @IBOutlet weak var isReadStatusIndicator: CircularImageView!
     
     // MARK:- Properties
@@ -33,9 +33,9 @@ class ConversationCell: UITableViewCell {
             
             profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
             nameLabel.text = chatter.name
-            statusLabel.text = chatter.status ?? ""
+            vibeLabel.text = chatter.vibe ?? ""
             nameLabel.backgroundColor = .clear
-            statusLabel.backgroundColor = .clear
+            vibeLabel.backgroundColor = .clear
             
             chatter.imageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {

@@ -10,6 +10,28 @@ import UIKit
 
 extension MessagesController {
     
+    func setupProfileButton() {
+        
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleProfileTapped), for: .touchUpInside)
+        
+        view.addSubview(button)
+        button.leadingAnchor.constraint(equalTo: chatterProfileImageView.leadingAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: chatterProfileImageView.topAnchor).isActive = true
+        button.trailingAnchor.constraint(equalTo: chatterProfileImageView.trailingAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: chatterNameLabel.bottomAnchor).isActive = true
+        
+    }
+    
+    @objc fileprivate func handleProfileTapped() {
+        if let vc = storyboard?.instantiateViewController(identifier: "ProfileController") as? UserProfileController,
+            let conversation = conversation {
+            vc.chatter = conversation.chatter
+            present(vc, animated: true)
+        }
+    }
+    
     func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.didFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }

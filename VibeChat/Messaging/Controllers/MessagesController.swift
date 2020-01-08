@@ -45,6 +45,7 @@ class MessagesController:   UIViewController {
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     var videoContainerView: UIImageView?
+    var initialVideoMessageFrame: CGRect?
     
     var playButton: UIButton?
     let activityIndicator: UIActivityIndicatorView = {
@@ -77,6 +78,7 @@ class MessagesController:   UIViewController {
         setupTapToDismissKeyboard()
         
         setupObservers()
+        setupProfileButton()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
