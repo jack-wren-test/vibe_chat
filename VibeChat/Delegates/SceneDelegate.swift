@@ -9,53 +9,25 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
-    // REFACTOR THIS UGLY!!
-    
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        var initialTimer: Timer?
-        initialTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
-            initialTimer = nil
-        }
-        
-        guard let windowScene = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { print("No window scene??"); return }
         let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        
-        self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = navController
-        self.window?.makeKeyAndVisible()
         
         AuthenticationManager.shared.checkForValidUser { (user) in
-            let homeController = storyboard.instantiateViewController(identifier: "HomeController") as! HomeController
             if let user = user {
                 CurrentUser.shared.setNewUser(user)
-                UsersManager.shared.fetchChatters() { (chatters) in
-                    if let chatters = chatters {
-                        homeController.chatters = chatters
-                        UserMessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
-                            guard let conversations = conversations else {return}
-                            homeController.updateConversations(conversations: conversations)
-                        }
-                    }
-                }
-                homeController.authenticationNeeded = false
             }
-            if initialTimer == nil {
-                navController.popViewController(animated: true)
-                navController.pushViewController(homeController, animated: true)
-            } else {
-                Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
-                    navController.popViewController(animated: true)
-                    navController.pushViewController(homeController, animated: true)
-                }
-            }
+            let authenticationController = storyboard.instantiateViewController(identifier: "AuthenticationController") as! AuthenticationController
+            self.window = UIWindow(windowScene: windowScene)
+            self.window?.rootViewController = authenticationController
+            self.window?.makeKeyAndVisible()
         }
-        
     }
+    
+    // App status functions for mornitoring user online staus if exists
 
     func sceneDidDisconnect(_ scene: UIScene) {
         CurrentUser.shared.data?.isOnline = false

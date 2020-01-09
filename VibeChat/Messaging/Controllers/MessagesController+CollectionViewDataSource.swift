@@ -43,14 +43,12 @@ extension MessagesController:   UICollectionViewDelegate,
         }
     }
     
-    // try to delete
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat!
         let message = messages[indexPath.section][indexPath.item]
         switch message {
         case let message as TextMessage where message.type == .textMessage:
-            height = estimatedFrameForText(text: message.text!).height+21.5
+            height = estimatedFrameForText(text: message.text!).height+21.5 // Hacky - research more
         default:
             if let message = message as? ImageBasedMessage {
                 height = 200/message.aspectRatio

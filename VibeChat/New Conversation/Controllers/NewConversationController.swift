@@ -13,7 +13,11 @@ class NewConversationController: UITableViewController {
     // MARK:- Properties
     
     var homeDelegate: HomeDelegate?
-    var chatters = [User]()
+    var chatters = [User]() {
+        didSet {
+            if isViewLoaded { tableView.reloadData() }
+        }
+    }
     let reuseIdentifier = "ChatterCell"
     
     // MARK:- ViewDidLoad
@@ -45,7 +49,4 @@ class NewConversationController: UITableViewController {
         }
     }
     
-    // MARK:- Methods
-    
-
 }

@@ -9,8 +9,6 @@
 import Foundation
 import Firebase
 
-// INCORPORATE MODEL
-
 enum MessageThreadType: String {
     typealias RawValue = String
     case Private, Group
@@ -27,6 +25,7 @@ class Conversation {
     var userUids:           [String]
     var userNames:          [String]
     var chatter:            User?
+    var chatterListener:    ListenerRegistration?
     var isReadStatus:       Bool {
         didSet {
             if hasDbCounterpart {
@@ -37,7 +36,7 @@ class Conversation {
         }
     }
     
-    // MARK:- Init
+    // MARK:- Lifecycle
     
     init(withChatter: User) {
         type = "private"
@@ -57,7 +56,11 @@ class Conversation {
         userNames = withDictionary["userNames"] as! [String]
         uid = withDictionary["uid"] as! String
         hasDbCounterpart = true
-        fetchChatter()
+    }
+    
+    deinit {
+        print("Conversation deinitialized")
+        chatterListener?.remove()
     }
     
     // MARK:- Methods
@@ -72,12 +75,23 @@ class Conversation {
         return data
     }
     
-    public func fetchChatter(completion: @escaping ()->() = {}) {
+    public func fetchChatter(completion: @escaping (_ success: Bool)->()) {
         let chatterUid = CurrentUser.shared.data?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
             if let user = user {
-                UsersManager.shared.listenToUserData(user: user) { (user) in
-                    self.chatter = user
+                self.chatter = user
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    public func listenToChatter(completion: @escaping ()->()) {
+        if let chatter = chatter {
+            self.chatterListener = UsersManager.shared.listenToUserData(user: chatter) { (user) in
+                self.chatter = user
+                DispatchQueue.main.async {
                     completion()
                 }
             }

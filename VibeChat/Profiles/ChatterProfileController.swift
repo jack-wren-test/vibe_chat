@@ -10,28 +10,33 @@ import UIKit
 
 class ChatterProfileController: UIViewController {
     
-    var chatter: User? {
-        didSet {
-            guard let user = chatter, let currentUser = CurrentUser.shared.data else {return}
-            isCurrentUsersProfile = currentUser.uid == user.uid
-        }
-    }
+    // MARK:- IBOutlets
+    
+    @IBOutlet weak var profileImageView: CircularImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var vibeLabel: UILabel!
+    
+    
+    // MARK:- Properties
+    
+    var chatter: User?
+    
+    // MARK:- Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configureViews() 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK:- Methods
+    
+    fileprivate func configureViews() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        if let chatter = chatter {
+            profileImageView.image = chatter.profileImage
+            nameLabel.text = chatter.name
+            vibeLabel.text = chatter.vibe
+        }
     }
-    */
 
 }

@@ -24,13 +24,6 @@ class UserProfileController: UIViewController,
     
     // MARK:- Properties
     
-    var chatter: User? {
-        didSet {
-            guard let user = chatter, let currentUser = CurrentUser.shared.data else {return}
-            isCurrentUsersProfile = currentUser.uid == user.uid
-        }
-    }
-    
     var homeDelegate: HomeDelegate?
     var imagePickerController: UIImagePickerController?
     
@@ -46,8 +39,10 @@ class UserProfileController: UIViewController,
         configureImagePickerController()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
         profileImageView.addGestureRecognizer(tapGesture)
-        
-        configureForChatterIfNeeded()
+    }
+    
+    deinit {
+        print("Profile controller deinitialized")
     }
     
     // MARK:- IBActions
@@ -59,27 +54,19 @@ class UserProfileController: UIViewController,
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        defer {self.dismiss(animated: true)}
         updateUserData()
         if let image = profileImageView.image, let currentUserData = CurrentUser.shared.data {
             currentUserData.profileImage = image
             StorageManager.shared.uploadProfileImageDataUnderUid(uid: currentUserData.uid, image: image) { (url) in
                 currentUserData.profileImageUrl = url
+                CurrentUser.shared.updateUserDataInDb()
             }
         }
-        CurrentUser.shared.updateUserDataInDb() { self.dismiss(animated: true) }
     }
     
     
     // MARK:- Methods
-    
-    fileprivate func configureForChatterIfNeeded() {
-        if !isCurrentUsersProfile {
-            saveButton.isHidden = true
-            logOutButton.isHidden = true
-            disableAllFields()
-        }
-    }
-    
     fileprivate func disableAllFields() {
         form.subviews.forEach { (view) in
             view.isUserInteractionEnabled = false
@@ -87,24 +74,19 @@ class UserProfileController: UIViewController,
     }
     
     fileprivate func setInitialFormValues() {
-        if isCurrentUsersProfile, let currentUserData = CurrentUser.shared.data {
+        if let currentUserData = CurrentUser.shared.data {
             nameTF.text = currentUserData.name
             vibeTF.text = currentUserData.vibe
             emailTF.text = currentUserData.email
             profileImageView.image = currentUserData.profileImage
-        } else if let chatter = chatter {
-            nameTF.text = chatter.name
-            vibeTF.text = chatter.vibe
-            emailTF.text = chatter.email
-            profileImageView.image = chatter.profileImage
         }
     }
     
     @objc func updateUserData() {
         guard let currentUserData = CurrentUser.shared.data else {return}
-        if let text = nameTF.text { currentUserData.name = text }
-        if let text = vibeTF.text { currentUserData.vibe = text }
-        if let text = emailTF.text { currentUserData.email = text }
+        if let text = nameTF.text, text != "" { currentUserData.name = text }
+        if let text = vibeTF.text, text != "" { currentUserData.vibe = text }
+        if let text = emailTF.text, text != "" { currentUserData.email = text }
     }
     
     fileprivate func configureImagePickerController() {
@@ -116,7 +98,7 @@ class UserProfileController: UIViewController,
     }
     
     @objc func handleProfileImageTapped() {
-        if isCurrentUsersProfile, let imagePicker = imagePickerController {
+        if let imagePicker = imagePickerController {
             present(imagePicker, animated: true)
         }
     }
@@ -141,8 +123,6 @@ extension UserProfileController: UIImagePickerControllerDelegate {
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagePickerController?.dismiss(animated: true)
     }
-    
-    // UGLY, REFACTOR
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {

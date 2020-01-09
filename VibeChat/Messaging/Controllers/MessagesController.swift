@@ -44,7 +44,7 @@ class MessagesController:   UIViewController {
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
-    var videoContainerView: UIImageView?
+    var zoomingImageView: UIImageView?
     var initialVideoMessageFrame: CGRect?
     
     var playButton: UIButton?

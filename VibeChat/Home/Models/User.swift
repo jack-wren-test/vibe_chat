@@ -22,7 +22,8 @@ class User {
         }
     }
     
-    public let imageCache = NSCache<NSString, UIImage>()
+    // Move cache into UIImage extension
+    public let profileImageCache = NSCache<NSString, UIImage>()
     public var profileImage = UIImage(imageLiteralResourceName: "profile").withRenderingMode(.alwaysTemplate)
     public var profileImageUrl: URL? {
         didSet {
@@ -33,6 +34,13 @@ class User {
     }
     
     // MARK:- Initializers
+    
+    init(uid: String, name: String, email: String) {
+        self.uid = uid
+        self.name = name
+        self.email = email
+        self.isOnline = true // If we were initialising this way, the current user is always online.
+    }
     
     init(withDictionary: [String: Any]) {
         name = withDictionary["name"] as! String
@@ -59,22 +67,28 @@ class User {
                                    "uid": uid,
                                    "email": email,
                                    "isOnline": isOnline]
-        if let profileImageUrl = profileImageUrl {dict["profileImageUrl"] = profileImageUrl.absoluteString}
-        if let vibe = vibe {dict["vibe"] = vibe}
+        addToDictIfNotNil(&dict, profileImageUrl?.absoluteString, "profileImageUrl")
+        addToDictIfNotNil(&dict, vibe, "vibe")
         return dict
     }
     
     public func imageFromChacheOrDb(completion: @escaping (_ image: UIImage)->()) {
         guard let url = profileImageUrl else {return}
-        if let image = imageCache.object(forKey: url.absoluteString as NSString) {
+        if let image = profileImageCache.object(forKey: url.absoluteString as NSString) {
             completion(image)
         } else {
             StorageManager.shared.downloadImageFromUrl(url: url) { [weak self] (image) in
                 if let image = image {
                     completion(image)
-                    self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                    self?.profileImageCache.setObject(image, forKey: url.absoluteString as NSString)
                 }
             }
+        }
+    }
+    
+    private func addToDictIfNotNil(_ dict: inout Dictionary<String, Any>, _ item: Any?, _ key: String) {
+        if let item = item {
+            dict[key] = item
         }
     }
     

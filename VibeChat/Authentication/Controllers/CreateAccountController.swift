@@ -100,18 +100,20 @@ extension CreateAccountController: CanAuthenticate {
         if let name = nameTF.text,
             let email = emailTF.text,
             let password = passwordTF.text {
-            AuthenticationManager.shared.createAccount(name: name, email: email, password: password) { (user) in
-                if let user = user {
-                    CurrentUser.shared.setNewUser(user)
-                    self.presentHomeScreen()
+            AuthenticationManager.shared.createAccount(name: name, email: email, password: password) { (success) in
+                if success {
+                    self.presentHomeScreen(true)
+                } else {
+                    // Notify user
+                    // Use exclamation mark next to field
                 }
             }
         }
     }
     
     func isFormValid() -> Bool {
-        if let _ = nameTF.text,
-            let _ = emailTF.text,
+        if nameTF.text != "",
+        emailTF.text != "",
             let password = passwordTF.text,
             let passwordConfirm = passwordConfirmTF.text,
             password == passwordConfirm {

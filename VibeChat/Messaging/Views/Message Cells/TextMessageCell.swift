@@ -76,7 +76,7 @@ class TextMessageCell: MessageCell {
         
         if isOutgoingMessage {
             bubbleView.backgroundColor = UIColor(named: "text_alt")
-            messageLabel.textColor = UIColor(named: "background")
+            messageLabel.textColor = UIColor(named: "background_alt")
             incomingXConstraint?.isActive = false
             outgoingXConstraint?.isActive = true
         } else {

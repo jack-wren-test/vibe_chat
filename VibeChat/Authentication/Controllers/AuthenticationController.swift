@@ -10,37 +10,34 @@ import UIKit
 
 class AuthenticationController: UIViewController {
     
-    // MARK:- Properties
-    
-    var homeDelegate: HomeDelegate?
-    
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    // MARK:- Methods
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! AuthenticationController
-        destination.homeDelegate = homeDelegate
+    override func viewDidAppear(_ animated: Bool) {
+        if CurrentUser.shared.isLoggedIn {
+            presentHomeScreen(false)
+        }
     }
     
-    public func presentHomeScreen() {
-        let navController = self.presentingViewController?.presentingViewController as! UINavigationController
-        UsersManager.shared.fetchChatters() { (chatters) in
-            if let chatters = chatters {
-                self.homeDelegate?.updateChatters(chatters: chatters)
-                UserMessagesManager.shared.listenToConversationsForCurrentUser { (conversations) in
-                    guard let conversations = conversations else {return}
-                    DispatchQueue.main.async {
-                        self.homeDelegate?.updateConversations(conversations: conversations)
-                    }
-                }
+    deinit {
+        print("Authentication controller deinitialized")
+    }
+    
+    // MARK:- Methods
+    
+    public func presentHomeScreen(_ isNewUser: Bool) {
+        if let storyboard = storyboard {
+            let homeController = storyboard.instantiateViewController(identifier: "HomeController") as! HomeController
+            homeController.isNewUser = isNewUser
+            let navController = UINavigationController(rootViewController: homeController)
+            navController.modalPresentationStyle = .fullScreen
+            dismiss(animated: true) {
+                self.present(navController, animated: true)
             }
         }
-        navController.dismiss(animated: true)
     }
     
 }

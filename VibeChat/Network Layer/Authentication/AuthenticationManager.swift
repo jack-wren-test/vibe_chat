@@ -21,14 +21,22 @@ final class AuthenticationManager {
     
     // MARK:- Public Methods
     
-    public func createAccount(name: String, email: String, password: String, completion: @escaping (User?)->()) {
+    public func createAccount(name: String, email: String, password: String, completion: @escaping (Bool)->()) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print("Error creating user: \(error.localizedDescription)")
+                completion(false)
+                return
             }
             guard let uid = result?.user.uid else {return}
-            UsersManager.shared.uploadUserData(uid: uid, name: name, email: email) { (user) in
-                completion(user)
+            let user = User(uid: uid, name: name, email: email)
+            CurrentUser.shared.setNewUser(user)
+            UsersManager.shared.uploadUserData(user: user) { (success) in
+                if success {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
@@ -48,13 +56,14 @@ final class AuthenticationManager {
         }
     }
     
-    public func logOut(completion: @escaping ()->()) {
+    public func logOut(completion: @escaping (Bool)->()) {
         do {
             try Auth.auth().signOut()
+            completion(true)
         } catch {
             print("Error logging out user: \(error.localizedDescription)")
+            completion(false)
         }
-        completion()
     }
     
     public func checkForValidUser(completion: @escaping (_ user: User?)->()) {
@@ -66,6 +75,7 @@ final class AuthenticationManager {
                         completion(user)
                     }
                 }
+                completion(nil)
             }
         } else {
             completion(nil)

@@ -61,21 +61,15 @@ final class UsersManager: FirestoreManager {
         }
     }
     
-    public func uploadUserData(uid: String, name: String, email: String, completion: @escaping (User?)->()) {
-        let data : [String: Any] = ["name" : name,
-                                    "uid" : uid,
-                                    "email" : email,
-                                    "status": "I just joined the vibe ~~~",
-                                    "vibe": "Free for All Friday 🥳"]
-        FirestoreManager.db.collection("users").document(uid).setData(data) { (error) in
+    public func uploadUserData(user: User, completion: @escaping (Bool)->()) {
+        let data = user.toDict()
+        FirestoreManager.db.collection("users").document(user.uid).setData(data) { (error) in
             if let error = error {
                 print("Error uploading new user data: \(error.localizedDescription)")
-                completion(nil)
-            } else {
-                self.fetchUserData(uid: uid) { (user) in
-                    completion(user)
-                }
+                completion(false)
+                return
             }
+            completion(true)
         }
     }
     
@@ -92,16 +86,19 @@ final class UsersManager: FirestoreManager {
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
                 completion(nil)
+                return
             }
             if let userData = snapshot?.data() {
                 let user = User(withDictionary: userData)
                 completion(user)
+            } else {
+                completion(nil)
             }
         }
     }
     
-    public func listenToUserData(user: User, completion: @escaping (User?)->()) {
-        collectionReference.document(user.uid).addSnapshotListener { (snapshot, error) in
+    public func listenToUserData(user: User, completion: @escaping (User?)->()) -> ListenerRegistration {
+        let listener = collectionReference.document(user.uid).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
                 completion(nil)
@@ -111,6 +108,7 @@ final class UsersManager: FirestoreManager {
                 completion(user)
             }
         }
+        return listener
     }
     
 }

@@ -24,12 +24,14 @@ extension MessagesController {
         
     }
     
-    @objc fileprivate func handleProfileTapped() {
-        if let vc = storyboard?.instantiateViewController(identifier: "ProfileController") as? UserProfileController,
-            let conversation = conversation {
-            vc.chatter = conversation.chatter
-            present(vc, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ChatterProfileController, let chatter = conversation?.chatter {
+            vc.chatter = chatter
         }
+    }
+    
+    @objc fileprivate func handleProfileTapped() {
+        performSegue(withIdentifier: "chatterProfileSegue", sender: self)
     }
     
     func setupObservers() {
@@ -76,9 +78,10 @@ extension MessagesController {
     func setupConverstationStatusListener() {
         conversationStatusListener = UserMessagesManager.shared.listenForConversationChanges(conversaion: conversation!, completion: { (conversation) in
             if let conversation = conversation, self.isViewLoaded {
-                conversation.fetchChatter{
-                    guard let isOnline = conversation.chatter?.isOnline else {return}
-                    self.chatterProfileImageView.layer.borderWidth = isOnline ? 2 : 0
+                conversation.fetchChatter { (success) in
+                    if success, let isOnline = conversation.chatter?.isOnline {
+                        self.chatterProfileImageView.layer.borderWidth = isOnline ? 2 : 0
+                    }
                 }
             }
         })

@@ -10,8 +10,6 @@ import UIKit
 
 protocol HomeDelegate {
     func presentNewChatWindow(conversation: Conversation)
-    func updateChatters(chatters: [User])
-    func updateConversations(conversations: [Conversation])
     func performLogOut()
 }
 
@@ -26,15 +24,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK:- Properties
     
-    var addingConversationIgnoreNextChanges = 2
-    var authenticationNeeded: Bool = true
-    var chatters = [User]()
-    var conversations: [String: Conversation]?
+    var isNewUser = false
+    var conversationsDict: [String: Conversation] = [:]
     var orderedConversations: [Conversation]?
     
     let reuseIdentifier = "ChatterCell"
     
-    // MARK:- ViewDidLoad
+    // MARK:- lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,19 +41,27 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.rowHeight = 80
         
-        if authenticationNeeded {
-            presentAuthenticationScreen()
+        listenForConversationChanges()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+        print("Is new user: \(isNewUser)")
+        if isNewUser {
+            performSegue(withIdentifier: "ProfileSegue", sender: self)
+            isNewUser = !isNewUser
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+    deinit {
+        print("home controller deinitialized")
     }
     
     // MARK:- TableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations?.count ?? 0
+        return orderedConversations?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -66,10 +70,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ConversationCell
-        if let orderedConvos = self.orderedConversations {
-            let conversationIsRead = orderedConvos[indexPath.row].isReadStatus
-            cell.conversation = orderedConvos[indexPath.row]
-            cell.isReadStatus = conversationIsRead
+        if self.orderedConversations?.count != 0 {
+            cell.conversation = self.orderedConversations![indexPath.row]
         }
         return cell
     }
@@ -77,47 +79,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.orderedConversations?[indexPath.row].isReadStatus = true
         performSegue(withIdentifier: "MessagesSegue", sender: self)
-    }
-    
-    // MARK:- Methods
-    
-    fileprivate func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
-        let orderedConversations = conversations.values.sorted { $0.lastMessageTime > $1.lastMessageTime }
-        return orderedConversations
-    }
-    
-    fileprivate func presentAuthenticationScreen() {
-        chatters = []
-        authenticationNeeded = !authenticationNeeded
-        performSegue(withIdentifier: "AuthenticateSegue", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // REFACTOR INTO SWITCH
-        
-        if segue.identifier == "AuthenticateSegue" {
-            if let vc = segue.destination as? AuthenticationController {
-                vc.homeDelegate = self
-            }
-        }
-        if segue.identifier == "ProfileSegue" {
-            if let vc = segue.destination as? UserProfileController {
-                vc.homeDelegate = self
-            }
-        }
-        if segue.identifier == "NewConversationSegue" {
-            if let vc = segue.destination as? NewConversationController {
-                vc.homeDelegate = self
-                vc.chatters = chatters
-            }
-        } else if segue.identifier == "MessagesSegue" {
-            if let vc = segue.destination as? MessagesController {
-                if let indexPath = tableView.indexPathForSelectedRow {
-                    guard let orderedConvos = orderedConversations else {return}
-                    vc.conversation = orderedConvos[indexPath.row]
-                }
-            }
-        }
     }
     
     // MARK:- IBActions
@@ -141,6 +102,52 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+extension HomeController {
+    
+    fileprivate func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
+        let orderedConversations = conversations.values.sorted { $0.lastMessageTime > $1.lastMessageTime }
+        return orderedConversations
+    }
+    
+    fileprivate func presentAuthenticationScreen() {
+        self.dismiss(animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ProfileSegue" {
+            if let vc = segue.destination as? UserProfileController {
+                vc.homeDelegate = self
+            }
+        }
+        if segue.identifier == "NewConversationSegue" {
+            if let vc = segue.destination as? NewConversationController {
+                vc.homeDelegate = self
+                UsersManager.shared.fetchChatters { (chatters) in
+                    if let chatters = chatters {
+                        vc.chatters = chatters
+                    }
+                }
+            }
+        } else if segue.identifier == "MessagesSegue" {
+            if let vc = segue.destination as? MessagesController {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    guard let orderedConvos = orderedConversations else {return}
+                    vc.conversation = orderedConvos[indexPath.row]
+                }
+            }
+        }
+    }
+    
+    fileprivate func listenForConversationChanges() {
+        CurrentUser.shared.listenToConversations { (conversations) in
+            conversations.forEach { self.conversationsDict[$0.uid] = $0 }
+            self.orderedConversations = self.orderConversationsByLatestMesage(conversations: self.conversationsDict)
+            self.tableView.reloadData()
+        }
+    }
+    
+}
+
 // MARK:- Delegate Protocol Methods
 
 extension HomeController: HomeDelegate {
@@ -151,48 +158,14 @@ extension HomeController: HomeDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func updateChatters(chatters: [User]) {
-        self.chatters = chatters
-    }
-    
-    func updateConversations(conversations: [Conversation]) {
-        if self.conversations?.count == nil {
-            let dictConversations = getDictionaryOfConversations(conversations: conversations)
-            self.orderedConversations = orderConversationsByLatestMesage(conversations:  dictConversations)
-            self.conversations = dictConversations
-        } else if conversations.count == 1, let currentConvos = self.conversations, currentConvos[conversations[0].uid] == nil {
-            addingConversationIgnoreNextChanges = 0
-            let newConversation = conversations[0]
-            newConversation.fetchChatter {
-                self.conversations?[newConversation.uid] = newConversation
-                self.orderedConversations = self.orderConversationsByLatestMesage(conversations:  self.conversations!)
-                if self.tableView.numberOfSections == 0 {
-                    self.tableView.insertSections(IndexSet([0]), with: .top)
-                } else {
-                    if self.orderedConversations?.count != self.tableView.numberOfRows(inSection: 0) {
-                        self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
-                    }
-                }
-            }
-        } else if let changedConversation = conversations.first {
-//            print("Got conversation change in home controller, read status: \(changedConversation.isReadStatus)")
-            if addingConversationIgnoreNextChanges < 2 {
-                addingConversationIgnoreNextChanges += 1
+    func performLogOut() {
+        CurrentUser.shared.logOut { (success) in
+            if success {
+                print("Succesfully logged out...")
+                self.presentAuthenticationScreen()
             } else {
-                changedConversation.fetchChatter {
-                    self.conversations?[changedConversation.uid] = changedConversation
-                    self.orderedConversations = self.orderConversationsByLatestMesage(conversations:  self.conversations!)
-                    if self.view.window != nil { self.tableView.reloadData() }
-                }
+                print("Error logging out...")
             }
         }
-    }
-    
-    func performLogOut() {
-        self.conversations = nil
-        self.orderedConversations = nil
-        self.tableView.reloadData()
-        self.presentAuthenticationScreen()
-        CurrentUser.shared.logOut()
     }
 }

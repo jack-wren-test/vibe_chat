@@ -84,23 +84,59 @@ final class UserMessagesManager {
         return listener
     }
     
-    public func listenToConversationsForCurrentUser(completion: @escaping ([Conversation]?)->()) {
-        guard let uid = CurrentUser.shared.data?.uid else {return}
-        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
+    public func listenToConversations(completion: @escaping ([Conversation])->()) -> ListenerRegistration {
+        let uid = CurrentUser.shared.data!.uid
+        let listener = collectionReference.document(uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
             if let error = error {
-                print("Error adding listener to user conversations: \(error.localizedDescription)")
+                print("Error adding new conversation listener: \(error.localizedDescription)")
+                return
+            }
+            var conversations: [Conversation] = []
+            let group = DispatchGroup()
+            if let changes = snapshot?.documentChanges {
+                group.enter()
+                for change in changes {
+                    group.enter()
+                    let document = change.document
+                    let conversation = Conversation(withDictionary: document.data())
+                    conversation.fetchChatter { (success) in
+                        if success { conversations.append(conversation) }
+                        group.leave()
+                    }
+                }
+            }
+            group.leave()
+            group.notify(queue: .main) {
+                completion(conversations)
+            }
+        }
+        return listener
+    }
+    
+    public func fetchConversationList(user: User, completion: @escaping ([Conversation]?)->()) {
+        collectionReference.document(user.uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user conversations: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            if let documentChanges = snapshot?.documentChanges {
+            let group = DispatchGroup()
+            if let documents = snapshot?.documents {
+                group.enter()
                 var conversations = [Conversation]()
-                for documentChange in documentChanges {
-                    let data = documentChange.document.data()
+                for document in documents {
+                    group.enter()
+                    let data = document.data()
                     let conversation = Conversation(withDictionary: data)
-//                    print("Detected a change in conversation: \(conversation.uid)")
-                    conversations.append(conversation)
+                    conversation.fetchChatter { (success) in
+                        if success {conversations.append(conversation)}
+                        group.leave()
+                    }
                 }
-                completion(conversations)
+                group.leave()
+                group.notify(queue: .main) {
+                    completion(conversations)
+                }
             }
         }
     }

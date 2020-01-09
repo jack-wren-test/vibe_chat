@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3Qm-HE-hvN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
@@ -146,10 +146,13 @@
                                     <action selector="closeButtonPressed:" destination="SMX-eS-i3a" eventType="touchUpInside" id="yEk-cY-O78"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="X0n-qm-Qwk">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="X0n-qm-Qwk">
                                 <rect key="frame" x="154" y="64" width="240" height="85"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="DY6-1j-Hes"/>
                                     <constraint firstAttribute="height" constant="85" id="TxS-1M-bUl"/>
@@ -182,12 +185,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZC3-RE-Go4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="yoh-rZ-Sgm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-620.28985507246387" y="-565.17857142857144"/>
+            <point key="canvasLocation" x="-2351" y="127"/>
         </scene>
         <!--Authentication Controller-->
         <scene sceneID="Eza-fq-a7u">
             <objects>
-                <viewController id="7e9-bF-6WT" customClass="AuthenticationController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationController" id="7e9-bF-6WT" customClass="AuthenticationController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IeT-BH-RYC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -198,8 +201,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BS-zb-6Vc">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="361"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waveform.path" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bRz-0V-wfE">
-                                                <rect key="frame" x="62" y="55" width="250" height="251.5"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="bRz-0V-wfE">
+                                                <rect key="frame" x="62" y="55.5" width="250" height="250"/>
                                                 <color key="tintColor" name="text_alt"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="hm5-2L-elV"/>
@@ -288,7 +291,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZeR-TS-2bi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="-565"/>
+            <point key="canvasLocation" x="-1593" y="127"/>
         </scene>
         <!--Log In Controller-->
         <scene sceneID="Fw1-eJ-T2C">
@@ -382,9 +385,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiH-7O-USg">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number." textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiH-7O-USg">
                                 <rect key="frame" x="154" y="64" width="240" height="85"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="Rw6-6J-ouD"/>
                                     <constraint firstAttribute="height" constant="85" id="T4X-yT-0Bz"/>
@@ -414,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X8w-oC-fmz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="896" y="-565"/>
+            <point key="canvasLocation" x="-835" y="127"/>
         </scene>
         <!--Messages Controller-->
         <scene sceneID="3r1-by-lwG">
@@ -670,22 +676,23 @@
             </objects>
             <point key="canvasLocation" x="895.6521739130435" y="126.5625"/>
         </scene>
-        <!--View Controller-->
+        <!--Chatter Profile Controller-->
         <scene sceneID="yRG-sb-dgw">
             <objects>
-                <viewController id="pqp-Zg-0fL" sceneMemberID="viewController">
+                <viewController id="pqp-Zg-0fL" customClass="ChatterProfileController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LHv-Jf-au5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="vPD-rb-MGA">
-                                <rect key="frame" x="20" y="156" width="374" height="530"/>
+                                <rect key="frame" x="20" y="144" width="374" height="554"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="dMX-HW-KMd" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="350"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                                         <color key="tintColor" name="text"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="350" id="Ycg-Iv-yIm" userLabel="height ≥ 300"/>
+                                            <constraint firstAttribute="width" secondItem="dMX-HW-KMd" secondAttribute="height" multiplier="1:1" id="uGl-wy-F8O"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -693,8 +700,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Je-M8-a2A">
-                                        <rect key="frame" x="0.0" y="390" width="374" height="140"/>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Je-M8-a2A">
+                                        <rect key="frame" x="0.0" y="414" width="374" height="140"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="F9t-vc-lBW">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="140"/>
@@ -715,7 +722,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="70" id="HTD-9d-gg9"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                         <color key="textColor" name="text"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -753,6 +760,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h73-R2-ocs"/>
                     </view>
+                    <connections>
+                        <outlet property="nameLabel" destination="rg4-d5-hHk" id="uUH-5J-nHi"/>
+                        <outlet property="profileImageView" destination="dMX-HW-KMd" id="Cge-5b-1Li"/>
+                        <outlet property="vibeLabel" destination="SZ7-yx-LKc" id="ecy-Vk-zAP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2bC-c7-gWC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -784,13 +796,10 @@
                                                     <action selector="profileButtonPressed:" destination="4Rq-Xn-ijI" eventType="touchUpInside" id="59S-ja-PSa"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THE VIBE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0E-du-299">
-                                                <rect key="frame" x="116.5" y="0.0" width="141" height="50"/>
-                                                <color key="tintColor" name="text_alt"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="35"/>
-                                                <color key="textColor" name="text_alt"/>
-                                                <color key="highlightedColor" name="text_alt"/>
-                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="waf-AE-fSf">
+                                                <rect key="frame" x="70" y="0.0" width="234" height="50"/>
+                                                <color key="tintColor" name="text"/>
+                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXI-Q0-YEh">
                                                 <rect key="frame" x="324" y="0.0" width="50" height="50"/>
                                                 <constraints>
@@ -941,7 +950,6 @@
                         <outlet property="newChatButton" destination="MXI-Q0-YEh" id="Wn7-Cr-8gJ"/>
                         <outlet property="profileButton" destination="lTA-ql-id9" id="FQe-9W-FBi"/>
                         <outlet property="tableView" destination="7Ba-4S-Pms" id="hiI-Fb-GZP"/>
-                        <segue destination="7e9-bF-6WT" kind="presentation" identifier="AuthenticateSegue" modalPresentationStyle="fullScreen" id="Gfb-kH-CQ8"/>
                         <segue destination="oOP-ow-YcZ" kind="show" identifier="MessagesSegue" id="e2A-LH-SSu"/>
                         <segue destination="sva-3r-1uI" kind="presentation" identifier="ProfileSegue" id="fOL-TG-Nff"/>
                         <segue destination="zTY-C9-j7U" kind="presentation" identifier="NewConversationSegue" id="9BX-CC-M5q"/>
@@ -950,36 +958,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cr4-wk-tc9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
-        </scene>
-        <!--Launch Screen Controller-->
-        <scene sceneID="uDx-lw-Xni">
-            <objects>
-                <viewController id="cYF-7X-AsV" customClass="LaunchScreenController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uvO-kP-pdw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waveform.path" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SOH-9w-F1O">
-                                <rect key="frame" x="107" y="303.5" width="200" height="201.5"/>
-                                <color key="tintColor" name="text_alt"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="2y3-VM-QqP"/>
-                                    <constraint firstAttribute="width" constant="200" id="aoe-B0-nb6"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" name="background"/>
-                        <constraints>
-                            <constraint firstItem="SOH-9w-F1O" firstAttribute="centerY" secondItem="uvO-kP-pdw" secondAttribute="centerY" id="3Pt-bK-u1e"/>
-                            <constraint firstItem="SOH-9w-F1O" firstAttribute="centerX" secondItem="uvO-kP-pdw" secondAttribute="centerX" id="Nfo-lB-mFK"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="z2X-l6-62F"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="WF8-07-lrY"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xFL-sh-haG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-620.28985507246387" y="823.66071428571422"/>
         </scene>
         <!--User Profile Controller-->
         <scene sceneID="5r7-sO-zsf">
@@ -1252,13 +1230,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tZm-wX-WcX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="823.66071428571422"/>
+            <point key="canvasLocation" x="517" y="854"/>
         </scene>
         <!--New Conversation Controller-->
         <scene sceneID="zXo-GU-yi8">
             <objects>
                 <tableViewController id="zTY-C9-j7U" customClass="NewConversationController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Azd-RT-yt7">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Azd-RT-yt7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1339,30 +1317,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuY-XX-6Ld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="895.6521739130435" y="823.66071428571422"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="qn3-ok-SwI">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Qm-HE-hvN" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="fFd-bR-BkH">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.062745098040000002" green="0.1450980392" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" name="background"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="cYF-7X-AsV" kind="relationship" relationship="rootViewController" id="hEL-Pp-8Df"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H8T-0p-Z5o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-620" y="127"/>
+            <point key="canvasLocation" x="1275" y="854"/>
         </scene>
     </scenes>
     <resources>
@@ -1370,6 +1325,7 @@
         <image name="clear.fill" catalog="system" width="64" height="56"/>
         <image name="doc" catalog="system" width="56" height="64"/>
         <image name="hand.point.left" catalog="system" width="64" height="48"/>
+        <image name="logo" width="185.5" height="185.5"/>
         <image name="pencil.and.ellipsis.rectangle" catalog="system" width="64" height="40"/>
         <image name="profile" width="256" height="256"/>
         <image name="smiley" catalog="system" width="64" height="60"/>

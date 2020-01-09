@@ -19,37 +19,48 @@ class ConversationCell: UITableViewCell {
     
     // MARK:- Properties
     
-    var isReadStatus: Bool? {
-        didSet {
-            guard let isRead = isReadStatus else {return}
-            isReadStatusIndicator.isHidden = isRead
-        }
-    }
-    
     var conversation: Conversation? {
         didSet {
-            guard let conversation = conversation else {return}
-            guard let chatter = conversation.chatter else {return}
-            
-            profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
-            nameLabel.text = chatter.name
-            vibeLabel.text = chatter.vibe ?? ""
-            nameLabel.backgroundColor = .clear
-            vibeLabel.backgroundColor = .clear
-            
-            chatter.imageFromChacheOrDb { (image) in
-                DispatchQueue.main.async {
-                    self.profileImageView.image = image
-                }
-            }
+            setupChatterListener()
         }
     }
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
+    }
+    
+    override func prepareForReuse() {
+        conversation = nil
+    }
+    
+    // MARK:- Methods
+    
+    fileprivate func setupChatterListener() {
+        conversation?.listenToChatter(completion: {
+            self.configureCellViews()
+        })
+    }
+    
+    fileprivate func configureCellViews() {
+        guard let conversation = conversation else {return}
+        guard let chatter = conversation.chatter else {return}
+        
+        profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
+        isReadStatusIndicator.isHidden = conversation.isReadStatus
+        
+        nameLabel.text = chatter.name
+        vibeLabel.text = chatter.vibe ?? ""
+        nameLabel.backgroundColor = .clear
+        vibeLabel.backgroundColor = .clear
+        
+        chatter.imageFromChacheOrDb { (image) in
+            DispatchQueue.main.async {
+                self.profileImageView.image = image
+            }
+        }
     }
     
 }

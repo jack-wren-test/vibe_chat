@@ -17,20 +17,27 @@ protocol ImageMessageDelegate {
 extension MessagesController: ImageMessageDelegate {
     
     func imageMessageTapped(_ imageView: UIImageView, _ videoLayer: AVPlayerLayer?, _ videoPlayer: AVPlayer?) {
-        if let currentPlayer = self.player, currentPlayer.currentTime() == CMTime.zero {
+        
+        var isVideoMessage = false
+        
+        if  videoPlayer != nil, videoLayer != nil {
             playerLayer = videoLayer
             player = videoPlayer
             player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
             playButton = UIButton(type: .system)
+            isVideoMessage = true
+        }
+        
+        if !isVideoMessage || isVideoMessage, player?.currentTime() == CMTime.zero {
             imageStartingFrame = imageView.superview?.convert(imageView.frame, to: nil)
             
-            videoContainerView = UIImageView(frame: imageStartingFrame!)
-            videoContainerView?.image = imageView.image
-            videoContainerView?.isUserInteractionEnabled = true
-            videoContainerView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            zoomingImageView = UIImageView(frame: imageStartingFrame!)
+            zoomingImageView?.image = imageView.image
+            zoomingImageView?.isUserInteractionEnabled = true
+            zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             
             animateZoomIn { (_) in
-                if let zoomingImageView = self.videoContainerView, let playerLayer = self.playerLayer, let playButton = self.playButton {
+                if let zoomingImageView = self.zoomingImageView, let playerLayer = self.playerLayer, let playButton = self.playButton {
                     self.addVideoPlayerCompnents(playerLayer, zoomingImageView, playButton)
                 }
             }
@@ -45,13 +52,13 @@ extension MessagesController: ImageMessageDelegate {
             backgroundView!.alpha = 0
             
             keywindow.addSubview(backgroundView!)
-            keywindow.addSubview(videoContainerView!)
+            keywindow.addSubview(zoomingImageView!)
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.backgroundView!.alpha = 1
                 let height = self.imageStartingFrame!.height / self.imageStartingFrame!.width * keywindow.frame.width
-                self.videoContainerView?.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)
-                self.videoContainerView?.center = keywindow.center
+                self.zoomingImageView?.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)
+                self.zoomingImageView?.center = keywindow.center
             }, completion: completion)
         }
     }
@@ -87,15 +94,16 @@ extension MessagesController: ImageMessageDelegate {
         messagePlayerLayer.frame = frame
         initialVideoMessageFrame = frame
         
-        videoContainerView = imageMessageView
-        videoContainerView?.layer.addSublayer(messagePlayerLayer)
-        videoContainerView?.addSubview(activityIndicator)
+        zoomingImageView = imageMessageView
+        zoomingImageView?.contentMode = .scaleAspectFill
+        zoomingImageView?.layer.addSublayer(messagePlayerLayer)
+        zoomingImageView?.addSubview(activityIndicator)
         
         self.playButton = playButton
         self.player = messagePlayerLayer.player
         
-        activityIndicator.centerXAnchor.constraint(equalTo: videoContainerView!.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: videoContainerView!.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: zoomingImageView!.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: zoomingImageView!.centerYAnchor).isActive = true
         
         if let player = self.player {
             playerLayer = messagePlayerLayer
@@ -107,7 +115,7 @@ extension MessagesController: ImageMessageDelegate {
     }
     
     @objc func playFullscreenMedia() {
-        if let player = player, let playerLayer = self.playerLayer, let zoomingImageView = self.videoContainerView, let playButton = self.playButton {
+        if let player = player, let playerLayer = self.playerLayer, let zoomingImageView = self.zoomingImageView, let playButton = self.playButton {
             zoomingImageView.layer.addSublayer(playerLayer)
             zoomingImageView.addSubview(activityIndicator)
             
@@ -124,34 +132,37 @@ extension MessagesController: ImageMessageDelegate {
         if let playButton = self.playButton, let player = self.player {
             player.seek(to: CMTime.zero)
             playButton.isHidden = false
-            videoContainerView?.bringSubviewToFront(playButton)
+            zoomingImageView?.bringSubviewToFront(playButton)
             self.playerLayer?.opacity = 0
             playerLayer?.removeFromSuperlayer()
         }
     }
     
-    @objc fileprivate func handleZoomOut(tapGesture: UITapGestureRecognizer) {
-        if let player = self.player, player.currentTime() == CMTime.zero {
-            if let zoomOutImageView = tapGesture.view {
-                zoomOutImageView.layer.cornerRadius = 10
-                zoomOutImageView.clipsToBounds = true
-                
-                playButton?.removeFromSuperview()
-                playButton = nil
-                
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    zoomOutImageView.frame = self.imageStartingFrame!
-                    self.backgroundView?.alpha = 0
-                    self.playerLayer?.opacity = 0
-                }) { (completed: Bool) in
-                    if let frame = self.initialVideoMessageFrame {
-                        print("setting frame: \(frame)")
-                        self.playerLayer?.frame = frame
-                    }
-                    zoomOutImageView.removeFromSuperview()
-                    self.backgroundView = nil
+    fileprivate func zoomOut(_ tapGesture: UITapGestureRecognizer) {
+        if let zoomOutImageView = tapGesture.view {
+            zoomOutImageView.layer.cornerRadius = 10
+            zoomOutImageView.clipsToBounds = true
+            playButton?.removeFromSuperview()
+            playButton = nil
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                zoomOutImageView.frame = self.imageStartingFrame!
+                self.backgroundView?.alpha = 0
+                self.playerLayer?.opacity = 0
+            }) { (completed: Bool) in
+                if let frame = self.initialVideoMessageFrame {
+                    self.playerLayer?.frame = frame
                 }
+                zoomOutImageView.removeFromSuperview()
+                self.backgroundView = nil
             }
+        }
+    }
+    
+    @objc fileprivate func handleZoomOut(tapGesture: UITapGestureRecognizer) {
+        if player == nil {
+            zoomOut(tapGesture)
+        } else if let player = self.player, player.currentTime() == CMTime.zero {
+            zoomOut(tapGesture)
         }
     }
     
