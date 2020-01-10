@@ -84,9 +84,8 @@ final class UserMessagesManager {
         return listener
     }
     
-    public func listenToConversations(completion: @escaping ([Conversation])->()) -> ListenerRegistration {
-        let uid = CurrentUser.shared.data!.uid
-        let listener = collectionReference.document(uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
+    public func listenToConversations(forUser: User, completion: @escaping ([Conversation])->()) -> ListenerRegistration {
+        let listener = collectionReference.document(forUser.uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error adding new conversation listener: \(error.localizedDescription)")
                 return
@@ -113,8 +112,8 @@ final class UserMessagesManager {
         return listener
     }
     
-    public func fetchConversationList(user: User, completion: @escaping ([Conversation]?)->()) {
-        collectionReference.document(user.uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
+    public func fetchConversationList(forUser: User, completion: @escaping ([Conversation]?)->()) {
+        collectionReference.document(forUser.uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error fetching user conversations: \(error.localizedDescription)")
                 completion(nil)

@@ -14,6 +14,7 @@ class MessageCell: UICollectionViewCell {
     
     var incomingXConstraint: NSLayoutConstraint?
     var outgoingXConstraint: NSLayoutConstraint?
+    var viewHeightAnchor: NSLayoutConstraint?
     
     // MARK:- Init
     
@@ -26,6 +27,12 @@ class MessageCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    override func prepareForReuse() {
+        viewHeightAnchor = nil
+    }
+    
+    // MARK:- Methods
     
     public func layoutMessage(_ isOutgoingMessage: Bool) {
         

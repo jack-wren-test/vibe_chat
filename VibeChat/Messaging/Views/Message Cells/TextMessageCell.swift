@@ -49,6 +49,7 @@ class TextMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
+        messageLabel.text = nil
         textMessage = nil
     }
     
@@ -63,8 +64,8 @@ class TextMessageCell: MessageCell {
         outgoingXConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         
         bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -10).isActive = true
         bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -10).isActive = true

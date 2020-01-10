@@ -81,6 +81,10 @@ class MessagesController:   UIViewController {
         setupProfileButton()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        scrollToBottomOfMessages()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         conversationListener?.remove()
         conversationStatusListener?.remove()

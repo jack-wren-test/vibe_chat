@@ -59,9 +59,11 @@ extension MessagesController {
     
     func scrollToBottomOfMessages() {
         if messages.count > 0 {
-            let section = messages.count-1
-            let cell = messages[section].count-1
-            collectionView.scrollToItem(at: IndexPath(row: cell, section: section), at: .bottom, animated: true)
+            let contentHeight: CGFloat = collectionView.contentSize.height
+            let heightAfterInserts: CGFloat = collectionView.frame.size.height - (collectionView.contentInset.top + collectionView.contentInset.bottom)
+            if contentHeight > heightAfterInserts {
+                collectionView.setContentOffset(CGPoint(x: 0, y: collectionView.contentSize.height - collectionView.frame.size.height), animated: true)
+            }
         }
     }
     
@@ -96,7 +98,6 @@ extension MessagesController {
                 self.messages = sortedMessages
                 if self.isViewLoaded {
                     self.collectionView.reloadData()
-                    self.scrollToBottomOfMessages()
                     if conversation.hasDbCounterpart {self.conversation!.isReadStatus = true}
                     self.conversation!.isReadStatus = true
                 }
@@ -104,10 +105,10 @@ extension MessagesController {
                 if self.isViewLoaded {
                     let isSection = self.messages.count != daysOfMessagesCount
                     self.animateAddNewMessage(isSection)
-                    self.scrollToBottomOfMessages()
                     if conversation.hasDbCounterpart {self.conversation!.isReadStatus = true}
                 }
             }
+            self.scrollToBottomOfMessages()
         }
     }
     

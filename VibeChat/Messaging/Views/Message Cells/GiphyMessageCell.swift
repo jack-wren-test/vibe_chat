@@ -50,6 +50,7 @@ class GiphyMessageCell : MessageCell {
     }
     
     override func prepareForReuse() {
+        giphyMediaView.image = nil
         giphyMessage = nil
     }
     
@@ -61,15 +62,15 @@ class GiphyMessageCell : MessageCell {
         incomingXConstraint = giphyMediaView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = giphyMediaView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         
-        giphyMediaView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        giphyMediaView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+        giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
         giphyMediaView.widthAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     private func updateHeightAnchor(usingAspectRatio: CGFloat) {
-        let viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
-        viewHeightAnchor.priority = UILayoutPriority.required
-        viewHeightAnchor.isActive = true
+        viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
+        viewHeightAnchor?.priority = UILayoutPriority.required
+        viewHeightAnchor?.isActive = true
     }
     
 }

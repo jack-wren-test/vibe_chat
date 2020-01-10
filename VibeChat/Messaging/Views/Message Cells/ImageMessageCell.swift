@@ -38,7 +38,6 @@ class ImageMessageCell: MessageCell {
     }()
     
     var controllerDelegate: ImageMessageDelegate?
-    var viewHeightAnchor: NSLayoutConstraint?
     
     // MARK:- Init
     
@@ -52,6 +51,7 @@ class ImageMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
+        imageMessageView.image = nil
         message = nil
     }
     
@@ -62,14 +62,14 @@ class ImageMessageCell: MessageCell {
         incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
         outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         imageMessageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        imageMessageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        imageMessageView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        imageMessageView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+        imageMessageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2).isActive = true
     }
     
     public func updateHeightAnchor(usingAspectRatio: CGFloat) {
-        let viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
-        viewHeightAnchor.priority = UILayoutPriority.required
-        viewHeightAnchor.isActive = true
+        viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
+        viewHeightAnchor?.priority = UILayoutPriority.required
+        viewHeightAnchor?.isActive = true
     }
     
     @objc public func handleImageTap() {

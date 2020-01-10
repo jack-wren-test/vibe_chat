@@ -51,8 +51,8 @@ final class UsersManager: FirestoreManager {
         }
     }
     
-    public func updateUserData(toUserUid: String, withData: [String: Any], completion: @escaping ()->()) {
-        collectionReference.document(toUserUid).setData(withData) { (error) in
+    public func updateUserData(forUser: User, withData: [String: Any], completion: @escaping ()->()) {
+        collectionReference.document(forUser.uid).setData(withData) { (error) in
             if let error = error {
                 print("Error updating values: \(error)")
                 completion()

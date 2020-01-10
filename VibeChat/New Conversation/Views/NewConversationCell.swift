@@ -27,7 +27,7 @@ class NewConversationCell: UITableViewCell {
             nameLabel.backgroundColor = .clear
             vibeLabel.backgroundColor = .clear
             
-            chatter.imageFromChacheOrDb { (image) in
+            chatter.profileImageFromChacheOrDb { (image) in
                 DispatchQueue.main.async {
                     self.profileImageView.image = image
                 }

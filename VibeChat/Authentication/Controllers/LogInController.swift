@@ -104,7 +104,7 @@ extension LogInController: CanAuthenticate {
         if let email = emailTF.text,
             let password = passwordTF.text {
             CurrentUser.shared.logIn(withEmail: email, andPassword: password) {
-                self.presentHomeScreen()
+                self.presentHomeScreen(false)
             }
         }
     }
