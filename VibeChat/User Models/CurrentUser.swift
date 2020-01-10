@@ -15,11 +15,9 @@ import Firebase
 /// Performs log in and log out actions as well as user related network calls.
 final class CurrentUser {
     
-    // MARK:- Singleton Setup
+    // MARK:- Properties
     
     static var shared = CurrentUser()
-    
-    // MARK:- Properties
     
     private var conversationsListener: ListenerRegistration?
     
@@ -43,7 +41,7 @@ final class CurrentUser {
     public func logIn(withEmail: String, andPassword: String, completion: @escaping ()->()) {
         AuthenticationManager.shared.logIn(email: withEmail, password: andPassword) { (user) in
             if let user = user {
-                self.setNewUser(user)
+                self.setCurrentUser(user)
                 completion()
             }
         }

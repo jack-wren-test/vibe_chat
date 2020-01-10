@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "61BB8D8A2398020300EEEEB0"
-               BuildableName = "VibeChat.app"
+               BuildableName = "Vibe Chat.app"
                BlueprintName = "VibeChat"
                ReferencedContainer = "container:VibeChat.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61BB8D8A2398020300EEEEB0"
-            BuildableName = "VibeChat.app"
+            BuildableName = "Vibe Chat.app"
             BlueprintName = "VibeChat"
             ReferencedContainer = "container:VibeChat.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61BB8D8A2398020300EEEEB0"
-            BuildableName = "VibeChat.app"
+            BuildableName = "Vibe Chat.app"
             BlueprintName = "VibeChat"
             ReferencedContainer = "container:VibeChat.xcodeproj">
          </BuildableReference>

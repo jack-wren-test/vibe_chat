@@ -22,7 +22,6 @@
 		6175874C239E7459002ED670 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874B239E7459002ED670 /* MessageCell.swift */; };
 		6175874E239E74BB002ED670 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874D239E74BB002ED670 /* MessagesController.swift */; };
 		61A470F723A000AD003DD758 /* DateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470F623A000AD003DD758 /* DateHeader.swift */; };
-		61A470FA23A25138003DD758 /* LaunchScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470F923A25138003DD758 /* LaunchScreenController.swift */; };
 		61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470FE23A7AD31003DD758 /* CurrentUser.swift */; };
 		61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710023A8E4C2003DD758 /* Conversation.swift */; };
 		61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710323A8F8AD003DD758 /* NewConversationController.swift */; };
@@ -87,7 +86,6 @@
 		6175874B239E7459002ED670 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		6175874D239E74BB002ED670 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		61A470F623A000AD003DD758 /* DateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeader.swift; sourceTree = "<group>"; };
-		61A470F923A25138003DD758 /* LaunchScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenController.swift; sourceTree = "<group>"; };
 		61A470FE23A7AD31003DD758 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		61A4710023A8E4C2003DD758 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		61A4710323A8F8AD003DD758 /* NewConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationController.swift; sourceTree = "<group>"; };
@@ -230,14 +228,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		61A470F823A2511D003DD758 /* Launch Screen */ = {
-			isa = PBXGroup;
-			children = (
-				61A470F923A25138003DD758 /* LaunchScreenController.swift */,
-			);
-			path = "Launch Screen";
-			sourceTree = "<group>";
-		};
 		61A470FD23A7AD0E003DD758 /* User Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +272,6 @@
 				61BB8DC723980AC400EEEEB0 /* Storyboards & Assets */,
 				61A470FD23A7AD0E003DD758 /* User Models */,
 				61271C202399560B00F1EE1B /* Network Layer */,
-				61A470F823A2511D003DD758 /* Launch Screen */,
 				61BB8DB32398052000EEEEB0 /* Authentication */,
 				61BB8DC523980AAF00EEEEB0 /* Home */,
 				61A4710223A8F814003DD758 /* New Conversation */,
@@ -689,7 +678,6 @@
 				61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */,
 				61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */,
 				61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */,
-				61A470FA23A25138003DD758 /* LaunchScreenController.swift in Sources */,
 				61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,

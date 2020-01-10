@@ -58,7 +58,7 @@ class UserProfileController: UIViewController,
         updateUserData()
         if let image = profileImageView.image, let currentUserData = CurrentUser.shared.data {
             currentUserData.profileImage = image
-            StorageManager.shared.uploadProfileImageDataUnderUid(uid: currentUserData.uid, image: image) { (url) in
+            StorageManager.shared.uploadProfileImage(forUser: currentUserData) { (url) in
                 currentUserData.profileImageUrl = url
                 CurrentUser.shared.updateUserDataInDb()
             }

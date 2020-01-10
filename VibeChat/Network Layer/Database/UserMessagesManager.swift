@@ -8,11 +8,14 @@
 
 import Firebase
 
+
+/// <#Description#>
 final class UserMessagesManager {
     
-    // MARK:- Singleton Setup
+    // MARK:- Properties
     
     static let shared = UserMessagesManager()
+    
     private let collectionReference = FirestoreManager.db.collection(dbCollection.userMessages.rawValue)
     
     // MARK:- Private Init (Force Singleton)
@@ -21,34 +24,40 @@ final class UserMessagesManager {
     
     // MARK:- Methods
     
-    public func createConversationIfNeeded(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
-        
+    fileprivate func checkForExistingConversation(_ conversation: Conversation,
+                                                  _ userConversations: [QueryDocumentSnapshot],
+                                                  completion: @escaping (_ conversation: Conversation?)->Void) {
         guard let uid = CurrentUser.shared.data?.uid else {return}
         guard let chatter = conversation.chatter else {return}
         var foundMatch: Bool = false
         let potentialConversationIds = [uid+"_"+chatter.uid, chatter.uid+"_"+uid]
+        for conversation in userConversations {
+            for potentialConversationId in potentialConversationIds {
+                if conversation.documentID == potentialConversationId && foundMatch == false {
+                    completion(nil)
+                    foundMatch = !foundMatch
+                }
+            }
+        }
+        if !foundMatch {
+            self.createConversation(conversation: conversation, andChatterName: chatter.uid, completion: completion)
+        }
+    }
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - conversation: <#conversation description#>
+    ///   - completion: <#completion description#>
+    public func createConversationIfNeeded(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
+        guard let uid = CurrentUser.shared.data?.uid else {return}
         collectionReference.document(uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error checking for message threads: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            guard let ConversationIds = snapshot?.documents else {completion(nil); return}
-            ConversationIds.forEach { (conversationId) in
-                potentialConversationIds.forEach { (potentialConversationId) in
-                    if conversationId.documentID == potentialConversationId && foundMatch == false {
-                        completion(nil)
-                        foundMatch = !foundMatch
-                    }
-                }
-            }
-            if !foundMatch {
-                self.createConversation(conversation: conversation, andChatterName: chatter.name) { (conversation) in
-                    if let conversation = conversation {
-                        completion(conversation)
-                    }
-                }
-            }
+            guard let userConversations = snapshot?.documents else {completion(nil); return}
+            self.checkForExistingConversation(conversation, userConversations, completion: completion)
         }
     }
     

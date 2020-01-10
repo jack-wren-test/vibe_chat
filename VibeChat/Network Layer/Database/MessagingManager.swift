@@ -8,11 +8,13 @@
 
 import FirebaseFirestore
 
+/// Class for managing queries to Firestore messages location.
 final class MessagingManager: FirestoreManager {
     
-    // MARK:- Singleton Setup
+    // MARK:- Properties
     
     static let shared = MessagingManager()
+    
     private let collectionReference = FirestoreManager.db.collection(dbCollection.messaging.rawValue)
     
     // MARK:- Private Init (Force Singleton)
@@ -21,6 +23,11 @@ final class MessagingManager: FirestoreManager {
     
     // MARK:- Methods
     
+    
+    /// Upload a message to Firestore database.
+    /// - Parameters:
+    ///   - message: The message to be uploaded
+    ///   - completion: Completion handler with empty default implementation
     public func uploadMessage(message: Message, completion: @escaping ()->() = {}) {
         guard let conversationId = message.conversationId else {return}
         collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.dictionaryRepresentation) { (error) in
@@ -33,6 +40,13 @@ final class MessagingManager: FirestoreManager {
         }
     }
     
+    
+    /// Creates a listener for listening for new messages in a specified conversation.
+    /// - Parameters:
+    ///   - onConversation: The conversation to listen to
+    ///   - completion: Completion handler returning optional array of Message objects
+    /// - Returns:
+    ///   - The listener registration object
     public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->()) -> ListenerRegistration {
         let conversationId = onConversation.uid
         let listener = collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
@@ -49,10 +63,11 @@ final class MessagingManager: FirestoreManager {
         return listener
     }
     
-    public func createConversationInMessaging(conversationData: [String: Any], completion: @escaping ()->()) {
-        collectionReference.document(conversationData["uid"] as! String).collection(dbCollection.messages.rawValue)
-    }
     
+    /// Parses an array of Firebase DocumentChange objects to array of Message objects.
+    /// - Parameters:
+    ///   - documentChange: The document change to parse
+    ///   - completion: Completion handler returining array of optional Message objects
     fileprivate func snapshotDocumentsToMessageArray(_ documentChange: [DocumentChange], completion: @escaping ([Message]?)->()) {
         var messages = [Message]()
         documentChange.forEach { (document) in

@@ -11,7 +11,7 @@
         <!--Create Account Controller-->
         <scene sceneID="w8m-7X-4Xk">
             <objects>
-                <viewController id="SMX-eS-i3a" customClass="CreateAccountController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SMX-eS-i3a" customClass="CreateAccountController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="53B-sx-SQH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1wS-s5-2AU">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="246"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSM-v7-g0r" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSM-v7-g0r" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -44,7 +44,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="lAs-dN-cQY"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r1n-EX-TCc" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r1n-EX-TCc" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="62" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -66,7 +66,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="W93-Gt-chv"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-cG-4d9" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-cG-4d9" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="124" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -88,7 +88,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="AMZ-DL-Ytg"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-oo-enG" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-oo-enG" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="186" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -108,7 +108,7 @@
                                             <constraint firstAttribute="width" constant="300" id="ykB-5b-70g"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L0u-cF-Q9U" customClass="AuthenticationButton" customModule="VibeChat" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L0u-cF-Q9U" customClass="AuthenticationButton" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="266" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="lZo-9H-crG"/>
@@ -190,7 +190,7 @@
         <!--Authentication Controller-->
         <scene sceneID="Eza-fq-a7u">
             <objects>
-                <viewController storyboardIdentifier="AuthenticationController" id="7e9-bF-6WT" customClass="AuthenticationController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationController" id="7e9-bF-6WT" customClass="AuthenticationController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IeT-BH-RYC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,7 +222,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="Fui-nZ-Znv">
                                                 <rect key="frame" x="37" y="104.5" width="300" height="152"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CsX-DV-Aio" customClass="AuthenticationButton" customModule="VibeChat" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CsX-DV-Aio" customClass="AuthenticationButton" customModule="Vibe_Chat" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="300" id="RiB-yn-KKE"/>
@@ -244,7 +244,7 @@
                                                             <segue destination="0LT-Cv-e7o" kind="presentation" modalPresentationStyle="fullScreen" id="dJH-qt-rxP"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJg-LE-I8w" customClass="AuthenticationButton" customModule="VibeChat" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJg-LE-I8w" customClass="AuthenticationButton" customModule="Vibe_Chat" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="92" width="300" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="300" id="Z1P-jJ-d7A"/>
@@ -296,7 +296,7 @@
         <!--Log In Controller-->
         <scene sceneID="Fw1-eJ-T2C">
             <objects>
-                <viewController id="0LT-Cv-e7o" customClass="LogInController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0LT-Cv-e7o" customClass="LogInController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vLQ-Qy-SnO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -316,10 +316,10 @@
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="0bq-F1-GqB">
                                 <rect key="frame" x="57" y="347" width="300" height="202"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xwq-xD-E8P" customClass="CreateAccountForm" customModule="VibeChat" customModuleProvider="target">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xwq-xD-E8P" customClass="CreateAccountForm" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="122"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbY-HL-21w" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbY-HL-21w" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -341,7 +341,7 @@
                                                     <constraint firstAttribute="height" constant="2" id="kZV-DW-Mnt"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X8f-te-iH6" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X8f-te-iH6" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="62" width="300" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -361,7 +361,7 @@
                                             <constraint firstAttribute="width" constant="300" id="BTd-7G-phg"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ja8-iE-yGj" customClass="AuthenticationButton" customModule="VibeChat" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ja8-iE-yGj" customClass="AuthenticationButton" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="142" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="0mZ-G7-qxK"/>
@@ -425,7 +425,7 @@
         <!--Messages Controller-->
         <scene sceneID="3r1-by-lwG">
             <objects>
-                <viewController storyboardIdentifier="MessagesController" id="oOP-ow-YcZ" customClass="MessagesController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessagesController" id="oOP-ow-YcZ" customClass="MessagesController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Smc-YH-dEG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -447,7 +447,7 @@
                                             <action selector="sendButtonPressed:" destination="oOP-ow-YcZ" eventType="touchUpInside" id="oE7-d2-AQs"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MDT-Kj-KwY" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MDT-Kj-KwY" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="130" y="8" width="222" height="35"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.062745098040000002" green="0.1450980392" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -543,7 +543,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxC-AR-Ja8">
                                                         <rect key="frame" x="0.0" y="0.0" width="70" height="63"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="NPI-sf-QAG" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="NPI-sf-QAG" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                                                 <rect key="frame" x="10" y="6.5" width="50" height="50"/>
                                                                 <color key="backgroundColor" red="0.97254901959999995" green="0.43921568630000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="tintColor" name="text_alt"/>
@@ -679,7 +679,7 @@
         <!--Chatter Profile Controller-->
         <scene sceneID="yRG-sb-dgw">
             <objects>
-                <viewController id="pqp-Zg-0fL" customClass="ChatterProfileController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pqp-Zg-0fL" customClass="ChatterProfileController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LHv-Jf-au5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -687,7 +687,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="vPD-rb-MGA">
                                 <rect key="frame" x="20" y="144" width="374" height="554"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="dMX-HW-KMd" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="dMX-HW-KMd" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="374"/>
                                         <color key="tintColor" name="text"/>
                                         <constraints>
@@ -773,7 +773,7 @@
         <!--Home Controller-->
         <scene sceneID="E3w-Ln-7YW">
             <objects>
-                <viewController storyboardIdentifier="HomeController" id="4Rq-Xn-ijI" customClass="HomeController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeController" id="4Rq-Xn-ijI" customClass="HomeController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jhz-qt-033">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -844,7 +844,7 @@
                                 <rect key="frame" x="0.0" y="134" width="414" height="762"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatterCell" rowHeight="80" id="tRS-bG-qjb" customClass="ConversationCell" customModule="VibeChat" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatterCell" rowHeight="80" id="tRS-bG-qjb" customClass="ConversationCell" customModule="Vibe_Chat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tRS-bG-qjb" id="P2P-id-MW1">
@@ -854,7 +854,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="asv-3U-OjN">
                                                     <rect key="frame" x="20" y="10" width="374" height="60"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="vlj-qC-K5Q" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="vlj-qC-K5Q" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="tintColor" name="text_alt"/>
@@ -891,7 +891,7 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </stackView>
-                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e61-Zh-eMQ" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e61-Zh-eMQ" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                                             <rect key="frame" x="354" y="20" width="20" height="20"/>
                                                             <color key="backgroundColor" red="0.38395864689999998" green="0.78039215689999997" blue="0.54470754440000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -962,7 +962,7 @@
         <!--User Profile Controller-->
         <scene sceneID="5r7-sO-zsf">
             <objects>
-                <viewController storyboardIdentifier="ProfileController" id="sva-3r-1uI" customClass="UserProfileController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileController" id="sva-3r-1uI" customClass="UserProfileController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eOx-FJ-AeD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -973,7 +973,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bi8-wO-Ah3">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="404"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="rCX-1d-Zdk" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="rCX-1d-Zdk" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                                 <rect key="frame" x="87" y="102" width="200" height="200"/>
                                                 <color key="tintColor" name="text"/>
                                                 <constraints>
@@ -1039,7 +1039,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkX-c6-gvY">
                                                                 <rect key="frame" x="0.0" y="66" width="374" height="66"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="'John Smith'" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3o6-An-RF6" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="'John Smith'" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3o6-An-RF6" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                                         <rect key="frame" x="20" y="0.0" width="354" height="66"/>
                                                                         <color key="textColor" red="0.062745098040000002" green="0.1450980392" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
@@ -1080,7 +1080,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oHQ-IW-wrN">
                                                                 <rect key="frame" x="0.0" y="198" width="374" height="66"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="What's your vibe?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WmE-lh-XnL" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="What's your vibe?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WmE-lh-XnL" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                                         <rect key="frame" x="20" y="0.0" width="354" height="66"/>
                                                                         <color key="textColor" red="0.062745098040000002" green="0.1450980392" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
@@ -1124,7 +1124,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZ0-2J-QS4">
                                                                 <rect key="frame" x="0.0" y="330" width="374" height="66"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="'hello.world@netscape.com'" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mya-Kd-yK1" customClass="AuthenticationTextField" customModule="VibeChat" customModuleProvider="target">
+                                                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="'hello.world@netscape.com'" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mya-Kd-yK1" customClass="AuthenticationTextField" customModule="Vibe_Chat" customModuleProvider="target">
                                                                         <rect key="frame" x="20" y="0.0" width="354" height="66"/>
                                                                         <color key="textColor" red="0.062745098040000002" green="0.1450980392" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
@@ -1235,13 +1235,13 @@
         <!--New Conversation Controller-->
         <scene sceneID="zXo-GU-yi8">
             <objects>
-                <tableViewController id="zTY-C9-j7U" customClass="NewConversationController" customModule="VibeChat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="zTY-C9-j7U" customClass="NewConversationController" customModule="Vibe_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Azd-RT-yt7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatterCell" rowHeight="80" id="LHZ-1W-sjJ" customClass="NewConversationCell" customModule="VibeChat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatterCell" rowHeight="80" id="LHZ-1W-sjJ" customClass="NewConversationCell" customModule="Vibe_Chat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LHZ-1W-sjJ" id="48X-W5-RI9">
@@ -1251,7 +1251,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fCu-qd-V2t">
                                             <rect key="frame" x="20" y="10" width="374" height="60"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Rds-Kn-hSE" customClass="CircularImageView" customModule="VibeChat" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Rds-Kn-hSE" customClass="CircularImageView" customModule="Vibe_Chat" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" name="text"/>
@@ -1343,7 +1343,7 @@
             <color red="0.063000001013278961" green="0.14499999582767487" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="text_alt">
-            <color red="0.063000001013278961" green="0.14499999582767487" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.062745098039215685" green="0.14117647058823529" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

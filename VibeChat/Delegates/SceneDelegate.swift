@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         AuthenticationManager.shared.checkForValidUser { (user) in
             if let user = user {
-                CurrentUser.shared.setNewUser(user)
+                CurrentUser.shared.setCurrentUser(user)
             }
             let authenticationController = storyboard.instantiateViewController(identifier: "AuthenticationController") as! AuthenticationController
             self.window = UIWindow(windowScene: windowScene)
