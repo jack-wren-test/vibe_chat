@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Controller for log in screen.
 class LogInController: AuthenticationController {
     
     // MARK:- IBOulets
@@ -22,7 +23,7 @@ class LogInController: AuthenticationController {
     var formKeyboardHiddenYConstraint: NSLayoutConstraint?
     var formKeyboardVisibleYConstraint: NSLayoutConstraint?
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +32,15 @@ class LogInController: AuthenticationController {
         registerForKeyboardWillChange()
         setupTapToDismissKeyboard()
         addTextFieldDidChangeActions()
-        emailTF.becomeFirstResponder()
         if formKeyboardHiddenYConstraint == nil {
             formKeyboardHiddenYConstraint = form.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             self.formKeyboardHiddenYConstraint?.isActive = true
         }
     }
     
-    // MARK:- Deinit
+    override func viewDidAppear(_ animated: Bool) {
+        emailTF.becomeFirstResponder()
+    }
     
     deinit {
         print("Log in controller deinitialized")
@@ -69,8 +71,6 @@ class LogInController: AuthenticationController {
             }
         }
     }
-    
-    // MARK:- ObjC Methods
     
     @objc public override func keyboardWillShow(_ notification: Notification) {
         animateViewWithKeyboard(notification)

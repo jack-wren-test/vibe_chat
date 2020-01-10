@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The base controller for the authentication screens.
 class AuthenticationController: UIViewController {
     
     // MARK:- Lifecycle
@@ -31,7 +32,7 @@ class AuthenticationController: UIViewController {
     public func presentHomeScreen(_ isNewUser: Bool) {
         if let storyboard = storyboard {
             let homeController = storyboard.instantiateViewController(identifier: "HomeController") as! HomeController
-            homeController.isNewUser = isNewUser
+            homeController.isNewUser = isNewUser // Will allow home controller to present the profile controller on load
             let navController = UINavigationController(rootViewController: homeController)
             navController.modalPresentationStyle = .fullScreen
             dismiss(animated: true) {

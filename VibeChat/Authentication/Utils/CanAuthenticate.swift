@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Protocol for any viewController than has the ability to authenticate a user.
 protocol CanAuthenticate {
     func checkPasswordIsComplex(password: String) -> Bool
     func isFormValid() -> Bool
@@ -17,6 +18,7 @@ protocol CanAuthenticate {
     func presentHomeScreen(_ isNewUser: Bool)
 }
 
+// Refactor into RegEx class?
 extension CanAuthenticate {
     
     func checkPasswordIsComplex(password: String) -> Bool {
