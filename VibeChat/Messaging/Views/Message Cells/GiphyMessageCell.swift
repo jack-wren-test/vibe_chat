@@ -10,6 +10,7 @@ import UIKit
 import GiphyUISDK
 import GiphyCoreSDK
 
+/// Class for a gif based cell.
 class GiphyMessageCell : MessageCell {
     
     // MARK:- Properties
@@ -38,7 +39,7 @@ class GiphyMessageCell : MessageCell {
         return view
     }()
     
-    // MARK:- Init
+    // MARK:- Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -9,6 +9,7 @@
 import UIKit
 
 @IBDesignable
+/// Custom button for authentication controlls
 public class AuthenticationButton: UIButton {
 
     // MARK:- Properties
@@ -26,12 +27,11 @@ public class AuthenticationButton: UIButton {
         }
     }
     
-    // MARK:- AwakeFromNib
+    // MARK:- Lifecycle
     
     public override func awakeFromNib() {
         layoutUI()
     }
-    
     
     // MARK:- Methods
     

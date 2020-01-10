@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Controller for new conversation view.
 class NewConversationController: UITableViewController {
     
     // MARK:- Properties
@@ -20,10 +21,14 @@ class NewConversationController: UITableViewController {
     }
     let reuseIdentifier = "ChatterCell"
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    deinit {
+        print("New conversation controller deinitialized")
     }
     
     // MARK:- TableViewDataSource

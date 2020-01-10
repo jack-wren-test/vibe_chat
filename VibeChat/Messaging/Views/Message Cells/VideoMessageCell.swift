@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+/// Class for a video message cell.
 class VideoMessageCell: ImageMessageCell {
     
     // MARK:- Properties
@@ -16,7 +17,7 @@ class VideoMessageCell: ImageMessageCell {
     override var message: ImageMessage? {
         didSet {
             guard let message = message as? VideoMessage, let user = CurrentUser.shared.data, let url = message.imageUrl else {return}
-            imageMessageView.loadImageUsingCacheWithUrl(url: url) { (image) in
+            imageMessageView.loadImageUsingCacheOrUrl(url: url) { (image) in
                 if image != nil {
                     let isOutgoingMessage = message.fromUid == user.uid
                     self.layoutMessage(isOutgoingMessage)

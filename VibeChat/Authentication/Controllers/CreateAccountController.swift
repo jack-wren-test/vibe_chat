@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Controller for create account screen.
 class CreateAccountController: AuthenticationController {
     
     // MARK:- IBOutlets
@@ -33,11 +34,18 @@ class CreateAccountController: AuthenticationController {
         registerForKeyboardWillChange()
         setupTapToDismissKeyboard()
         addTextFieldDidChangeActions()
-        nameTF.becomeFirstResponder()
         if formKeyboardHiddenYConstraint == nil {
             formKeyboardHiddenYConstraint = form.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             self.formKeyboardHiddenYConstraint?.isActive = true
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        emailTF.becomeFirstResponder()
+    }
+    
+    deinit {
+        print("Create account controller deinitialized")
     }
 
     // MARK:- IBActions
@@ -65,8 +73,6 @@ class CreateAccountController: AuthenticationController {
             }
         }
     }
-    
-    // MARK:- ObjC Methods
     
     override func keyboardWillShow(_ notification: Notification) {
         animateViewWithKeyboard(notification)

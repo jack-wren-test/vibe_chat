@@ -9,10 +9,12 @@
 import Foundation
 import Firebase
 
+/// Procol to ensure any image based message has an aspect ratio property.
 protocol ImageBasedMessage {
     var aspectRatio: CGFloat { get }
 }
 
+/// Model for an image message.
 class ImageMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties
@@ -44,7 +46,7 @@ class ImageMessage: Message, ImageBasedMessage {
         updateDictionaryRepresentation()
     }
     
-    // MARK:- Handlers
+    // MARK:- Methods
     
     private func updateDictionaryRepresentation() {
         if let imageUrl = self.imageUrl {

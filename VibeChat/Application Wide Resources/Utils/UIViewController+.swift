@@ -8,7 +8,13 @@
 
 import UIKit
 
+///
+/// Extention adds default functionality for animating a view controller when the keyboard is shown.
+/// Functions designed to be overriden in special cases.
+///
 extension UIViewController {
+    
+    // MARK:- Additional Properties
     
     fileprivate struct keyboard {
         static var isHidden: Bool = true

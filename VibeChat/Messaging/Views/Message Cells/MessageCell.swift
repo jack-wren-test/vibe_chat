@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Base class for a message cell.
 class MessageCell: UICollectionViewCell {
     
     // MARK:- Properties
@@ -16,7 +17,7 @@ class MessageCell: UICollectionViewCell {
     var outgoingXConstraint: NSLayoutConstraint?
     var viewHeightAnchor: NSLayoutConstraint?
     
-    // MARK:- Init
+    // MARK:- Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

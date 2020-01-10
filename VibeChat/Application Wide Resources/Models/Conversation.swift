@@ -9,11 +9,13 @@
 import Foundation
 import Firebase
 
-enum MessageThreadType: String {
+/// Enummeration for conversation types.
+enum ConversationType: String {
     typealias RawValue = String
     case Private, Group
 }
 
+/// Model for a conversation between two or more users.
 class Conversation {
     
     // MARK:- Properties
@@ -38,6 +40,8 @@ class Conversation {
     
     // MARK:- Lifecycle
     
+    /// Init from chatter details. For use when a conversation is created with the application.
+    /// - Parameter withChatter: The chatter to create a conversation with
     init(withChatter: User) {
         type = "private"
         lastMessageTime = Date()
@@ -48,6 +52,8 @@ class Conversation {
         isReadStatus = false
     }
     
+    /// Init from [String: Any] Dictionary. For use when creating a conversation from Firestore data.
+    /// - Parameter withDictionary: The dictionary to create a conversation from
     init(withDictionary: [String: Any]) {
         type = withDictionary["type"] as! String
         isReadStatus = withDictionary["isReadStatus"] as! Bool
@@ -65,6 +71,7 @@ class Conversation {
     
     // MARK:- Methods
     
+    /// Returns a Dictionary representation of the Conversation
     public func toDict() -> [String: Any] {
         let data: [String: Any] = ["userNames": [CurrentUser.shared.data?.name, chatter?.name],
                                    "userUids": [CurrentUser.shared.data?.uid, chatter?.uid],
@@ -75,6 +82,8 @@ class Conversation {
         return data
     }
     
+    /// Fetches the chatter associated with the conversation.
+    /// - Parameter completion: Completion handler passing a success truth value
     public func fetchChatter(completion: @escaping (_ success: Bool)->()) {
         let chatterUid = CurrentUser.shared.data?.uid == userUids[0] ? userUids[1] : userUids[0]
         UsersManager.shared.fetchUserData(uid: chatterUid) { (user) in
@@ -87,7 +96,9 @@ class Conversation {
         }
     }
     
-    public func listenToChatter(completion: @escaping ()->()) {
+    /// Creates a listener to listen to changes for the chatter associated with the conversation.
+    /// - Parameter completion: Completion handler with a default empty implementation
+    public func listenToChatter(completion: @escaping ()->Void = {}) {
         if let chatter = chatter {
             self.chatterListener = UsersManager.shared.listenToUserData(user: chatter) { (user) in
                 self.chatter = user

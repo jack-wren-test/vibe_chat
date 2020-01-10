@@ -64,22 +64,3 @@ class ConversationCell: UITableViewCell {
     }
     
 }
-
-@IBDesignable
-class CircularImageView: UIImageView {
-
-    override public var intrinsicContentSize: CGSize {
-        return CGSize(width: 70, height: 70)
-    }
-    
-    @IBInspectable
-    var borderColor: UIColor? {
-        get {
-            return UIColor(cgColor: layer.borderColor!)
-        }
-        set {
-            layer.borderColor = newValue?.cgColor
-        }
-    }
-
-}

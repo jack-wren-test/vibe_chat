@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Model for a text based message.
 final class TextMessage: Message {
     
     // MARK:- Properties

@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+/// Model for a video message.
 class VideoMessage: ImageMessage {
     
     // MARK:- Properties

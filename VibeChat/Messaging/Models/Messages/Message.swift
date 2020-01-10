@@ -9,10 +9,12 @@
 import Foundation
 import Firebase
 
+/// Enummeration for message types.
 enum MessageType {
     case textMessage, videoMessage, imageMessage, giphyMessage
 }
 
+/// Base model for a message.
 class Message {
     
     // MARK:- Properties
@@ -24,7 +26,7 @@ class Message {
     var timestamp: Date?
     var conversationId: String?
     
-    // MARK:- Initializers
+    // MARK:- Init
     
     init(toUid: String, fromUid: String, timestamp: Date, threadId: String) {
         self.toUid = toUid

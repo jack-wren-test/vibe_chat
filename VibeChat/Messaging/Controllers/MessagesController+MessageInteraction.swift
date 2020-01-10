@@ -14,6 +14,9 @@ protocol ImageMessageDelegate {
     func playVideoMessage(messagePlayerLayer: AVPlayerLayer, imageMessageView: UIImageView, playButton: UIButton, frame: CGRect)
 }
 
+///
+///
+/// 
 extension MessagesController: ImageMessageDelegate {
     
     func imageMessageTapped(_ imageView: UIImageView, _ videoLayer: AVPlayerLayer?, _ videoPlayer: AVPlayer?) {

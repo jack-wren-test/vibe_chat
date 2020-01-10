@@ -9,6 +9,7 @@
 import UIKit
 
 @IBDesignable
+/// Custom text field for authentication controlls
 public class AuthenticationTextField: UITextField {
 
     // MARK:- Properties

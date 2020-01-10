@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+/// Model for a gif baed message.
 class GiphyMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties

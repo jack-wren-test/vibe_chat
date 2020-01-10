@@ -8,11 +8,13 @@
 
 import UIKit
 
+/// Create image cache class and use a singleton pattern?
 let imageCache = NSCache<NSString, UIImage>()
 
+/// Extends UIImage to have the functionality to load an image from the cache declared above, or from url.
 extension UIImageView {
     
-    public func loadImageUsingCacheWithUrl(url: URL, completion: @escaping (_ image: UIImage?)->() = {_ in }) {
+    public func loadImageUsingCacheOrUrl(url: URL, completion: @escaping (_ image: UIImage?)->() = {_ in }) {
         self.image = nil
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
             self.image = cachedImage

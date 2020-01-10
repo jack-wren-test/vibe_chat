@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Class for text message cell.
 class TextMessageCell: MessageCell {
     
     // MARK:- Properties
@@ -37,7 +38,7 @@ class TextMessageCell: MessageCell {
         }
     }
     
-    // MARK:- Init
+    // MARK:- Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,8 +56,7 @@ class TextMessageCell: MessageCell {
     
     // MARK:- Methods
     
-    private func configureViews() {
-        
+    fileprivate func configureViews() {
         addSubview(bubbleView)
         addSubview(messageLabel)
         
@@ -74,7 +74,6 @@ class TextMessageCell: MessageCell {
     }
     
     override func layoutMessage(_ isOutgoingMessage: Bool) {
-        
         if isOutgoingMessage {
             bubbleView.backgroundColor = UIColor(named: "text_alt")
             messageLabel.textColor = UIColor(named: "background_alt")
@@ -86,7 +85,6 @@ class TextMessageCell: MessageCell {
             outgoingXConstraint?.isActive = false
             incomingXConstraint?.isActive = true
         }
-        
     }
     
 }

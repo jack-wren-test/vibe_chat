@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Controller for chatter profile view.
 class ChatterProfileController: UIViewController {
     
     // MARK:- IBOutlets
@@ -15,7 +16,6 @@ class ChatterProfileController: UIViewController {
     @IBOutlet weak var profileImageView: CircularImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var vibeLabel: UILabel!
-    
     
     // MARK:- Properties
     
@@ -26,6 +26,10 @@ class ChatterProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews() 
+    }
+    
+    deinit {
+        print("Chatter profile controller deinitialized")
     }
     
     // MARK:- Methods

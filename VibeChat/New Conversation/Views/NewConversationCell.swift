@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Cell for use in new conversation view controller.
 class NewConversationCell: UITableViewCell {
     
     // MARK:- IBOutlets
@@ -20,29 +21,34 @@ class NewConversationCell: UITableViewCell {
     
     var chatter: User? {
         didSet {
-            
-            guard let chatter = chatter else {return}
-            nameLabel.text = chatter.name
-            vibeLabel.text = chatter.vibe ?? ""
-            nameLabel.backgroundColor = .clear
-            vibeLabel.backgroundColor = .clear
-            
-            chatter.profileImageFromChacheOrDb { (image) in
-                DispatchQueue.main.async {
-                    self.profileImageView.image = image
-                }
-            }
-            
+            layoutViews()
         }
     }
     
-    // MARK:- ViewDidLoad
+    // MARK:- Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
     }
-
+    
+    override func prepareForReuse() {
+        chatter = nil
+    }
+    
     // MARK:- Methods
 
+    private func layoutViews() {
+        guard let chatter = chatter else {return}
+        nameLabel.text = chatter.name
+        vibeLabel.text = chatter.vibe ?? ""
+        nameLabel.backgroundColor = .clear
+        vibeLabel.backgroundColor = .clear
+        chatter.profileImageFromChacheOrDb { (image) in
+            DispatchQueue.main.async {
+                self.profileImageView.image = image
+            }
+        }
+    }
+    
 }
