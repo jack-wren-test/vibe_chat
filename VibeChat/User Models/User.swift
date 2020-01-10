@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Model for a user.
 class User {
     
     // MARK:- Properties

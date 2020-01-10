@@ -44,7 +44,7 @@ final class MessagingManager: FirestoreManager {
     /// Creates a listener for listening for new messages in a specified conversation.
     /// - Parameters:
     ///   - onConversation: The conversation to listen to
-    ///   - completion: Completion handler returning optional array of Message objects
+    ///   - completion: Completion handler passing optional array of Message objects
     /// - Returns:
     ///   - The listener registration object
     public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->()) -> ListenerRegistration {
@@ -56,7 +56,7 @@ final class MessagingManager: FirestoreManager {
             }
             DispatchQueue.main.async {
                 if let snapshot = snapshot?.documentChanges {
-                    self.snapshotDocumentsToMessageArray(snapshot, completion: completion)
+                    self.firestoreDocumentsToMessageArray(snapshot, completion: completion)
                 }
             }
         }
@@ -67,8 +67,8 @@ final class MessagingManager: FirestoreManager {
     /// Parses an array of Firebase DocumentChange objects to array of Message objects.
     /// - Parameters:
     ///   - documentChange: The document change to parse
-    ///   - completion: Completion handler returining array of optional Message objects
-    fileprivate func snapshotDocumentsToMessageArray(_ documentChange: [DocumentChange], completion: @escaping ([Message]?)->()) {
+    ///   - completion: Completion handler passing array of optional Message objects
+    fileprivate func firestoreDocumentsToMessageArray(_ documentChange: [DocumentChange], completion: @escaping ([Message]?)->()) {
         var messages = [Message]()
         documentChange.forEach { (document) in
             let messageData = document.document.data()

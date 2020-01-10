@@ -8,16 +8,13 @@
 
 import FirebaseFirestore
 
-enum userField: String {
-    typealias RawValue = String
-    case name, email, uid, vibe, status, isOnline, profileImageUrl
-}
-
+/// Class for managing queries to Firestore users location.
 final class UsersManager: FirestoreManager {
     
-    // MARK:- Singleton Setup
+    // MARK:- Properties
     
     static let shared = UsersManager()
+    
     private let collectionReference = FirestoreManager.db.collection(dbCollection.users.rawValue)
     
     // MARK:- Private Init (Force Singleton)
@@ -26,44 +23,45 @@ final class UsersManager: FirestoreManager {
     
     // MARK:- Methods
     
-    // REFACTOR TO TAKE IN USERS RATHER THAN DATA AS TO ADHERE TO DEPENDENCY INJECTION
-
+    /// Fetch all chatters from Firestore database.
+    /// - Parameter completion: Completion handler passing an optional array of User objects
     public func fetchChatters(completion: @escaping ([User]?)->()) {
         collectionReference.addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error fetching users: \(error.localizedDescription)")
                 completion(nil)
             }
-            if let snapshotArray = snapshot?.documents {
-                var users = [User]()
-                snapshotArray.forEach { (snapshot) in
-                    let userData = snapshot.data()
-                    let uid = userData["uid"] as! String
-                    if uid != CurrentUser.shared.data?.uid {
-                        let user = User(withDictionary: userData)
-                        users.append(user)
-                    }
-                }
-                DispatchQueue.main.async {
-                    completion(users)
-                }
-            }
+            guard let snapshotArray = snapshot?.documents else {return}
+            self.firestoreDocumentsToUsers(snapshotArray, completion: completion)
         }
     }
     
-    public func updateUserData(forUser: User, withData: [String: Any], completion: @escaping ()->()) {
-        collectionReference.document(forUser.uid).setData(withData) { (error) in
-            if let error = error {
-                print("Error updating values: \(error)")
-                completion()
+    /// Parse Firestore documents to Users.
+    /// - Parameters:
+    ///   - snapshotArray: Firestore documents to parse
+    ///   - completion: Completion handler passing an optional array of User objects
+    fileprivate func firestoreDocumentsToUsers(_ snapshotArray: [QueryDocumentSnapshot],
+                                               completion: @escaping ([User]?)->Void) {
+        var users = [User]()
+        snapshotArray.forEach { (snapshot) in
+            let userData = snapshot.data()
+            let uid = userData["uid"] as! String
+            if uid != CurrentUser.shared.data?.uid {
+                let user = User(withDictionary: userData)
+                users.append(user)
             }
-            completion()
+        }
+        DispatchQueue.main.async {
+            completion(users)
         }
     }
     
-    public func uploadUserData(user: User, completion: @escaping (Bool)->()) {
-        let data = user.toDict()
-        FirestoreManager.db.collection("users").document(user.uid).setData(data) { (error) in
+    /// Update user data in Firestore database.
+    /// - Parameters:
+    ///   - forUser: The user to update
+    ///   - completion: Completion handler passing success truth value
+    public func updateUserData(forUser: User, completion: @escaping (Bool)->Void) {
+        collectionReference.document(forUser.uid).setData(forUser.toDict()) { (error) in
             if let error = error {
                 print("Error uploading new user data: \(error.localizedDescription)")
                 completion(false)
@@ -73,15 +71,21 @@ final class UsersManager: FirestoreManager {
         }
     }
     
+    /// Toggle the current user's isOnline status.
+    /// - Parameter user: The user to update
     public func toggleIsOnline(user: User) {
-        collectionReference.document(user.uid).updateData([userField.isOnline.rawValue: user.isOnline]) { (error) in
+        collectionReference.document(user.uid).updateData(["isOnline": user.isOnline]) { (error) in
             if let error = error {
                 print("Error updating online status: \(error.localizedDescription)")
             }
         }
     }
     
-    public func fetchUserData(uid: String, completion: @escaping (User?)->()) {
+    /// Fetch user data.
+    /// - Parameters:
+    ///   - uid: The uid to fetch user data for
+    ///   - completion: Completion handler passing an optional User object
+    public func fetchUserData(uid: String, completion: @escaping (User?)->Void) {
         collectionReference.document(uid).getDocument { (snapshot, error) in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
@@ -97,6 +101,10 @@ final class UsersManager: FirestoreManager {
         }
     }
     
+    /// Create listener to listen to user data changes in the Firestore database.
+    /// - Parameters:
+    ///   - user: The user to listen to
+    ///   - completion: Completion handler passing an optional User object
     public func listenToUserData(user: User, completion: @escaping (User?)->()) -> ListenerRegistration {
         let listener = collectionReference.document(user.uid).addSnapshotListener { (snapshot, error) in
             if let error = error {

@@ -28,7 +28,7 @@ final class AuthenticationManager {
     ///   - name: Display name
     ///   - email: Email address
     ///   - password: Password
-    ///   - completion: Completion handler returning success truth value
+    ///   - completion: Completion handler passing success truth value
     public func createAccount(name: String, email: String, password: String, completion: @escaping (Bool)->()) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
@@ -39,7 +39,7 @@ final class AuthenticationManager {
             guard let uid = result?.user.uid else {return}
             let user = User(uid: uid, name: name, email: email)
             CurrentUser.shared.setCurrentUser(user)
-            UsersManager.shared.uploadUserData(user: user) { (success) in
+            UsersManager.shared.updateUserData(forUser: user) { (success) in
                 if success {
                     completion(true)
                 } else {
@@ -53,7 +53,7 @@ final class AuthenticationManager {
     /// - Parameters:
     ///   - email: Email address
     ///   - password: Password
-    ///   - completion: Completion handler returning optional User object
+    ///   - completion: Completion handler passing optional User object
     public func logIn(email: String, password: String, completion: @escaping (User?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
@@ -70,7 +70,7 @@ final class AuthenticationManager {
     }
     
     /// Log out current user from Firebase backend system.
-    /// - Parameter completion: Completion handler returning success truth value
+    /// - Parameter completion: Completion passing returning success truth value
     public func logOut(completion: @escaping (Bool)->()) {
         do {
             try Auth.auth().signOut()
@@ -82,7 +82,7 @@ final class AuthenticationManager {
     }
     
     /// Check to see if the previous user of this app & device is valid and already logged in to Firebase backend system.
-    /// - Parameter completion: Completion handler returning optional User object
+    /// - Parameter completion: Completion handler passing optional User object
     public func checkForValidUser(completion: @escaping (_ user: User?)->()) {
         if let uid = Auth.auth().currentUser?.uid {
             UsersManager.shared.fetchUserData(uid: uid) { (user) in

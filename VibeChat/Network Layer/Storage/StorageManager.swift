@@ -40,7 +40,7 @@ final class StorageManager {
     /// Upload the current user's profile image to Firebase Storage.
     /// - Parameters:
     ///   - forUser: The user for profile image update
-    ///   - completion: Completion handler returning optional URL object
+    ///   - completion: Completion handler passing optional URL object
     public func uploadProfileImage(forUser: User, completion: @escaping (URL?)->()) {
         guard let data = forUser.profileImage.jpegData(compressionQuality: 0.1) else {return}
         let imageRef = profileImagesRef.child(forUser.uid+".jpg")
@@ -59,7 +59,7 @@ final class StorageManager {
     /// Upload an image message to Firebase Storage
     /// - Parameters:
     ///   - image: Image to upload
-    ///   - completion: Completion handler returning optional URL object
+    ///   - completion: Completion handler passing optional URL object
     public func uploadImageMessage(image: UIImage, completion: @escaping (URL?)->()) {
         let imageRef = messageImagesRef.child(NSUUID().uuidString)
         uploadImage(image: image, toReference: imageRef) { (url) in
@@ -71,7 +71,7 @@ final class StorageManager {
     /// Upload a video thumbnail to Firebase Storage.
     /// - Parameters:
     ///   - image: Image to upload
-    ///   - completion: Completion handler returning an optional URL object
+    ///   - completion: Completion handler passing an optional URL object
     public func uploadVideoThumbnail(image: UIImage, completion: @escaping (URL?)->()) {
         let imageRef = videoThumbnailsRef.child(NSUUID().uuidString)
         uploadImage(image: image, toReference: imageRef) { (url) in
@@ -83,7 +83,7 @@ final class StorageManager {
     /// Upload a video message to Firebase Storage.
     /// - Parameters:
     ///   - video: Video data to upload
-    ///   - completion: Completion handler returning an optional URL object
+    ///   - completion: Completion handler passing an optional URL object
     public func uploadVideoMessage(video: Data, completion: @escaping (URL?)->()) -> StorageUploadTask {
         var videoName = NSUUID().uuidString
         videoName.append(contentsOf: ".mov")
@@ -112,7 +112,7 @@ final class StorageManager {
     /// - Parameters:
     ///   - image: Image to upload
     ///   - toReference: Reference to Firebase Storage location
-    ///   - completion: Completion handler returning an optional URL object
+    ///   - completion: Completion handler passing an optional URL object
     private func uploadImage(image: UIImage, toReference: StorageReference, completion: @escaping (URL?)->()) {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
         toReference.putData(imageData, metadata: nil) { (metadata, error) in
@@ -130,7 +130,7 @@ final class StorageManager {
     /// Download an image.
     /// - Parameters:
     ///   - url: Url to download image from
-    ///   - completion: Completion handler returning an optional UIImage object
+    ///   - completion: Completion handler passing an optional UIImage object
     public func downloadImageFromUrl(url: URL, completion: @escaping (UIImage?)->()) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
@@ -152,7 +152,7 @@ final class StorageManager {
     /// Download image Url from Firebase storage reference
     /// - Parameters:
     ///   - forReference: Firebase storage reference
-    ///   - completion: Compltion handler returning optional URL object
+    ///   - completion: Compltion handler passing optional URL object
     private func downloadImageUrl(forReference: StorageReference, completion: @escaping (URL?)->()) {
         forReference.downloadURL { (url, error) in
             if let error = error {

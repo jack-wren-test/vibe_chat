@@ -80,10 +80,10 @@ final class CurrentUser {
     
     /// Upates the database counterpart for the current user with any changes.
     /// - Parameter completion: Optional completion handler with empty default implementation
-    public func updateUserDataInDb(completion: @escaping (()->()) = {}) {
+    public func updateUserDataInDb(completion: @escaping (()->Void) = {}) {
         guard let data = data else {return}
-        UsersManager.shared.updateUserData(forUser: data, withData: data.toDict()) {
-            completion()
+        UsersManager.shared.updateUserData(forUser: data) { success in
+            if success { completion() }
         }
     }
     
