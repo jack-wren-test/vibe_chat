@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import FirebaseFirestore
+import Firebase
 import GiphyUISDK
 import AVFoundation
 
+/// Controller for the messages view.
 class MessagesController:   UIViewController {
-    
     
     // MARK:- IBOutlets
     
@@ -61,24 +61,18 @@ class MessagesController:   UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         GiphyUISDK.configure(apiKey: "vXS5bLeyzx4cOUgU9RVheieQLWXmVRoY")
         
+        configureInitialChatterHeader()
         collectionViewConfig()
         setupMessageListener()
         setupConverstationStatusListener()
-        
-        guard let chatter = conversation?.chatter else {return}
-        chatterProfileImageView.layer.borderWidth = chatter.isOnline ? 2 : 0
-        chatterProfileImageView.image = chatter.profileImage
-        chatterNameLabel.text = chatter.name
         
         registerForKeyboardWillShow()
         registerForKeyboardWillHide()
         setupTapToDismissKeyboard()
         
         setupObservers()
-        setupProfileButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
