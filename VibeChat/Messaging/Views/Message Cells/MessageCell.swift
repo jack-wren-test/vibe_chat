@@ -13,6 +13,16 @@ class MessageCell: UICollectionViewCell {
     
     // MARK:- Properties
     
+    let maxMessageWidth: CGFloat = 225
+    let cellBuffer: CGFloat = 2
+    let edgeBuffer: CGFloat = 10
+    
+    var message: Message? {
+        didSet {
+            setupMessage()
+        }
+    }
+    
     var incomingXConstraint: NSLayoutConstraint?
     var outgoingXConstraint: NSLayoutConstraint?
     var viewHeightAnchor: NSLayoutConstraint?
@@ -21,8 +31,8 @@ class MessageCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .clear
-        layoutIfNeeded()
+        self.backgroundColor = .clear
+        self.layoutIfNeeded()
     }
     
     required init?(coder: NSCoder) {
@@ -30,21 +40,25 @@ class MessageCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        viewHeightAnchor = nil
+        self.viewHeightAnchor = nil
     }
     
     // MARK:- Methods
     
+    public func setupMessage() {
+        guard let message = message, let user = CurrentUser.shared.data else {return}
+        let isOutgoingMessage = message.fromUid == user.uid
+        self.layoutMessage(isOutgoingMessage)
+    }
+    
     public func layoutMessage(_ isOutgoingMessage: Bool) {
-        
         if isOutgoingMessage {
-            incomingXConstraint?.isActive = false
-            outgoingXConstraint?.isActive = true
+            self.incomingXConstraint?.isActive = false
+            self.outgoingXConstraint?.isActive = true
         } else {
-            outgoingXConstraint?.isActive = false
-            incomingXConstraint?.isActive = true
+            self.outgoingXConstraint?.isActive = false
+            self.incomingXConstraint?.isActive = true
         }
-        
     }
     
 }

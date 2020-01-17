@@ -1,0 +1,6 @@
+framework module Pods_VibeChat_VibeChatTests {
+  umbrella header "Pods-VibeChat-VibeChatTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

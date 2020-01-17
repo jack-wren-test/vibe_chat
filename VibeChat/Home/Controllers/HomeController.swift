@@ -9,8 +9,8 @@
 import UIKit
 
 /// Protocol for delegating tasks to the HomeController.
-protocol HomeDelegate {
-    func presentNewChatWindow(conversation: Conversation)
+protocol HomeDelegate: AnyObject {
+    func presentNewWindow(conversation: Conversation)
     func performLogOut()
 }
 
@@ -19,13 +19,13 @@ class HomeController: UIViewController {
     
     // MARK:- IBOutlets
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var profileButton: UIButton!
-    @IBOutlet weak var newChatButton: UIButton!
+    @IBOutlet public weak var tableView: UITableView!
+    @IBOutlet public weak var profileButton: UIButton!
+    @IBOutlet public weak var newChatButton: UIButton!
     
     // MARK:- Properties
     
-    var isNewUser = false
+    var isNewUser: Bool?
     var conversationsDict: [String: Conversation] = [:]
     var orderedConversations: [Conversation]?
     
@@ -35,17 +35,17 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
-        tableViewConfig()
-        listenForConversationChanges()
+        self.navigationController?.isNavigationBarHidden = true
+        self.tableViewConfig()
+        self.listenForConversationChanges()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
-        print("Is new user: \(isNewUser)")
+        guard let isNewUser = self.isNewUser else {return}
         if isNewUser {
             performSegue(withIdentifier: "ProfileSegue", sender: self)
-            isNewUser = !isNewUser
+            self.isNewUser = !isNewUser
         }
     }
     
@@ -55,12 +55,12 @@ class HomeController: UIViewController {
     
     // MARK:- IBActions
     
-    @IBAction func profileButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "ProfileSegue", sender: self)
+    @IBAction private func profileButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "ProfileSegue", sender: self)
     }
     
-    @IBAction func newChatButtonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "NewConversationSegue", sender: self)
+    @IBAction private func newChatButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "NewConversationSegue", sender: self)
     }
     
 }

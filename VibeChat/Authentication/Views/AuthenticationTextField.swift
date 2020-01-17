@@ -20,5 +20,30 @@ public class AuthenticationTextField: UITextField {
             self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : placeholderTextColor ?? UIColor.lightGray])
         }
     }
-
+    
+    let badInputIndicator: UIImageView = {
+        let indicator = UIImageView(image: #imageLiteral(resourceName: "warningIcon"))
+        indicator.tintColor = UIColor(named: "decoration")
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isHidden = true
+        return indicator
+    }()
+    
+    // MARK:- Lifecycle
+    
+    public override func awakeFromNib() {
+        addBadInputIndicator()
+    }
+    
+    // MARK:- Methods
+    
+    private func addBadInputIndicator() {
+        self.addSubview(badInputIndicator)
+        
+        self.badInputIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        self.badInputIndicator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+        self.badInputIndicator.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        self.badInputIndicator.widthAnchor.constraint(equalToConstant: 36).isActive = true
+    }
+    
 }

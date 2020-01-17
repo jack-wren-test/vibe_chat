@@ -16,30 +16,30 @@ class DateHeaderLabel: UILabel {
     override var intrinsicContentSize: CGSize {
         let originalContentSize = super.intrinsicContentSize
         let height = originalContentSize.height + 14
-        layer.cornerRadius = height / 2
+        self.layer.cornerRadius = height / 2
         return CGSize(width: originalContentSize.width + 16, height: height)
     }
     
     var date: Date? {
         didSet {
-            configureView()
+            self.configureView()
         }
     }
     
     // MARK:- Methods
     
-    fileprivate func configureView() {
-        translatesAutoresizingMaskIntoConstraints = false
-        clipsToBounds = true
-        backgroundColor = UIColor(named: "decoration")
-        text = formatDate()
-        textColor = UIColor(named: "background")
-        textAlignment = .center
-        font = .systemFont(ofSize: 14, weight: .light)
+    private func configureView() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.clipsToBounds = true
+        self.backgroundColor = UIColor(named: "decoration")
+        self.text = self.formatDate()
+        self.textColor = UIColor(named: "background")
+        self.textAlignment = .center
+        self.font = .systemFont(ofSize: 14, weight: .light)
         
     }
     
-    fileprivate func formatDate() -> String {
+    private func formatDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         if let date = date {

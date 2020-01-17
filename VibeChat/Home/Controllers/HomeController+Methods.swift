@@ -11,9 +11,9 @@ import UIKit
 extension HomeController {
     
     public func tableViewConfig() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = 80
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.rowHeight = 80
     }
     
     public func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
@@ -33,9 +33,6 @@ extension HomeController {
         case "NewConversationSegue":
             let vc = segue.destination as! NewConversationController
             vc.homeDelegate = self
-            UsersManager.shared.fetchChatters { (chatters) in
-                if let chatters = chatters { vc.chatters = chatters }
-            }
         case "MessagesSegue":
             let vc = segue.destination as! MessagesController
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -48,10 +45,12 @@ extension HomeController {
     }
     
     public func listenForConversationChanges() {
-        CurrentUser.shared.listenToConversations { (conversations) in
+        CurrentUser.shared.listenToConversations { [weak self] (conversations) in
+            guard let self = self else {return}
             conversations.forEach { self.conversationsDict[$0.uid] = $0 }
             self.orderedConversations = self.orderConversationsByLatestMesage(conversations: self.conversationsDict)
             self.tableView.reloadData()
+            self.addNoConversationsCoverIfNeeded(orderedConversations: self.orderedConversations)
         }
     }
     
@@ -61,6 +60,18 @@ extension HomeController {
             dict[conversation.uid] = conversation
         }
         return dict
+    }
+    
+    public func addNoConversationsCoverIfNeeded(orderedConversations: [Conversation]?) {
+        var noConversationsCover: NoConversationsCoverView?
+        if orderedConversations?.count == 0 || orderedConversations == nil {
+            let noConversationsCover = NoConversationsCoverView()
+            view.addSubview(noConversationsCover)
+            noConversationsCover.constraintsEqual(toView: tableView)
+        } else {
+            noConversationsCover?.removeFromSuperview()
+            noConversationsCover = nil
+        }
     }
     
 }

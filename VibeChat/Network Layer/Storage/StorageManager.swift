@@ -9,13 +9,10 @@
 import Foundation
 import Firebase
 
-
 /// Enumeration for the various Firebase storage locations used in application.
 enum storageLocation: String {
-    typealias RawValue = String
     case profileImages, messageImages, videos, videoThumbnails
 }
-
 
 /// Class for managing requests from the Firebase Storage API.
 final class StorageManager {
@@ -41,18 +38,17 @@ final class StorageManager {
     /// - Parameters:
     ///   - forUser: The user for profile image update
     ///   - completion: Completion handler passing optional URL object
-    public func uploadProfileImage(forUser: User, completion: @escaping (URL?)->()) {
+    public func uploadProfileImage(forUser: User, completion: @escaping (URL?)->Void) {
         guard let data = forUser.profileImage.jpegData(compressionQuality: 0.1) else {return}
-        let imageRef = profileImagesRef.child(forUser.uid+".jpg")
-        imageRef.putData(data, metadata: nil) { (metadata, error) in
+        let imageRef = self.profileImagesRef.child(forUser.uid+".jpg")
+        imageRef.putData(data, metadata: nil) { [weak self] metadata, error in
+            guard let self = self else {return}
             if let error = error {
                 print("Error uploading image data: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            self.downloadImageUrl(forReference: imageRef) { (url) in
-                completion(url)
-            }
+            self.downloadUrl(forReference: imageRef, completion: completion)
         }
     }
     
@@ -60,23 +56,25 @@ final class StorageManager {
     /// - Parameters:
     ///   - image: Image to upload
     ///   - completion: Completion handler passing optional URL object
-    public func uploadImageMessage(image: UIImage, completion: @escaping (URL?)->()) {
-        let imageRef = messageImagesRef.child(NSUUID().uuidString)
-        uploadImage(image: image, toReference: imageRef) { (url) in
-            if let url = url { completion(url); return }
-            completion(nil)
+    public func uploadImageMessage(image: UIImage,
+                                   completion: @escaping (URL?)->Void) -> StorageUploadTask? {
+        let imageRef = self.messageImagesRef.child(NSUUID().uuidString)
+        let uploadTask = uploadImage(image: image, toReference: imageRef) { url in
+            guard let url = url else {completion(nil); return }
+            completion(url)
         }
+        return uploadTask
     }
     
     /// Upload a video thumbnail to Firebase Storage.
     /// - Parameters:
     ///   - image: Image to upload
     ///   - completion: Completion handler passing an optional URL object
-    public func uploadVideoThumbnail(image: UIImage, completion: @escaping (URL?)->()) {
-        let imageRef = videoThumbnailsRef.child(NSUUID().uuidString)
-        uploadImage(image: image, toReference: imageRef) { (url) in
-            if let url = url { completion(url); return }
-            completion(nil)
+    public func uploadVideoThumbnail(image: UIImage, completion: @escaping (URL?)->Void) {
+        let imageRef = self.videoThumbnailsRef.child(NSUUID().uuidString)
+        let _ = uploadImage(image: image, toReference: imageRef) { url in
+            guard let url = url else {completion(nil); return }
+            completion(url)
         }
     }
     
@@ -84,28 +82,39 @@ final class StorageManager {
     /// - Parameters:
     ///   - video: Video data to upload
     ///   - completion: Completion handler passing an optional URL object
-    public func uploadVideoMessage(video: Data, completion: @escaping (URL?)->()) -> StorageUploadTask {
+    public func uploadVideoMessage(video: Data, completion: @escaping (URL?)->Void) -> StorageUploadTask {
         var videoName = NSUUID().uuidString
         videoName.append(contentsOf: ".mov")
-        let videoRef = videosRef.child(videoName)
-        let task = videoRef.putData(video, metadata: nil) { (metadata, error) in
+        let videoRef = self.videosRef.child(videoName)
+        let task = videoRef.putData(video, metadata: nil) { [weak self] metadata, error in
+            guard let self = self else {return}
             if let error = error {
                 print("Error uploading video: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            videoRef.downloadURL { (url, error) in
-                if let error = error {
-                    print("Error downloading video url: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-                if let url = url {
-                    completion(url.absoluteURL)
-                }
-            }
+            self.downloadUrl(forReference: videoRef, completion: completion)
         }
         return task
+    }
+    
+    /// Download an image.
+    /// - Parameters:
+    ///   - url: Url to download image from
+    ///   - completion: Completion handler passing an optional UIImage object
+    public func downloadImageFromUrl(url: URL, completion: @escaping (UIImage?)->Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error downloading image: \(error)")
+                completion(nil)
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {completion(nil); return}
+            DispatchQueue.main.async {
+                completion(image)
+                return
+            }
+        }.resume()
     }
     
     /// Upload an image to specified reference.
@@ -113,55 +122,34 @@ final class StorageManager {
     ///   - image: Image to upload
     ///   - toReference: Reference to Firebase Storage location
     ///   - completion: Completion handler passing an optional URL object
-    private func uploadImage(image: UIImage, toReference: StorageReference, completion: @escaping (URL?)->()) {
-        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
-        toReference.putData(imageData, metadata: nil) { (metadata, error) in
+    private func uploadImage(image: UIImage,
+                             toReference: StorageReference,
+                             completion: @escaping (URL?)->Void) -> StorageUploadTask? {
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return nil}
+        let storageTask = toReference.putData(imageData, metadata: nil) { [weak self] metadata, error in
+            guard let self = self else {return}
             if let error = error {
                 print("Error occured uploading image message: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            self.downloadImageUrl(forReference: toReference) { (url) in
-                completion(url)
-            }
+            self.downloadUrl(forReference: toReference, completion: completion)
         }
-    }
-    
-    /// Download an image.
-    /// - Parameters:
-    ///   - url: Url to download image from
-    ///   - completion: Completion handler passing an optional UIImage object
-    public func downloadImageFromUrl(url: URL, completion: @escaping (UIImage?)->()) {
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("Error downloading image: \(error)")
-                completion(nil)
-                return
-            } else {
-                if let image = UIImage(data: data!) {
-                    DispatchQueue.main.async {
-                        completion(image)
-                    }
-                } else {
-                    completion(nil)
-                }
-            }
-        }.resume()
+        return storageTask
     }
     
     /// Download image Url from Firebase storage reference
     /// - Parameters:
     ///   - forReference: Firebase storage reference
     ///   - completion: Compltion handler passing optional URL object
-    private func downloadImageUrl(forReference: StorageReference, completion: @escaping (URL?)->()) {
-        forReference.downloadURL { (url, error) in
+    private func downloadUrl(forReference: StorageReference, completion: @escaping (URL?)->Void) {
+        forReference.downloadURL { url, error in
             if let error = error {
                 print("Error downloading image url: \(error)")
                 completion(nil)
             }
-            if let url = url {
-                completion(url)
-            }
+            guard let url = url else {return}
+            completion(url)
         }
     }
     

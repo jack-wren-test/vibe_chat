@@ -10,42 +10,42 @@ import Foundation
 import Firebase
 
 /// Model for a gif baed message.
-class GiphyMessage: Message, ImageBasedMessage {
+final class GiphyMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties
     
-    var giphId: String?
-    var aspectRatio: CGFloat
+    private(set) var giphId: String
+    private(set) var aspectRatio: CGFloat
     
     // MARK:- Init
     
-    init(giphId: String, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+    init(giphId: String, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, conversationId: String) {
         self.giphId = giphId
         self.aspectRatio = aspectRatio
-        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        setType(type: .giphyMessage)
-        updateDictionaryRepresentation()
+        
+        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, conversationId: conversationId)
+        self.setType(type: .giphyMessage)
+        self.updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String : Any]) {
-        giphId = withDictionary["giphId"] as? String
+        self.giphId = withDictionary["giphId"] as! String
         if let aspectRatio = withDictionary["aspectRatio"] as? CGFloat {
             self.aspectRatio = aspectRatio
         } else {
-            self.aspectRatio = CGFloat(16/9)
+            self.aspectRatio = CGFloat(1)
         }
+        
         super.init(withDictionary: withDictionary)
-        setType(type: .giphyMessage)
-        updateDictionaryRepresentation()
+        self.setType(type: .giphyMessage)
+        self.updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
     private func updateDictionaryRepresentation() {
-        if let giphId = self.giphId {
-            dictionaryRepresentation["giphId"] = giphId
-        }
-        dictionaryRepresentation["aspectRatio"] = aspectRatio
+        self.dictionaryRepresentation["giphId"] = self.giphId
+        self.dictionaryRepresentation["aspectRatio"] = self.aspectRatio
     }
     
 }

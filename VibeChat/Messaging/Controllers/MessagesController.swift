@@ -12,28 +12,25 @@ import GiphyUISDK
 import AVFoundation
 
 /// Controller for the messages view.
-class MessagesController:   UIViewController {
+class MessagesController: UIViewController {
     
     // MARK:- IBOutlets
     
-    @IBOutlet weak var chatterNameLabel: UILabel!
-    @IBOutlet weak var chatterProfileImageView: CircularImageView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var messageTextField: AuthenticationTextField!
-    @IBOutlet weak var textEntryBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var specialMessageLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var progressBarWidthAnchor: NSLayoutConstraint!
+    @IBOutlet public weak var chatterNameLabel: UILabel!
+    @IBOutlet public weak var chatterProfileImageView: CircularImageView!
+    @IBOutlet public weak var collectionView: UICollectionView!
+    @IBOutlet public weak var messageTextField: AuthenticationTextField!
+    @IBOutlet public weak var textEntryBottomConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var specialMessageLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var progressBarWidthAnchor: NSLayoutConstraint!
     
     // MARK:- Properties
     
     let headerReuseId = "headerView"
-    let textReuseId = "textMessageCell"
-    let imageReuseId = "imageMessageCell"
-    let videoReuseId = "videoMessageCell"
-    let giphyReuseId = "giphyMessageCell"
     
     var messages = [[Message]]()
+    var organiser: MessageOrganiser?
     var conversationListener: ListenerRegistration?
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
@@ -63,25 +60,25 @@ class MessagesController:   UIViewController {
         super.viewDidLoad()
         GiphyUISDK.configure(apiKey: "vXS5bLeyzx4cOUgU9RVheieQLWXmVRoY")
         
-        configureInitialChatterHeader()
-        collectionViewConfig()
-        setupMessageListener()
-        setupConverstationStatusListener()
-        
-        registerForKeyboardWillShow()
-        registerForKeyboardWillHide()
-        setupTapToDismissKeyboard()
-        
-        setupObservers()
+        self.configureInitialChatterHeader()
+        self.collectionViewConfig()
+        self.setupMessageListener()
+        self.setupConverstationStatusListener()
+
+        self.registerForKeyboardWillShow()
+        self.registerForKeyboardWillHide()
+        self.setupTapToDismissKeyboard()
+
+        self.setupObservers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        scrollToBottomOfMessages()
+        self.scrollToBottomOfMessages()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        conversationListener?.remove()
-        conversationStatusListener?.remove()
+        self.conversationListener?.remove()
+        self.conversationStatusListener?.remove()
     }
     
     deinit {
@@ -90,20 +87,18 @@ class MessagesController:   UIViewController {
     
     // MARK:- @IBActions
     
-    @IBAction func backButtonPressed(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+    @IBAction private func backButtonPressed(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func vibeButtonPressed(_ sender: UIButton) {
-        print("Vibe button pressed")
-    }
-    
-    @IBAction func sendButtonPressed(_ sender: UIButton) {
-        guard let conversation = conversation else {return}
-        if messageTextField.text != "" {
-            if let text = messageTextField.text, let toUid = conversation.chatter?.uid, let fromUid = CurrentUser.shared.data?.uid {
-                messageTextField.text = ""
-                sendTextMessage(conversation, text, toUid, fromUid)
+    @IBAction private func sendButtonPressed(_ sender: UIButton) {
+        guard let conversation = self.conversation else {return}
+        guard let text = self.messageTextField.text else {return}
+        if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if  let toUid = conversation.chatter?.uid,
+                let fromUid = CurrentUser.shared.data?.uid {
+                self.messageTextField.text = ""
+                self.checkForConversationAndSendTextMessage(conversation, text, toUid, fromUid)
             }
         }
     }

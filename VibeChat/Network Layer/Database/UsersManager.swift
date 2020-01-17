@@ -25,8 +25,9 @@ final class UsersManager: FirestoreManager {
     
     /// Fetch all chatters from Firestore database.
     /// - Parameter completion: Completion handler passing an optional array of User objects
-    public func fetchChatters(completion: @escaping ([User]?)->()) {
-        collectionReference.addSnapshotListener { (snapshot, error) in
+    public func fetchChatters(completion: @escaping ([User]?)->Void) {
+        self.collectionReference.addSnapshotListener { [weak self] snapshot, error in
+            guard let self = self else {return}
             if let error = error {
                 print("Error fetching users: \(error.localizedDescription)")
                 completion(nil)
@@ -41,7 +42,7 @@ final class UsersManager: FirestoreManager {
     ///   - snapshotArray: Firestore documents to parse
     ///   - completion: Completion handler passing an optional array of User objects
     fileprivate func firestoreDocumentsToUsers(_ snapshotArray: [QueryDocumentSnapshot],
-                                               completion: @escaping ([User]?)->Void) {
+                                               completion: @escaping ([User])->Void) {
         var users = [User]()
         snapshotArray.forEach { (snapshot) in
             let userData = snapshot.data()
@@ -60,23 +61,36 @@ final class UsersManager: FirestoreManager {
     /// - Parameters:
     ///   - forUser: The user to update
     ///   - completion: Completion handler passing success truth value
-    public func updateUserData(forUser: User, completion: @escaping (Bool)->Void) {
-        collectionReference.document(forUser.uid).setData(forUser.toDict()) { (error) in
+    public func updateUserData(forUser: User, completion: @escaping (_ error: Error?)->Void) {
+        self.collectionReference.document(forUser.uid).setData(forUser.toDict()) { error in
             if let error = error {
-                print("Error uploading new user data: \(error.localizedDescription)")
-                completion(false)
-                return
+                completion(error)
+            } else {
+                completion(nil)
             }
-            completion(true)
         }
+    }
+    
+    /// Delete user data in the Firestore database.
+    /// - Parameters:
+    ///   - forUser: The user to delete.
+    public func deleteUserData(forUid: String) {
+        self.collectionReference.document(forUid).delete()
     }
     
     /// Toggle the current user's isOnline status.
     /// - Parameter user: The user to update
-    public func toggleIsOnline(user: User) {
-        collectionReference.document(user.uid).updateData(["isOnline": user.isOnline]) { (error) in
+    public func toggleIsOnline(user: User, completion: ((Bool)->Void)?) {
+        self.collectionReference.document(user.uid).updateData(["isOnline": user.isOnline]) { error in
             if let error = error {
                 print("Error updating online status: \(error.localizedDescription)")
+                if let completion = completion {
+                    completion(false)
+                }
+                return
+            }
+            if let completion = completion {
+                completion(true)
             }
         }
     }
@@ -86,7 +100,7 @@ final class UsersManager: FirestoreManager {
     ///   - uid: The uid to fetch user data for
     ///   - completion: Completion handler passing an optional User object
     public func fetchUserData(uid: String, completion: @escaping (User?)->Void) {
-        collectionReference.document(uid).getDocument { (snapshot, error) in
+        self.collectionReference.document(uid).getDocument { snapshot, error in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
                 completion(nil)
@@ -106,7 +120,7 @@ final class UsersManager: FirestoreManager {
     ///   - user: The user to listen to
     ///   - completion: Completion handler passing an optional User object
     public func listenToUserData(user: User, completion: @escaping (User?)->()) -> ListenerRegistration {
-        let listener = collectionReference.document(user.uid).addSnapshotListener { (snapshot, error) in
+        let listener = self.collectionReference.document(user.uid).addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
                 completion(nil)

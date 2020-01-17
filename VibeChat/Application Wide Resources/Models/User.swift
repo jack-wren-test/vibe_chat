@@ -13,31 +13,29 @@ class User {
     
     // MARK:- Properties
     
-    private let profileImageCache = NSCache<NSString, UIImage>()
+    private(set) var uid: String
     
     public var name: String
-    public var uid: String
-    public var vibe: String?
     public var email: String
+    public var vibe: String?
+    
     public var profileImage = UIImage(imageLiteralResourceName: "profile").withRenderingMode(.alwaysTemplate).withTintColor(.white)
     
     public var profileImageUrl: URL? {
         didSet {
-            profileImageFromChacheOrDb { (image) in
-                self.profileImage = image
+            profileImageFromChacheOrDb { [weak self] (image) in
+                self?.profileImage = image
             }
         }
     }
     
     public var isOnline: Bool {
         didSet {
-            UsersManager.shared.toggleIsOnline(user: self)
+            UsersManager.shared.toggleIsOnline(user: self, completion: nil)
         }
     }
     
     // MARK:- Init
-    
-    
     
     /// Init from submitted details. For use when a user is created with the application.
     /// - Parameters:
@@ -51,20 +49,19 @@ class User {
         self.isOnline = true // If we were initialising this way, the current user is always online.
     }
     
-    
     /// Init from a [String: Any] dictionary. For use when creating a user object with details from Firestore.
     /// - Parameter withDictionary: Dictionary of user parameters.
     init(withDictionary: [String: Any]) {
-        name = withDictionary["name"] as! String
-        uid = withDictionary["uid"] as! String
-        email = withDictionary["email"] as! String
-        vibe = withDictionary["vibe"] as? String
-        isOnline = withDictionary["isOnline"] as! Bool
-        if let profileImageUrlString = withDictionary["profileImageUrl"] as? String {
-            self.profileImageUrl = URL(string: profileImageUrlString)
-            profileImageFromChacheOrDb { (image) in
-                self.profileImage = image
-            }
+        self.name = withDictionary["name"] as! String
+        self.uid = withDictionary["uid"] as! String
+        self.email = withDictionary["email"] as! String
+        self.vibe = withDictionary["vibe"] as? String
+        self.isOnline = withDictionary["isOnline"] as! Bool
+        guard let profileImageUrlString = withDictionary["profileImageUrl"] as? String else {return}
+        self.profileImageUrl = URL(string: profileImageUrlString)
+        profileImageFromChacheOrDb { [weak self] image in
+            guard let self = self else {return}
+            self.profileImage = image
         }
     }
     
@@ -72,31 +69,28 @@ class User {
     
     /// Rreturn a dictionary object representation of the user.
     public func toDict() -> [String: Any] {
-        var dict: [String: Any] = ["name": name, "uid": uid,
-                                   "email": email, "isOnline": isOnline]
+        var dict: [String: Any] = ["name": self.name, "uid": self.uid,
+                                   "email": self.email, "isOnline": self.isOnline]
         addToDictIfNotNil(&dict, profileImageUrl?.absoluteString, "profileImageUrl")
         addToDictIfNotNil(&dict, vibe, "vibe")
         return dict
     }
-    
     
     /// Acquire the users profile image, checks the current imageUrl for the user and returns the cached image or
     /// fetches image from Firebase storage.
     /// - Parameter completion: Completes with a returned UIImage.
     public func profileImageFromChacheOrDb(completion: @escaping (_ image: UIImage)->()) {
         guard let url = profileImageUrl else {return}
-        if let image = profileImageCache.object(forKey: url.absoluteString as NSString) {
+        if let image = imageCache.object(forKey: url.absoluteString as NSString) {
             completion(image)
         } else {
-            StorageManager.shared.downloadImageFromUrl(url: url) { [weak self] (image) in
-                if let image = image {
-                    completion(image)
-                    self?.profileImageCache.setObject(image, forKey: url.absoluteString as NSString)
-                }
+            StorageManager.shared.downloadImageFromUrl(url: url) { image in
+                guard let image = image else {return}
+                completion(image)
+                imageCache.setObject(image, forKey: url.absoluteString as NSString)
             }
         }
     }
-    
     
     /// Convenience method for adding an optional value to dictionary if != nil.
     /// - Parameters:
@@ -104,9 +98,8 @@ class User {
     ///   - item: The object to be added.
     ///   - key: The key for accessing the item.
     private func addToDictIfNotNil(_ dict: inout Dictionary<String, Any>, _ item: Any?, _ key: String) {
-        if let item = item {
-            dict[key] = item
-        }
+        guard let item = item else {return}
+        dict[key] = item
     }
     
     // ^ Useful in other areas of progran, extend dictionary?

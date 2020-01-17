@@ -22,30 +22,44 @@ final class AuthenticationManager {
     
     // MARK:- Methods
     
-    /// Create an account in the Firebase backend system using credentials.
-    /// Logs in, and sets the current user if successful.
+    /// Create an account in the Firebase backend system using credentials. Performs authentication, sets initial user data and logs in user to app.
+    /// Performs authentication, sets initial user data and logs in user to app if successfull.
     /// - Parameters:
     ///   - name: Display name
     ///   - email: Email address
     ///   - password: Password
     ///   - completion: Completion handler passing success truth value
-    public func createAccount(name: String, email: String, password: String, completion: @escaping (Bool)->()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+    public func createVibeChatAccount(name: String,
+                                      email: String,
+                                      password: String,
+                                      completion: @escaping (_ error: Error?)->Void) {
+        authenticateNewAccout(withEmail: email, password: password) { [weak self] uid, error  in
+            guard let self = self else {return}
             if let error = error {
-                print("Error creating user: \(error.localizedDescription)")
-                completion(false)
+                completion(error)
+                return
+            }
+            guard let uid = uid else {return}
+            let user = User(uid: uid, name: name, email: email)
+            self.updateCurrentUser(user, completion: completion)
+        }
+    }
+    
+    /// Authenticates a new user.
+    /// - Parameters:
+    ///   - withEmail: The email to authenticate with
+    ///   - password: Password associated with account
+    ///   - completion: Completion handler passing optional string containing the user uid
+    public func authenticateNewAccout(withEmail: String,
+                                      password: String,
+                                      completion: @escaping (_ uid: String?, _ error: Error?)->Void) {
+        Auth.auth().createUser(withEmail: withEmail, password: password) { result, error in
+            if let error = error {
+                completion(nil, error)
                 return
             }
             guard let uid = result?.user.uid else {return}
-            let user = User(uid: uid, name: name, email: email)
-            CurrentUser.shared.setCurrentUser(user)
-            UsersManager.shared.updateUserData(forUser: user) { (success) in
-                if success {
-                    completion(true)
-                } else {
-                    completion(false)
-                }
-            }
+            completion(uid, nil)
         }
     }
     
@@ -54,24 +68,25 @@ final class AuthenticationManager {
     ///   - email: Email address
     ///   - password: Password
     ///   - completion: Completion handler passing optional User object
-    public func logIn(email: String, password: String, completion: @escaping (User?)->()) {
-        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+    public func logIn(email: String,
+                      password: String,
+                      completion: @escaping (_ user: User?, _ error: Error?)->Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
-                print("Error logging in: \(error.localizedDescription)")
-                completion(nil)
+                completion(nil, error)
+                return
             }
-            if let uid = result?.user.uid {
-                UsersManager.shared.fetchUserData(uid: uid) { (user) in
-                    user?.isOnline = true
-                    completion(user)
-                }
+            guard let uid = result?.user.uid  else {return}
+            UsersManager.shared.fetchUserData(uid: uid) { (user) in
+                user?.isOnline = true
+                completion(user, nil)
             }
         }
     }
     
     /// Log out current user from Firebase backend system.
-    /// - Parameter completion: Completion passing returning success truth value
-    public func logOut(completion: @escaping (Bool)->()) {
+    /// - Parameter completion: Completion handler passing returning success truth value
+    public func logOut(completion: @escaping (Bool)->Void) {
         do {
             try Auth.auth().signOut()
             completion(true)
@@ -81,22 +96,42 @@ final class AuthenticationManager {
         }
     }
     
+    /// Deletes the currently logged in user from Firebase authentication section
+    /// - Parameter completion: Completion handler passing returning success truth value
+    public func deleteAccount(completion: @escaping ((Bool)->Void) = {_ in}) {
+        guard let user = Auth.auth().currentUser else {return}
+        user.delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            UsersManager.shared.deleteUserData(forUid: user.uid)
+            completion(true)
+        }
+    }
+    
     /// Check to see if the previous user of this app & device is valid and already logged in to Firebase backend system.
     /// - Parameter completion: Completion handler passing optional User object
-    public func checkForValidUser(completion: @escaping (_ user: User?)->()) {
-        if let uid = Auth.auth().currentUser?.uid {
-            UsersManager.shared.fetchUserData(uid: uid) { (user) in
-                if let user = user {
-                    user.isOnline = true
-                    DispatchQueue.main.async {
-                        completion(user)
-                    }
-                } else {
-                    completion(nil)
-                }
+    public func checkForValidUser(completion: @escaping (_ user: User?)->Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        UsersManager.shared.fetchUserData(uid: uid) { user in
+            guard let user = user else {return}
+            user.isOnline = true
+            DispatchQueue.main.async {
+                completion(user)
             }
-        } else {
-            completion(nil)
+        }
+    }
+    
+    fileprivate func updateCurrentUser(_ user: User, completion: @escaping (_ error: Error?)->Void) {
+        CurrentUser.shared.setCurrentUser(user)
+        UsersManager.shared.updateUserData(forUser: user) { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
+            }
         }
     }
     

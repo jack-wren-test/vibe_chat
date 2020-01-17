@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "61BB8DA02398020400EEEEB0"
+               BlueprintIdentifier = "61ADBD0223CC8AC2003DDD53"
                BuildableName = "VibeChatTests.xctest"
                BlueprintName = "VibeChatTests"
                ReferencedContainer = "container:VibeChat.xcodeproj">

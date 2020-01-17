@@ -13,9 +13,9 @@ class ChatterProfileController: UIViewController {
     
     // MARK:- IBOutlets
     
-    @IBOutlet weak var profileImageView: CircularImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var vibeLabel: UILabel!
+    @IBOutlet public weak var profileImageView: CircularImageView!
+    @IBOutlet public weak var nameLabel: UILabel!
+    @IBOutlet public weak var vibeLabel: UILabel!
     
     // MARK:- Properties
     
@@ -25,7 +25,7 @@ class ChatterProfileController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViews() 
+        self.configureViews()
     }
     
     deinit {
@@ -34,12 +34,12 @@ class ChatterProfileController: UIViewController {
     
     // MARK:- Methods
     
-    fileprivate func configureViews() {
-        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+    private func configureViews() {
+        self.profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         if let chatter = chatter {
-            profileImageView.image = chatter.profileImage
-            nameLabel.text = chatter.name
-            vibeLabel.text = chatter.vibe
+            self.profileImageView.image = chatter.profileImage
+            self.nameLabel.text = chatter.name
+            self.vibeLabel.text = chatter.vibe
         }
     }
 

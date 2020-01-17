@@ -22,62 +22,33 @@ final class UserMessagesManager {
     private func Init() {}
     
     // MARK:- Methods
-    
-    /// Check for existing conversation in the Firestore database and create a new one if nessesary.
-    /// - Parameters:
-    ///   - conversation: The conversation object to create data for in the database
-    ///   - completion: Completion handler passing an optional Conversation object
-    public func createConversationIfNeeded(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
-        guard let uid = CurrentUser.shared.data?.uid else {return}
-        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
-            if let error = error {
-                print("Error checking for message threads: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            guard let userConversations = snapshot?.documents else {completion(nil); return}
-            self.checkForExistingConversation(conversation, userConversations, completion: completion)
-        }
-    }
-    
-    /// Check a users conversation list for an existing conversation.
-    /// - Parameters:
-    ///   - conversation: The Onversation object to check for
-    ///   - userConversations: The conversations for the current user in the database
-    ///   - completion: Completion handler passing a Conversation object
-    fileprivate func checkForExistingConversation(_ conversation: Conversation,
-                                                  _ userConversations: [QueryDocumentSnapshot],
-                                                  completion: @escaping (_ conversation: Conversation?)->Void) {
-        guard let uid = CurrentUser.shared.data?.uid else {return}
-        guard let chatter = conversation.chatter else {return}
-        let potentialConversationIds = [uid+"_"+chatter.uid, chatter.uid+"_"+uid]
-        for conversation in userConversations {
-            for potentialConversationId in potentialConversationIds {
-                if conversation.documentID == potentialConversationId {
-                    completion(nil)
-                    return
-                }
-            }
-        }
-        self.createConversation(conversation: conversation, completion: completion)
-    }
-    
+
     /// Create a conversation in the Firestore database for both users.
     /// - Parameters:
     ///   - conversation: The Conversation object to populate from
     ///   - completion: Completion handler passing an optional Conversation object
-    fileprivate func createConversation(conversation: Conversation, completion: @escaping (_ conversation: Conversation?)->()) {
+    public func createConversation(conversation: Conversation, completion: @escaping (_ success: Bool)->Void) {
         let group = DispatchGroup()
         group.enter()
-        publishConversation(conversation.userUids[0], conversation.uid, conversation.toDict()) { (success) in
+        self.publishConversation(conversation.userUids[0],
+                                 conversation.uid, conversation.toDict()) { success in
+            if !success {
+                completion(false)
+                return
+            }
             group.leave()
         }
         group.enter()
-        publishConversation(conversation.userUids[1], conversation.uid, conversation.toDict()) { (success) in
+        self.publishConversation(conversation.userUids[1],
+                                 conversation.uid, conversation.toDict()) { success in
+            if !success {
+                completion(false)
+                return
+            }
             group.leave()
         }
         group.notify(queue: .main) {
-            completion(conversation)
+            completion(true)
         }
     }
     
@@ -87,8 +58,13 @@ final class UserMessagesManager {
     ///   - withConversationId: The conversation UID
     ///   - data: The data to publish
     ///   - completion: Completion handler passing a success truth value
-    fileprivate func publishConversation(_ forUserId: String, _ withConversationId: String, _ data: [String : Any], _ completion: @escaping (_ success: Bool) -> ()) {
-    collectionReference.document(forUserId).collection(dbCollection.conversations.rawValue).document(withConversationId).setData(data) { (error) in
+    private func publishConversation(_ forUserId: String,
+                                         _ withConversationId: String,
+                                         _ data: [String : Any],
+                                         _ completion: @escaping (_ success: Bool) -> Void) {
+        self.collectionReference.document(forUserId)
+        .collection(dbCollection.conversations.rawValue)
+        .document(withConversationId).setData(data) { error in
             if let error = error {
                 print("Error creating message thread: \(error.localizedDescription)")
                 completion(false)
@@ -102,19 +78,21 @@ final class UserMessagesManager {
     /// - Parameters:
     ///   - conversaion: The Conversation object to listen to
     ///   - completion: Completion handler passing an optional Conversation object
-    public func listenForConversationChanges(conversaion: Conversation, completion: @escaping (Conversation?)->()) -> ListenerRegistration {
+    public func listenForConversationChanges(conversaion: Conversation,
+                                             completion: @escaping (Conversation?)->Void) -> ListenerRegistration {
         let uid = CurrentUser.shared.data!.uid
         let conversationId = conversaion.uid
-        let listener = collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversationId).addSnapshotListener { (snapshot, error) in
+        let listener = self.collectionReference.document(uid)
+            .collection(dbCollection.conversations.rawValue)
+            .document(conversationId).addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error adding listener to thread: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            if let snapshotData = snapshot?.data() {
-                let conversation = Conversation(withDictionary: snapshotData)
-                completion(conversation)
-            }
+            guard let snapshotData = snapshot?.data() else {return}
+            let conversation = Conversation(withDictionary: snapshotData)
+            completion(conversation)
         }
         return listener
     }
@@ -123,32 +101,20 @@ final class UserMessagesManager {
     /// - Parameters:
     ///   - forUser: The User to listen to
     ///   - completion: Completion handler passing an array of Conversation objects (can be empty upon first call)
-    public func listenToConversations(forUser: User, completion: @escaping ([Conversation])->()) -> ListenerRegistration {
-        let listener = collectionReference.document(forUser.uid).collection(dbCollection.conversations.rawValue).addSnapshotListener { (snapshot, error) in
-            if let error = error {
-                print("Error adding new conversation listener: \(error.localizedDescription)")
-                return
-            }
-            guard let changes = snapshot?.documentChanges else {return}
-            self.firestoreChangesToConversations(changes, completion: completion)
+    public func listenToConversations(forUser: User,
+                                      completion: @escaping ([Conversation])->Void) -> ListenerRegistration {
+        let listener = self.collectionReference.document(forUser.uid)
+            .collection(dbCollection.conversations.rawValue)
+            .addSnapshotListener { [weak self] snapshot, error in
+                guard let self = self else {return}
+                if let error = error {
+                    print("Error adding new conversation listener: \(error.localizedDescription)")
+                    return
+                }
+                guard let changes = snapshot?.documentChanges else {return}
+                self.firestoreChangesToConversations(changes, completion: completion)
         }
         return listener
-    }
-    
-    /// Fetch the conversation list for a user.
-    /// - Parameters:
-    ///   - forUser: The user who's conversations to return
-    ///   - completion: Completion handler passing an optional array of Conversation objects
-    public func fetchConversationList(forUser: User, completion: @escaping ([Conversation]?)->Void) {
-        collectionReference.document(forUser.uid).collection(dbCollection.conversations.rawValue).getDocuments { (snapshot, error) in
-            if let error = error {
-                print("Error fetching user conversations: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            guard let documents = snapshot?.documents else {return}
-            self.firestoreDocumentsToConversations(documents, completion: completion)
-        }
     }
     
     /// Parse Firestore database doucment changes to an array of Conversation objects.
@@ -173,29 +139,20 @@ final class UserMessagesManager {
         }
     }
     
-    // VVVV Very similar to aboce funtion, refactor
-    
-    /// Parse Firestore database documents to an array of Conversation objects.
-    /// - Parameters:
-    ///   - documents: The documents to parse
-    ///   - completion: Completion handler passing an array of Conversation objects
-    public func firestoreDocumentsToConversations(_ documents: [QueryDocumentSnapshot],
-                                                            completion: @escaping ([Conversation]?)->Void) {
-        var conversations = [Conversation]()
-        let group = DispatchGroup()
-        group.enter()
-        for document in documents {
-            group.enter()
-            let data = document.data()
-            let conversation = Conversation(withDictionary: data)
-            conversation.fetchChatter { (success) in
-                if success {conversations.append(conversation)}
-                group.leave()
-            }
-            group.leave()
-            group.notify(queue: .main) {
-                completion(conversations)
-            }
+    fileprivate func updateConversationStatusForUserUid(_ uid: String,
+                                                        _ conversation: Conversation,
+                                                        _ data: [String : Any],
+                                                        _ group: DispatchGroup?) {
+        group?.enter()
+        collectionReference.document(uid)
+            .collection(dbCollection.conversations.rawValue)
+            .document(conversation.uid)
+            .setData(data, merge: true) { (error) in
+                if let error = error {
+                    print("Error uploading message: \(error.localizedDescription)")
+                    return
+                }
+                group?.leave()
         }
     }
     
@@ -206,9 +163,13 @@ final class UserMessagesManager {
     ///   - chatterIsRead: If the chatter has read the conversation
     ///   - withNewMessageTime: The time of the latest message
     ///   - completion: Completion handler passing nothing
-    public func updateConversationStatus(conversation: Conversation, userIsRead: Bool, chatterIsRead: Bool, withNewMessageTime: Date?, completion: @escaping ()->Void) {
-        guard let uid = CurrentUser.shared.data?.uid else {return}
-        let chatterUid = uid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
+    public func updateConversationStatus(conversation: Conversation,
+                                         userIsRead: Bool,
+                                         chatterIsRead: Bool,
+                                         withNewMessageTime: Date?,
+                                         completion: @escaping ()->Void) {
+        guard let userUid = CurrentUser.shared.data?.uid else {return}
+        let chatterUid = userUid == conversation.userUids[0] ? conversation.userUids[1] : conversation.userUids[0]
 
         var data: [String: Any] = ["isReadStatus": userIsRead]
         if let lastMessageTime = withNewMessageTime {
@@ -216,18 +177,9 @@ final class UserMessagesManager {
         }
 
         let group = DispatchGroup()
-        group.enter()
-        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true) { (error) in
-            if let error = error {print("Error uploading message: \(error.localizedDescription)"); return}
-            group.leave()
-        }
-
+        self.updateConversationStatusForUserUid(userUid, conversation, data, group)
         data["isReadStatus"] = chatterIsRead
-        group.enter()
-        collectionReference.document(chatterUid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true) { (error) in
-            if let error = error {print("Error uploading message: \(error.localizedDescription)"); return}
-            group.leave()
-        }
+        self.updateConversationStatusForUserUid(chatterUid, conversation, data, group)
         group.notify(queue: .main) {
             completion()
         }
@@ -244,8 +196,6 @@ final class UserMessagesManager {
             data["lastMessageTime"] = Timestamp(date: lastMessageTime)
         }
         guard let uid = CurrentUser.shared.data?.uid else {return}
-        collectionReference.document(uid).collection(dbCollection.conversations.rawValue).document(conversation.uid).setData(data, merge: true)
+        self.updateConversationStatusForUserUid(uid, conversation, data, nil)
     }
-    
-    
 }

@@ -19,7 +19,7 @@ class DateHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureView()
+        self.configureView()
     }
     
     required init?(coder: NSCoder) {
@@ -29,9 +29,9 @@ class DateHeader: UICollectionReusableView {
     // MARK:- Methods
     
     fileprivate func configureView() {
-        addSubview(dateLabel)
-        dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        self.addSubview(dateLabel)
+        self.dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        self.dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
 }

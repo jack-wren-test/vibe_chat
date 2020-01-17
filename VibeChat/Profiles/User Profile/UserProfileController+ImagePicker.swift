@@ -11,7 +11,7 @@ import UIKit
 extension UserProfileController: UIImagePickerControllerDelegate {
 
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        imagePickerController?.dismiss(animated: true)
+        self.imagePickerController?.dismiss(animated: true)
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -21,7 +21,6 @@ extension UserProfileController: UIImagePickerControllerDelegate {
                 self.imagePickerController?.dismiss(animated: true)
             }
         }
-        imagePickerController?.dismiss(animated: true)
-        
+        self.imagePickerController?.dismiss(animated: true)
     }
 }

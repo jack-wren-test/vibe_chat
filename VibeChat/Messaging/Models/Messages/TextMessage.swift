@@ -13,32 +13,31 @@ final class TextMessage: Message {
     
     // MARK:- Properties
     
-    var text:   String?
+    private(set) var text:   String?
     
     // MARK:- Init
     
-    init(text: String, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
-        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        setType(type: .textMessage)
+    init(text: String, toUid: String, fromUid: String, timestamp: Date, conversationId: String) {
+        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, conversationId: conversationId)
+        self.setType(type: .textMessage)
         self.text = text
-        updateDictionaryRepresentation()
+        self.updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
         super.init(withDictionary: withDictionary)
-        setType(type: .textMessage)
+        self.setType(type: .textMessage)
         if let text = withDictionary["text"] as? String {
             self.text = text
         }
-        updateDictionaryRepresentation()
+        self.updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
     private func updateDictionaryRepresentation() {
-        if let text = self.text {
-            dictionaryRepresentation["text"] = text
-        }
+        guard let text = self.text else {return}
+        self.dictionaryRepresentation["text"] = text
     }
     
 }

@@ -28,18 +28,16 @@ final class GiphyManager {
     /// - Parameters:
     ///   - withId: Unique gif ID
     ///   - completion: Completion handler passing an option GPHMedia Object
-    public func requestGif(withId: String, completion: @escaping (GPHMedia?)->()) {
-        
-        GiphyCore.shared.gifByID(withId) { (response, error) in
+    public func requestGif(withId: String, completion: @escaping (GPHMedia?)->Void) {
+        GiphyCore.shared.gifByID(withId) { response, error in
             if let error = error {
                 print("Error downloading Giph: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            if let media = response?.data {
-                DispatchQueue.main.async {
-                    completion(media)
-                }
+            guard let media = response?.data  else {return}
+            DispatchQueue.main.async {
+                completion(media)
             }
         }
         

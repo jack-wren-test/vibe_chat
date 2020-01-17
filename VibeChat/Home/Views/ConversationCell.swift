@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationCell: UITableViewCell {
+final class ConversationCell: UITableViewCell {
 
     // MARK:- Outlets
 
@@ -33,30 +33,31 @@ class ConversationCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        conversation = nil
+        self.conversation = nil
     }
     
     // MARK:- Methods
     
     fileprivate func setupChatterListener() {
-        conversation?.listenToChatter(completion: {
+        self.conversation?.listenToChatter(completion: {
             self.configureCellViews()
         })
     }
     
     fileprivate func configureCellViews() {
-        guard let conversation = conversation else {return}
+        guard let conversation = self.conversation else {return}
         guard let chatter = conversation.chatter else {return}
         
-        profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
-        isReadStatusIndicator.isHidden = conversation.isReadStatus
+        self.profileImageView.layer.borderWidth = chatter.isOnline ? 3 : 0
+        self.isReadStatusIndicator.isHidden = conversation.isReadStatus
         
-        nameLabel.text = chatter.name
-        vibeLabel.text = chatter.vibe ?? ""
-        nameLabel.backgroundColor = .clear
-        vibeLabel.backgroundColor = .clear
+        self.nameLabel.text = chatter.name
+        self.vibeLabel.text = chatter.vibe ?? ""
+        self.nameLabel.backgroundColor = .clear
+        self.vibeLabel.backgroundColor = .clear
         
-        chatter.profileImageFromChacheOrDb { (image) in
+        chatter.profileImageFromChacheOrDb { [weak self] (image) in
+            guard let self = self else {return}
             DispatchQueue.main.async {
                 self.profileImageView.image = image
             }

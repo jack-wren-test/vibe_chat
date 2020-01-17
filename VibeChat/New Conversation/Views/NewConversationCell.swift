@@ -21,7 +21,7 @@ class NewConversationCell: UITableViewCell {
     
     var chatter: User? {
         didSet {
-            layoutViews()
+            self.layoutViews()
         }
     }
     
@@ -29,22 +29,23 @@ class NewConversationCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
+        self.selectionStyle = .none
     }
     
     override func prepareForReuse() {
-        chatter = nil
+        self.chatter = nil
     }
     
     // MARK:- Methods
 
     private func layoutViews() {
         guard let chatter = chatter else {return}
-        nameLabel.text = chatter.name
-        vibeLabel.text = chatter.vibe ?? ""
-        nameLabel.backgroundColor = .clear
-        vibeLabel.backgroundColor = .clear
-        chatter.profileImageFromChacheOrDb { (image) in
+        self.nameLabel.text = chatter.name
+        self.vibeLabel.text = chatter.vibe ?? ""
+        self.nameLabel.backgroundColor = .clear
+        self.vibeLabel.backgroundColor = .clear
+        chatter.profileImageFromChacheOrDb { [weak self] (image) in
+            guard let self = self else {return}
             DispatchQueue.main.async {
                 self.profileImageView.image = image
             }

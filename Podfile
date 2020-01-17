@@ -6,20 +6,22 @@ target 'VibeChat' do
   use_frameworks!
 
   # Pods for VibeChat
-
-  # Add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
-
-  # Add the pods for any other Firebase products you want to use in your app
-  # For example, to use Firebase Authentication and Cloud Firestore
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Giphy'
 
   target 'VibeChatTests' do
-    inherit! :search_paths
+    inherit! :complete
     # Pods for testing
   end
+
+post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings.delete('CODE_SIGNING_ALLOWED')
+        config.build_settings.delete('CODE_SIGNING_REQUIRED')
+    end
+end
 
 end

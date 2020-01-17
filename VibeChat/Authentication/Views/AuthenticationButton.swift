@@ -30,12 +30,12 @@ public class AuthenticationButton: UIButton {
     // MARK:- Lifecycle
     
     public override func awakeFromNib() {
-        layoutUI()
+        self.layoutUI()
     }
     
     // MARK:- Methods
     
-    fileprivate func layoutUI() {
+    private func layoutUI() {
         setTitleColor(UIColor(named: "text_alt"), for: .normal)
         setTitleColor(UIColor.systemGray2, for: .disabled)
         layer.borderColor = isEnabled ? UIColor(named: "text_alt")?.cgColor : UIColor.systemGray2.cgColor

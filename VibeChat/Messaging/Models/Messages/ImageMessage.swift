@@ -19,40 +19,40 @@ class ImageMessage: Message, ImageBasedMessage {
     
     // MARK:- Properties
     
-    var imageUrl: URL?
-    var aspectRatio: CGFloat
+    private(set) var imageUrl: URL?
+    private(set) var aspectRatio: CGFloat
     
     // MARK:- Init
     
-    init(imageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+    init(imageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, conversationId: String) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
-        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        setType(type: .imageMessage)
-        updateDictionaryRepresentation()
+        
+        super.init(toUid: toUid, fromUid: fromUid, timestamp: timestamp, conversationId: conversationId)
+        self.setType(type: .imageMessage)
+        self.updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
-        if let aspectRatio = withDictionary["aspectRatio"] as? CGFloat {
+        if let aspectRatio = withDictionary["aspectRatio"] as? CGFloat,
+            let imageUrlString = withDictionary["imageUrl"] as? String {
             self.aspectRatio = aspectRatio
-        } else {
-            self.aspectRatio = CGFloat(16/9)
-        }
-        if let imageUrlString = withDictionary["imageUrl"] as? String {
             self.imageUrl = URL(string: imageUrlString)
+        } else {
+            self.aspectRatio = CGFloat(1)
         }
+        
         super.init(withDictionary: withDictionary)
-        setType(type: .imageMessage)
-        updateDictionaryRepresentation()
+        self.setType(type: .imageMessage)
+        self.updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
     private func updateDictionaryRepresentation() {
-        if let imageUrl = self.imageUrl {
-            dictionaryRepresentation["imageUrl"] = imageUrl.absoluteString
-        }
-        dictionaryRepresentation["aspectRatio"] = aspectRatio
+        guard let imageUrl = self.imageUrl else {return}
+        self.dictionaryRepresentation["imageUrl"] = imageUrl.absoluteString
+        self.dictionaryRepresentation["aspectRatio"] = self.aspectRatio
     }
     
     

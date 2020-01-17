@@ -11,26 +11,11 @@ import GiphyUISDK
 import GiphyCoreSDK
 
 /// Class for a gif based cell.
-class GiphyMessageCell : MessageCell {
+final class GiphyMessageCell : MessageCell {
     
     // MARK:- Properties
     
-    var giphyMessage: GiphyMessage? {
-        didSet {
-            guard let giphyMessage = giphyMessage else {return}
-            guard let user = CurrentUser.shared.data else {return}
-            let isOutgoingMessage = giphyMessage.fromUid == user.uid
-            GiphyManager.shared.requestGif(withId: giphyMessage.giphId!) { (media) in
-                if let media = media {
-                    self.giphyMediaView.setMedia(media)
-                    self.layoutMessage(isOutgoingMessage)
-                    self.updateHeightAnchor(usingAspectRatio: giphyMessage.aspectRatio)
-                }
-            }
-        }
-    }
-    
-    let giphyMediaView : GPHMediaView = {
+    fileprivate let giphyMediaView: GPHMediaView = {
         let view = GPHMediaView()
         view.contentMode = .scaleToFill
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +28,7 @@ class GiphyMessageCell : MessageCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureViews()
+        self.configureViews()
     }
     
     required init?(coder: NSCoder) {
@@ -51,27 +36,28 @@ class GiphyMessageCell : MessageCell {
     }
     
     override func prepareForReuse() {
-        giphyMediaView.image = nil
-        giphyMessage = nil
+        self.giphyMediaView.image = nil
     }
     
     // MARK:- Methods
     
     private func configureViews() {
-        addSubview(giphyMediaView)
+        self.addSubview(giphyMediaView)
+        self.incomingXConstraint = giphyMediaView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.edgeBuffer)
+        self.outgoingXConstraint = giphyMediaView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.edgeBuffer)
         
-        incomingXConstraint = giphyMediaView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
-        outgoingXConstraint = giphyMediaView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
-        
-        giphyMediaView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        giphyMediaView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
-        giphyMediaView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        self.giphyMediaView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.cellBuffer).isActive = true
+        self.giphyMediaView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.cellBuffer).isActive = true
+        self.giphyMediaView.widthAnchor.constraint(equalToConstant: self.maxMessageWidth).isActive = true
     }
     
-    private func updateHeightAnchor(usingAspectRatio: CGFloat) {
-        viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
-        viewHeightAnchor?.priority = UILayoutPriority.required
-        viewHeightAnchor?.isActive = true
+    override func setupMessage() {
+        super.setupMessage()
+        guard let giphyMessage = self.message as? GiphyMessage else {return}
+        GiphyManager.shared.requestGif(withId: giphyMessage.giphId) { [weak self] media in
+            guard let self = self, let media = media else {return}
+            self.giphyMediaView.setMedia(media)
+        }
     }
     
 }

@@ -14,20 +14,7 @@ class ImageMessageCell: MessageCell {
     
     // MARK:- Properties
     
-    var message: ImageMessage? {
-        didSet {
-            guard let message = message, let user = CurrentUser.shared.data, let url = message.imageUrl else {return}
-            imageMessageView.loadImageUsingCacheOrUrl(url: url) { (image) in
-                if image != nil {
-                    let isOutgoingMessage = message.fromUid == user.uid
-                    self.layoutMessage(isOutgoingMessage)
-                    self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
-                }
-            }
-        }
-    }
-    
-    lazy var imageMessageView: UIImageView = {
+    lazy var imageMessageView: UIImageView? = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
@@ -38,13 +25,13 @@ class ImageMessageCell: MessageCell {
         return imageView
     }()
     
-    var controllerDelegate: ImageMessageDelegate?
+    weak var controllerDelegate: ImageInteractionDelegate?
     
     // MARK:- Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureViews()
+        self.configureViews()
     }
     
     required init?(coder: NSCoder) {
@@ -52,29 +39,42 @@ class ImageMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
-        imageMessageView.image = nil
-        message = nil
+        self.imageMessageView = nil
+        self.message = nil
     }
     
     // MARK:- Methods
     
-    private func configureViews() {
-        addSubview(imageMessageView)
-        incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
-        outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
-        imageMessageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        imageMessageView.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-        imageMessageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2).isActive = true
+    override func setupMessage() {
+        super.setupMessage()
+        guard let message = self.message as? ImageMessage, let url = message.imageUrl else {return}
+        guard let imageMessageView = self.imageMessageView else {return}
+        imageMessageView.loadImageUsingCacheOrUrl(url: url)
+        self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
     }
     
-    public func updateHeightAnchor(usingAspectRatio: CGFloat) {
-        viewHeightAnchor = heightAnchor.constraint(equalToConstant: 200/usingAspectRatio)
-        viewHeightAnchor?.priority = UILayoutPriority.required
-        viewHeightAnchor?.isActive = true
+    private func configureViews() {
+        guard let imageMessageView = self.imageMessageView else {return}
+        self.addSubview(imageMessageView)
+        self.incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,
+                                                                             constant: self.edgeBuffer)
+        self.outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: self.trailingAnchor,
+                                                                              constant: -self.edgeBuffer)
+        imageMessageView.widthAnchor.constraint(equalToConstant: self.maxMessageWidth).isActive = true
+        imageMessageView.topAnchor.constraint(equalTo: self.topAnchor,
+                                              constant: self.cellBuffer).isActive = true
+        imageMessageView.bottomAnchor.constraint(equalTo: self.bottomAnchor,
+                                                 constant: -self.cellBuffer).isActive = true
+    }
+    
+    public func updateHeightAnchor(usingAspectRatio aspectRatio: CGFloat) {
+        self.viewHeightAnchor = heightAnchor.constraint(equalToConstant: self.maxMessageWidth/aspectRatio)
+        self.viewHeightAnchor?.isActive = true
     }
     
     @objc public func handleImageTap() {
-        controllerDelegate?.imageMessageTapped(imageMessageView, nil, nil)
+        guard let imageMessageView = imageMessageView else {return}
+        self.controllerDelegate?.imageMessageTapped(imageMessageView, nil, nil)
     }
     
 }

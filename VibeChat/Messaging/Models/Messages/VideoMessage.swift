@@ -10,36 +10,36 @@ import Foundation
 import Firebase
 
 /// Model for a video message.
-class VideoMessage: ImageMessage {
+final class VideoMessage: ImageMessage {
     
     // MARK:- Properties
     
-    var videoUrl: URL?
+    private(set) var videoUrl: URL?
     
     // MARK:- Init
     
-    init(videoUrl: URL, thumbnailImageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, threadId: String) {
-        super.init(imageUrl: thumbnailImageUrl, aspectRatio: aspectRatio, toUid: toUid, fromUid: fromUid, timestamp: timestamp, threadId: threadId)
-        setType(type: .videoMessage)
+    init(videoUrl: URL, thumbnailImageUrl: URL, aspectRatio: CGFloat, toUid: String, fromUid: String, timestamp: Date, conversationId: String) {
+        super.init(imageUrl: thumbnailImageUrl, aspectRatio: aspectRatio, toUid: toUid, fromUid: fromUid, timestamp: timestamp, conversationId: conversationId)
+        self.setType(type: .videoMessage)
         self.videoUrl = videoUrl
-        updateDictionaryRepresentation()
+        self.updateDictionaryRepresentation()
     }
     
     override init(withDictionary: [String: Any]) {
         if let videoUrlString = withDictionary["videoUrl"] as? String {
             self.videoUrl = URL(string: videoUrlString)
         }
+        
         super.init(withDictionary: withDictionary)
-        setType(type: .videoMessage)
-        updateDictionaryRepresentation()
+        self.setType(type: .videoMessage)
+        self.updateDictionaryRepresentation()
     }
     
     // MARK:- Methods
     
     private func updateDictionaryRepresentation() {
-        if let videoUrl = self.videoUrl {
-            dictionaryRepresentation["videoUrl"] = videoUrl.absoluteString
-        }
+        guard let videoUrl = self.videoUrl else {return}
+        self.dictionaryRepresentation["videoUrl"] = videoUrl.absoluteString
     }
     
 }

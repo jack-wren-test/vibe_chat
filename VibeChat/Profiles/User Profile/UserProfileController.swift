@@ -15,31 +15,31 @@ class UserProfileController: UIViewController,
     
     // MARK:- IBOutlets
     
-    @IBOutlet weak var profileImageView: CircularImageView!
-    @IBOutlet weak var form: UIStackView!
-    @IBOutlet weak var nameTF: AuthenticationTextField!
-    @IBOutlet weak var vibeTF: AuthenticationTextField!
-    @IBOutlet weak var emailTF: AuthenticationTextField!
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var logOutButton: UIButton!
+    @IBOutlet public weak var profileImageView: CircularImageView!
+    @IBOutlet public weak var form: UIStackView!
+    @IBOutlet public weak var nameTF: AuthenticationTextField!
+    @IBOutlet public weak var vibeTF: AuthenticationTextField!
+    @IBOutlet public weak var emailTF: AuthenticationTextField!
+    @IBOutlet public weak var saveButton: UIButton!
+    @IBOutlet public weak var logOutButton: UIButton!
     
     // MARK:- Properties
     
-    var homeDelegate: HomeDelegate?
+    weak var homeDelegate: HomeDelegate?
     var imagePickerController: UIImagePickerController?
     
     // MARK:- Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerForKeyboardWillShow()
-        registerForKeyboardWillChange()
-        registerForKeyboardWillHide()
-        setupTapToDismissKeyboard()
-        setInitialFormValues()
-        configureImagePickerController()
+        self.registerForKeyboardWillShow()
+        self.registerForKeyboardWillChange()
+        self.registerForKeyboardWillHide()
+        self.setupTapToDismissKeyboard()
+        self.setInitialFormValues()
+        self.configureImagePickerController()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
-        profileImageView.addGestureRecognizer(tapGesture)
+        self.profileImageView.addGestureRecognizer(tapGesture)
     }
     
     deinit {
@@ -48,15 +48,15 @@ class UserProfileController: UIViewController,
     
     // MARK:- IBActions
     
-    @IBAction func logOutButtonPressed(_ sender: UIButton) {
+    @IBAction private func logOutButtonPressed(_ sender: UIButton) {
         dismiss(animated: true) {
             self.homeDelegate?.performLogOut()
         }
     }
     
-    @IBAction func saveButtonPressed(_ sender: UIButton) {
+    @IBAction private func saveButtonPressed(_ sender: UIButton) {
         defer {self.dismiss(animated: true)}
-        updateUserData()
+        self.updateUserData()
         if let image = profileImageView.image, let currentUserData = CurrentUser.shared.data {
             currentUserData.profileImage = image
             StorageManager.shared.uploadProfileImage(forUser: currentUserData) { (url) in

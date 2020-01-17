@@ -11,39 +11,54 @@ import Firebase
 
 /// Enummeration for message types.
 enum MessageType {
+    
     case textMessage, videoMessage, imageMessage, giphyMessage
+    
+    var reuseId: String {
+        switch self {
+        case .textMessage:
+            return "textMessageCell"
+        case .videoMessage:
+            return "imageMessageCell"
+        case .imageMessage:
+            return "videoMessageCell"
+        case .giphyMessage:
+            return "giphyMessageCell"
+        }
+    }
+    
 }
 
 /// Base model for a message.
 class Message {
     
-    // MARK:- Properties
+    // MARK:- Properties b
     
-    private(set) var type: MessageType?
     var dictionaryRepresentation: [String: Any]!
-    var toUid: String?
-    var fromUid: String?
-    var timestamp: Date?
-    var conversationId: String?
+    private(set) var type: MessageType?
+    private(set) var toUid: String?
+    private(set) var fromUid: String?
+    private(set) var timestamp: Date?
+    private(set) var conversationId: String?
     
     // MARK:- Init
     
-    init(toUid: String, fromUid: String, timestamp: Date, threadId: String) {
+    init(toUid: String, fromUid: String, timestamp: Date, conversationId: String) {
         self.toUid = toUid
         self.fromUid = fromUid
         self.timestamp = timestamp
-        self.conversationId = threadId
-        dictionaryRepresentation = toDict()
+        self.conversationId = conversationId
+        self.dictionaryRepresentation = self.toDict()
     }
     
     init(withDictionary: [String: Any]) {
-        toUid = withDictionary["toUid"] as? String
-        fromUid = withDictionary["fromUid"] as? String
-        conversationId = withDictionary["threadId"] as? String
+        self.toUid = withDictionary["toUid"] as? String
+        self.fromUid = withDictionary["fromUid"] as? String
+        self.conversationId = withDictionary["threadId"] as? String
         if let timestamp = withDictionary["timestamp"] as? Timestamp {
             self.timestamp = timestamp.dateValue()
         }
-        dictionaryRepresentation = toDict()
+        self.dictionaryRepresentation = self.toDict()
     }
     
     // MARK:- Methods
@@ -53,10 +68,10 @@ class Message {
     }
     
     private func toDict() -> [String: Any] {
-        let tStamp = Timestamp.init(date: timestamp ?? Date())
-        let dict: [String: Any] = ["toUid": toUid ?? "",
-                                   "fromUid": fromUid ?? "",
-                                   "threadId": conversationId ?? "",
+        let tStamp = Timestamp.init(date: self.timestamp ?? Date())
+        let dict: [String: Any] = ["toUid": self.toUid ?? "",
+                                   "fromUid": self.fromUid ?? "",
+                                   "threadId": self.conversationId ?? "",
                                    "timestamp": tStamp]
         return dict
     }

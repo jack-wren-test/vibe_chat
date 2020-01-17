@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1005553780290-lgmickelscqcntc77e6ospbfpbc2cn42.apps.googleusercontent.com</string>
+	<string>346533146256-6gkohnjn86vge4qdrcnjs4p2rk32ki71.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1005553780290-lgmickelscqcntc77e6ospbfpbc2cn42</string>
+	<string>com.googleusercontent.apps.346533146256-6gkohnjn86vge4qdrcnjs4p2rk32ki71</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBKLc3geg90-XjkNRMXuXuM2EW_n_nQYWE</string>
+	<string>AIzaSyB8tmNkXakliYkoDzzQbep44FTLrtpgZn0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1005553780290</string>
+	<string>346533146256</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>wrenkitchens.VibeChat</string>
+	<string>wrenkitchens.Vibe-Chat</string>
 	<key>PROJECT_ID</key>
-	<string>vibechat-631d4</string>
+	<string>wren-chat-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vibechat-631d4.appspot.com</string>
+	<string>wren-chat-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1005553780290:ios:aa713a2b521af07d300fdb</string>
+	<string>1:346533146256:ios:8e641ca33054c7a1dc3215</string>
 	<key>DATABASE_URL</key>
-	<string>https://vibechat-631d4.firebaseio.com</string>
+	<string>https://wren-chat-app.firebaseio.com</string>
 </dict>
 </plist>

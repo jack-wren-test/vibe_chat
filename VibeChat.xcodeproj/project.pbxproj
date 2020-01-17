@@ -7,20 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E4EB040D4D0664A4D9649E0 /* Pods_VibeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3838933A4A51E5BB5213103D /* Pods_VibeChatTests.framework */; };
-		61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C1E23993A6C00F1EE1B /* CanAuthenticate.swift */; };
+		0CCCC69208DAA7A494629004 /* Pods_VibeChat_VibeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CCD5C2EA4B27D085969A96 /* Pods_VibeChat_VibeChatTests.framework */; };
+		61206EB223CF37F200E2F658 /* AuthenticateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61206EB123CF37F200E2F658 /* AuthenticateController.swift */; };
+		61271C1F23993A6C00F1EE1B /* CanAuthenticateWithForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */; };
 		61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C212399562100F1EE1B /* FirestoreManager.swift */; };
+		61392DFE23CF6EB00034B2D1 /* MessageOrganiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */; };
+		613A3DF323D06C7D00F0128A /* MessagesController+MessageHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */; };
+		613A3DF523D06D4100F0128A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 613A3DF423D06D4100F0128A /* GoogleService-Info.plist */; };
+		613A3DF723D0782E00F0128A /* MediaMessageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DF623D0782E00F0128A /* MediaMessageUploader.swift */; };
+		613A3DFA23D07E4C00F0128A /* MediaMessageUploader+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DF923D07E4C00F0128A /* MediaMessageUploader+Gif.swift */; };
+		613A3DFC23D0809F00F0128A /* MediaMessageUploader+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DFB23D0809F00F0128A /* MediaMessageUploader+Video.swift */; };
+		613A3DFE23D080AC00F0128A /* MediaMessageUploader+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DFD23D080AC00F0128A /* MediaMessageUploader+Image.swift */; };
 		61445FE723BB742400452FBB /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FE623BB742400452FBB /* VideoMessage.swift */; };
 		61445FED23BF436A00452FBB /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEC23BF436A00452FBB /* TextMessage.swift */; };
-		61445FF023BF641300452FBB /* MessagesController+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEF23BF641300452FBB /* MessagesController+CollectionViewDataSource.swift */; };
-		61445FF223BF642700452FBB /* MessagesController+Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF123BF642700452FBB /* MessagesController+Methods.swift */; };
-		61445FF423BF64CA00452FBB /* MessagesController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF323BF64CA00452FBB /* MessagesController+ImagePicker.swift */; };
-		61445FF623BF650C00452FBB /* MessagesController+Giphy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF523BF650C00452FBB /* MessagesController+Giphy.swift */; };
-		61445FF823BF655400452FBB /* MessagesController+MessageInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF723BF655400452FBB /* MessagesController+MessageInteraction.swift */; };
+		61445FF023BF641300452FBB /* MessagesController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FEF23BF641300452FBB /* MessagesController+CollectionView.swift */; };
+		61445FF223BF642700452FBB /* MessagesController+SetupMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */; };
+		61445FF423BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */; };
+		61445FF623BF650C00452FBB /* MessagesController+GiphyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF523BF650C00452FBB /* MessagesController+GiphyPicker.swift */; };
+		61445FF823BF655400452FBB /* MessagesController+ImageMessageInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */; };
 		616B2E63239A575700E9B0B2 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* UserProfileController.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
 		6175874C239E7459002ED670 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874B239E7459002ED670 /* MessageCell.swift */; };
 		6175874E239E74BB002ED670 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874D239E74BB002ED670 /* MessagesController.swift */; };
+		6177EF8323CCADED00323E4C /* XCTestCase+waitForExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8223CCADED00323E4C /* XCTestCase+waitForExpectation.swift */; };
+		6177EF8523CCD3C700323E4C /* AuthenticationValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8423CCD3C700323E4C /* AuthenticationValidationTests.swift */; };
+		6177EF8823CCD73A00323E4C /* HomeControllerMethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8723CCD73A00323E4C /* HomeControllerMethodTests.swift */; };
+		6177EF8A23CDBE9000323E4C /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8923CDBE9000323E4C /* NetworkTest.swift */; };
+		6177EF8C23CF304F00323E4C /* CreateAccountController+CanAuthenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8B23CF304E00323E4C /* CreateAccountController+CanAuthenticate.swift */; };
+		6177EF8E23CF33C000323E4C /* LoginController+CanAuthenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177EF8D23CF33C000323E4C /* LoginController+CanAuthenticate.swift */; };
 		61A470F723A000AD003DD758 /* DateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470F623A000AD003DD758 /* DateHeader.swift */; };
 		61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A470FE23A7AD31003DD758 /* CurrentUser.swift */; };
 		61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4710023A8E4C2003DD758 /* Conversation.swift */; };
@@ -33,43 +47,41 @@
 		61A5F84F23C8C404000C4C5E /* UserProfileController+Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F84E23C8C404000C4C5E /* UserProfileController+Methods.swift */; };
 		61A5F85323C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85223C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift */; };
 		61A5F85623C8CB46000C4C5E /* DateHeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85523C8CB46000C4C5E /* DateHeaderLabel.swift */; };
-		61A5F85823C8CBB2000C4C5E /* MessagesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85723C8CBB2000C4C5E /* MessagesControllerTests.swift */; };
-		61A5F85A23C8CBBD000C4C5E /* HomeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85923C8CBBD000C4C5E /* HomeControllerTests.swift */; };
-		61A5F85C23C8CBCE000C4C5E /* AuthenticationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85B23C8CBCE000C4C5E /* AuthenticationControllerTests.swift */; };
 		61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */; };
+		61BA83B423CC6C5900913DBC /* NoConversationsCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA83B323CC6C5900913DBC /* NoConversationsCoverView.swift */; };
+		61BA83B623CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA83B523CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift */; };
 		61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */; };
 		61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D902398020300EEEEB0 /* SceneDelegate.swift */; };
 		61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D922398020300EEEEB0 /* HomeController.swift */; };
 		61BB8D962398020300EEEEB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61BB8D942398020300EEEEB0 /* Main.storyboard */; };
 		61BB8D982398020300EEEEB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BB8D972398020300EEEEB0 /* Assets.xcassets */; };
-		61BB8DB52398053900EEEEB0 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DB42398053900EEEEB0 /* AuthenticationController.swift */; };
+		61BB8DB52398053900EEEEB0 /* AuthenticationHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DB42398053900EEEEB0 /* AuthenticationHomeController.swift */; };
 		61BB8DBA239805E900EEEEB0 /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DB9239805E900EEEEB0 /* LogInController.swift */; };
 		61BB8DBC239806E100EEEEB0 /* CreateAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DBB239806E100EEEEB0 /* CreateAccountController.swift */; };
 		61BB8DBE239806FD00EEEEB0 /* AuthenticationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DBD239806FD00EEEEB0 /* AuthenticationButton.swift */; };
 		61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DC32398075600EEEEB0 /* AuthenticationManager.swift */; };
 		61BB8DCC239904FD00EEEEB0 /* AuthenticationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCB239904FD00EEEEB0 /* AuthenticationTextField.swift */; };
 		61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCD23990E4B00EEEEB0 /* User.swift */; };
-		61BB8DD02399120900EEEEB0 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */; };
+		61BB8DD02399120900EEEEB0 /* UIViewController+KeyboardHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCF2399120900EEEEB0 /* UIViewController+KeyboardHandling.swift */; };
 		61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */; };
 		61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D16FCC239AB55F006435C2 /* StorageManager.swift */; };
 		61DC11C523C5DC0D00892F4A /* ChatterProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DC11C423C5DC0D00892F4A /* ChatterProfileController.swift */; };
-		61DC11C723C5F98E00892F4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61DC11C623C5F98E00892F4A /* GoogleService-Info.plist */; };
 		61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39232239FBE3100BAAD21 /* MessagingManager.swift */; };
 		61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39236239FBED400BAAD21 /* UsersManager.swift */; };
-		61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */; };
 		61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */; };
 		61EA8E9523BA017400FC7B87 /* ImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */; };
 		61EA8E9823BA073200FC7B87 /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9723BA073200FC7B87 /* ImageMessage.swift */; };
-		61EA8E9A23BA18AA00FC7B87 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */; };
+		61EA8E9A23BA18AA00FC7B87 /* UIImageView+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9923BA18AA00FC7B87 /* UIImageView+ImageCache.swift */; };
 		61EA8E9C23BA22D800FC7B87 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */; };
 		61EA8E9E23BA40F600FC7B87 /* GiphyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */; };
 		61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */; };
 		61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */; };
+		61F5338723CC937100C35F49 /* UsersManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5338623CC937100C35F49 /* UsersManagerTests.swift */; };
 		E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		61BB8DA22398020400EEEEB0 /* PBXContainerItemProxy */ = {
+		61ADBD0823CC8AC3003DDD53 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61BB8D832398020300EEEEB0 /* Project object */;
 			proxyType = 1;
@@ -81,19 +93,34 @@
 /* Begin PBXFileReference section */
 		1B812DC1F6BA4A2FCD075BF0 /* Pods-VibeChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChatTests.debug.xcconfig"; path = "Target Support Files/Pods-VibeChatTests/Pods-VibeChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3838933A4A51E5BB5213103D /* Pods_VibeChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		61271C1E23993A6C00F1EE1B /* CanAuthenticate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanAuthenticate.swift; sourceTree = "<group>"; };
+		410FA5D016379502FE59C7C9 /* Pods-VibeChat-VibeChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat-VibeChatTests.debug.xcconfig"; path = "Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		61206EB123CF37F200E2F658 /* AuthenticateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateController.swift; sourceTree = "<group>"; };
+		61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanAuthenticateWithForm.swift; sourceTree = "<group>"; };
 		61271C212399562100F1EE1B /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOrganiser.swift; sourceTree = "<group>"; };
+		613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+MessageHandling.swift"; sourceTree = "<group>"; };
+		613A3DF423D06D4100F0128A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		613A3DF623D0782E00F0128A /* MediaMessageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageUploader.swift; sourceTree = "<group>"; };
+		613A3DF923D07E4C00F0128A /* MediaMessageUploader+Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaMessageUploader+Gif.swift"; sourceTree = "<group>"; };
+		613A3DFB23D0809F00F0128A /* MediaMessageUploader+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaMessageUploader+Video.swift"; sourceTree = "<group>"; };
+		613A3DFD23D080AC00F0128A /* MediaMessageUploader+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaMessageUploader+Image.swift"; sourceTree = "<group>"; };
 		61445FE623BB742400452FBB /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		61445FEC23BF436A00452FBB /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
-		61445FEF23BF641300452FBB /* MessagesController+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		61445FF123BF642700452FBB /* MessagesController+Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+Methods.swift"; sourceTree = "<group>"; };
-		61445FF323BF64CA00452FBB /* MessagesController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+ImagePicker.swift"; sourceTree = "<group>"; };
-		61445FF523BF650C00452FBB /* MessagesController+Giphy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+Giphy.swift"; sourceTree = "<group>"; };
-		61445FF723BF655400452FBB /* MessagesController+MessageInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+MessageInteraction.swift"; sourceTree = "<group>"; };
+		61445FEF23BF641300452FBB /* MessagesController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+CollectionView.swift"; sourceTree = "<group>"; };
+		61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+SetupMethods.swift"; sourceTree = "<group>"; };
+		61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+ImageVideoPicker.swift"; sourceTree = "<group>"; };
+		61445FF523BF650C00452FBB /* MessagesController+GiphyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+GiphyPicker.swift"; sourceTree = "<group>"; };
+		61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+ImageMessageInteraction.swift"; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		6175874B239E7459002ED670 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		6175874D239E74BB002ED670 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
+		6177EF8223CCADED00323E4C /* XCTestCase+waitForExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+waitForExpectation.swift"; sourceTree = "<group>"; };
+		6177EF8423CCD3C700323E4C /* AuthenticationValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationValidationTests.swift; sourceTree = "<group>"; };
+		6177EF8723CCD73A00323E4C /* HomeControllerMethodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerMethodTests.swift; sourceTree = "<group>"; };
+		6177EF8923CDBE9000323E4C /* NetworkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
+		6177EF8B23CF304E00323E4C /* CreateAccountController+CanAuthenticate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountController+CanAuthenticate.swift"; sourceTree = "<group>"; };
+		6177EF8D23CF33C000323E4C /* LoginController+CanAuthenticate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+CanAuthenticate.swift"; sourceTree = "<group>"; };
 		61A470F623A000AD003DD758 /* DateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeader.swift; sourceTree = "<group>"; };
 		61A470FE23A7AD31003DD758 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		61A4710023A8E4C2003DD758 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -106,10 +133,11 @@
 		61A5F84E23C8C404000C4C5E /* UserProfileController+Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileController+Methods.swift"; sourceTree = "<group>"; };
 		61A5F85223C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileController+ImagePicker.swift"; sourceTree = "<group>"; };
 		61A5F85523C8CB46000C4C5E /* DateHeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeaderLabel.swift; sourceTree = "<group>"; };
-		61A5F85723C8CBB2000C4C5E /* MessagesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesControllerTests.swift; sourceTree = "<group>"; };
-		61A5F85923C8CBBD000C4C5E /* HomeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerTests.swift; sourceTree = "<group>"; };
-		61A5F85B23C8CBCE000C4C5E /* AuthenticationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationControllerTests.swift; sourceTree = "<group>"; };
+		61ADBD0323CC8AC2003DDD53 /* VibeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VibeChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		61ADBD0723CC8AC3003DDD53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesManager.swift; sourceTree = "<group>"; };
+		61BA83B323CC6C5900913DBC /* NoConversationsCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoConversationsCoverView.swift; sourceTree = "<group>"; };
+		61BA83B523CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConvenienceConstraints.swift"; sourceTree = "<group>"; };
 		61BB8D8B2398020300EEEEB0 /* Vibe Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vibe Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BB8D902398020300EEEEB0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,51 +145,50 @@
 		61BB8D952398020300EEEEB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		61BB8D972398020300EEEEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61BB8D9C2398020300EEEEB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61BB8DA12398020400EEEEB0 /* VibeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VibeChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		61BB8DA72398020400EEEEB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61BB8DB42398053900EEEEB0 /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
+		61BB8DB42398053900EEEEB0 /* AuthenticationHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHomeController.swift; sourceTree = "<group>"; };
 		61BB8DB9239805E900EEEEB0 /* LogInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
 		61BB8DBB239806E100EEEEB0 /* CreateAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountController.swift; sourceTree = "<group>"; };
 		61BB8DBD239806FD00EEEEB0 /* AuthenticationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationButton.swift; sourceTree = "<group>"; };
 		61BB8DC32398075600EEEEB0 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		61BB8DCB239904FD00EEEEB0 /* AuthenticationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTextField.swift; sourceTree = "<group>"; };
 		61BB8DCD23990E4B00EEEEB0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		61BB8DCF2399120900EEEEB0 /* UIViewController+KeyboardHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandling.swift"; sourceTree = "<group>"; };
 		61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		61D16FCC239AB55F006435C2 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		61DC11C423C5DC0D00892F4A /* ChatterProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterProfileController.swift; sourceTree = "<group>"; };
-		61DC11C623C5F98E00892F4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61E39232239FBE3100BAAD21 /* MessagingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManager.swift; sourceTree = "<group>"; };
 		61E39236239FBED400BAAD21 /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
-		61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingManagerTests.swift; sourceTree = "<group>"; };
 		61EA8E9123ACDF9000FC7B87 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		61EA8E9423BA017400FC7B87 /* ImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageCell.swift; sourceTree = "<group>"; };
 		61EA8E9723BA073200FC7B87 /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
-		61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		61EA8E9923BA18AA00FC7B87 /* UIImageView+ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageCache.swift"; sourceTree = "<group>"; };
 		61EA8E9B23BA22D800FC7B87 /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessage.swift; sourceTree = "<group>"; };
 		61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessageCell.swift; sourceTree = "<group>"; };
 		61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyManager.swift; sourceTree = "<group>"; };
+		61F5338623CC937100C35F49 /* UsersManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManagerTests.swift; sourceTree = "<group>"; };
 		6E3C3FD3DB807EB252E0B1D1 /* Pods-VibeChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat.release.xcconfig"; path = "Target Support Files/Pods-VibeChat/Pods-VibeChat.release.xcconfig"; sourceTree = "<group>"; };
 		76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChatTests.release.xcconfig"; path = "Target Support Files/Pods-VibeChatTests/Pods-VibeChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		7E221EEEC9D02D47E9B77858 /* Pods-VibeChat-VibeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat-VibeChatTests.release.xcconfig"; path = "Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1CCD5C2EA4B27D085969A96 /* Pods_VibeChat_VibeChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChat_VibeChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B10D158F7D3E644E8006F5 /* Pods-VibeChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat.debug.xcconfig"; path = "Target Support Files/Pods-VibeChat/Pods-VibeChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		61ADBD0023CC8AC2003DDD53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CCCC69208DAA7A494629004 /* Pods_VibeChat_VibeChatTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61BB8D882398020300EEEEB0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61BB8D9E2398020400EEEEB0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5E4EB040D4D0664A4D9649E0 /* Pods_VibeChatTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,16 +200,9 @@
 			children = (
 				AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */,
 				3838933A4A51E5BB5213103D /* Pods_VibeChatTests.framework */,
+				C1CCD5C2EA4B27D085969A96 /* Pods_VibeChat_VibeChatTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		61271C1D23993A4B00F1EE1B /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				61271C1E23993A6C00F1EE1B /* CanAuthenticate.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		61271C202399560B00F1EE1B /* Network Layer */ = {
@@ -194,6 +214,25 @@
 				61E3922F239FBDDC00BAAD21 /* Database */,
 			);
 			path = "Network Layer";
+			sourceTree = "<group>";
+		};
+		613A3DF823D07E3300F0128A /* Media Message Uploader */ = {
+			isa = PBXGroup;
+			children = (
+				613A3DF623D0782E00F0128A /* MediaMessageUploader.swift */,
+				613A3DF923D07E4C00F0128A /* MediaMessageUploader+Gif.swift */,
+				613A3DFB23D0809F00F0128A /* MediaMessageUploader+Video.swift */,
+				613A3DFD23D080AC00F0128A /* MediaMessageUploader+Image.swift */,
+			);
+			path = "Media Message Uploader";
+			sourceTree = "<group>";
+		};
+		613A3DFF23D08A5B00F0128A /* Message Organiser */ = {
+			isa = PBXGroup;
+			children = (
+				61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */,
+			);
+			path = "Message Organiser";
 			sourceTree = "<group>";
 		};
 		616B2E5E239A56E900E9B0B2 /* Profiles */ = {
@@ -211,6 +250,8 @@
 				61758748239E7408002ED670 /* Models */,
 				61758747239E73F6002ED670 /* Views */,
 				61758746239E73EF002ED670 /* Controllers */,
+				613A3DFF23D08A5B00F0128A /* Message Organiser */,
+				613A3DF823D07E3300F0128A /* Media Message Uploader */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -219,11 +260,12 @@
 			isa = PBXGroup;
 			children = (
 				6175874D239E74BB002ED670 /* MessagesController.swift */,
-				61445FF723BF655400452FBB /* MessagesController+MessageInteraction.swift */,
-				61445FF523BF650C00452FBB /* MessagesController+Giphy.swift */,
-				61445FF323BF64CA00452FBB /* MessagesController+ImagePicker.swift */,
-				61445FEF23BF641300452FBB /* MessagesController+CollectionViewDataSource.swift */,
-				61445FF123BF642700452FBB /* MessagesController+Methods.swift */,
+				61445FF523BF650C00452FBB /* MessagesController+GiphyPicker.swift */,
+				61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */,
+				61445FEF23BF641300452FBB /* MessagesController+CollectionView.swift */,
+				61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */,
+				613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */,
+				61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -245,6 +287,40 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		6177EF8123CCA35C00323E4C /* Authentication Validation Method Tests */ = {
+			isa = PBXGroup;
+			children = (
+				6177EF8423CCD3C700323E4C /* AuthenticationValidationTests.swift */,
+			);
+			path = "Authentication Validation Method Tests";
+			sourceTree = "<group>";
+		};
+		6177EF8623CCD71B00323E4C /* Home Controller Method Tests */ = {
+			isa = PBXGroup;
+			children = (
+				6177EF8723CCD73A00323E4C /* HomeControllerMethodTests.swift */,
+			);
+			path = "Home Controller Method Tests";
+			sourceTree = "<group>";
+		};
+		6177EF8F23CF33D800323E4C /* Login Controller */ = {
+			isa = PBXGroup;
+			children = (
+				61BB8DB9239805E900EEEEB0 /* LogInController.swift */,
+				6177EF8D23CF33C000323E4C /* LoginController+CanAuthenticate.swift */,
+			);
+			path = "Login Controller";
+			sourceTree = "<group>";
+		};
+		6177EF9023CF33E200323E4C /* Create Account Controller */ = {
+			isa = PBXGroup;
+			children = (
+				61BB8DBB239806E100EEEEB0 /* CreateAccountController.swift */,
+				6177EF8B23CF304E00323E4C /* CreateAccountController+CanAuthenticate.swift */,
+			);
+			path = "Create Account Controller";
+			sourceTree = "<group>";
+		};
 		61A4710223A8F814003DD758 /* New Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,9 +334,9 @@
 			isa = PBXGroup;
 			children = (
 				61A5F85423C8C935000C4C5E /* Current User Singleton */,
-				61BB8DB02398020E00EEEEB0 /* Utils */,
 				61A5F84423C8BE8A000C4C5E /* Models */,
 				61A5F84323C8BE84000C4C5E /* Views */,
+				61BB8DB02398020E00EEEEB0 /* Utils */,
 			);
 			path = "Application Wide Resources";
 			sourceTree = "<group>";
@@ -308,11 +384,22 @@
 			path = "Current User Singleton";
 			sourceTree = "<group>";
 		};
+		61ADBD0423CC8AC2003DDD53 /* VibeChatTests */ = {
+			isa = PBXGroup;
+			children = (
+				6177EF8623CCD71B00323E4C /* Home Controller Method Tests */,
+				6177EF8123CCA35C00323E4C /* Authentication Validation Method Tests */,
+				61F5338C23CC944900C35F49 /* Network Tests */,
+				61ADBD0723CC8AC3003DDD53 /* Info.plist */,
+			);
+			path = VibeChatTests;
+			sourceTree = "<group>";
+		};
 		61BB8D822398020300EEEEB0 = {
 			isa = PBXGroup;
 			children = (
 				61BB8D8D2398020300EEEEB0 /* VibeChat */,
-				61BB8DA42398020400EEEEB0 /* VibeChatTests */,
+				61ADBD0423CC8AC2003DDD53 /* VibeChatTests */,
 				61BB8D8C2398020300EEEEB0 /* Products */,
 				9B4E0B06E9C0744AFB4ABEA9 /* Pods */,
 				1A44F77FE3250693108DEE87 /* Frameworks */,
@@ -323,7 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				61BB8D8B2398020300EEEEB0 /* Vibe Chat.app */,
-				61BB8DA12398020400EEEEB0 /* VibeChatTests.xctest */,
+				61ADBD0323CC8AC2003DDD53 /* VibeChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -332,8 +419,8 @@
 			isa = PBXGroup;
 			children = (
 				61A5F84223C8BE2B000C4C5E /* Application Wide Resources */,
-				61BB8DC723980AC400EEEEB0 /* Storyboards & Assets */,
 				61271C202399560B00F1EE1B /* Network Layer */,
+				61BB8DC723980AC400EEEEB0 /* Storyboards & Assets */,
 				61BB8DB32398052000EEEEB0 /* Authentication */,
 				61BB8DC523980AAF00EEEEB0 /* Home */,
 				61A4710223A8F814003DD758 /* New Conversation */,
@@ -341,28 +428,17 @@
 				616B2E5F239A56F500E9B0B2 /* Messaging */,
 				61BB8DC623980AB700EEEEB0 /* App Delegates */,
 				61BB8D9C2398020300EEEEB0 /* Info.plist */,
-				61DC11C623C5F98E00892F4A /* GoogleService-Info.plist */,
+				613A3DF423D06D4100F0128A /* GoogleService-Info.plist */,
 			);
 			path = VibeChat;
-			sourceTree = "<group>";
-		};
-		61BB8DA42398020400EEEEB0 /* VibeChatTests */ = {
-			isa = PBXGroup;
-			children = (
-				61BB8DA72398020400EEEEB0 /* Info.plist */,
-				61E39238239FC74700BAAD21 /* MessagingManagerTests.swift */,
-				61A5F85723C8CBB2000C4C5E /* MessagesControllerTests.swift */,
-				61A5F85923C8CBBD000C4C5E /* HomeControllerTests.swift */,
-				61A5F85B23C8CBCE000C4C5E /* AuthenticationControllerTests.swift */,
-			);
-			path = VibeChatTests;
 			sourceTree = "<group>";
 		};
 		61BB8DB02398020E00EEEEB0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				61BB8DCF2399120900EEEEB0 /* UIViewController+.swift */,
-				61EA8E9923BA18AA00FC7B87 /* UIImageView+.swift */,
+				61BB8DCF2399120900EEEEB0 /* UIViewController+KeyboardHandling.swift */,
+				61EA8E9923BA18AA00FC7B87 /* UIImageView+ImageCache.swift */,
+				61BA83B523CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -370,7 +446,7 @@
 		61BB8DB32398052000EEEEB0 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				61271C1D23993A4B00F1EE1B /* Utils */,
+				61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */,
 				61BB8DB82398054D00EEEEB0 /* Controllers */,
 				61BB8DB72398054800EEEEB0 /* Views */,
 			);
@@ -389,9 +465,10 @@
 		61BB8DB82398054D00EEEEB0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				61BB8DB42398053900EEEEB0 /* AuthenticationController.swift */,
-				61BB8DB9239805E900EEEEB0 /* LogInController.swift */,
-				61BB8DBB239806E100EEEEB0 /* CreateAccountController.swift */,
+				61BB8DB42398053900EEEEB0 /* AuthenticationHomeController.swift */,
+				61206EB123CF37F200E2F658 /* AuthenticateController.swift */,
+				6177EF8F23CF33D800323E4C /* Login Controller */,
+				6177EF9023CF33E200323E4C /* Create Account Controller */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -438,6 +515,7 @@
 			isa = PBXGroup;
 			children = (
 				61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */,
+				61BA83B323CC6C5900913DBC /* NoConversationsCoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -526,6 +604,16 @@
 			path = "Giphy Interface";
 			sourceTree = "<group>";
 		};
+		61F5338C23CC944900C35F49 /* Network Tests */ = {
+			isa = PBXGroup;
+			children = (
+				6177EF8223CCADED00323E4C /* XCTestCase+waitForExpectation.swift */,
+				61F5338623CC937100C35F49 /* UsersManagerTests.swift */,
+				6177EF8923CDBE9000323E4C /* NetworkTest.swift */,
+			);
+			path = "Network Tests";
+			sourceTree = "<group>";
+		};
 		9B4E0B06E9C0744AFB4ABEA9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +621,8 @@
 				6E3C3FD3DB807EB252E0B1D1 /* Pods-VibeChat.release.xcconfig */,
 				1B812DC1F6BA4A2FCD075BF0 /* Pods-VibeChatTests.debug.xcconfig */,
 				76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */,
+				410FA5D016379502FE59C7C9 /* Pods-VibeChat-VibeChatTests.debug.xcconfig */,
+				7E221EEEC9D02D47E9B77858 /* Pods-VibeChat-VibeChatTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -540,6 +630,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		61ADBD0223CC8AC2003DDD53 /* VibeChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61ADBD0A23CC8AC3003DDD53 /* Build configuration list for PBXNativeTarget "VibeChatTests" */;
+			buildPhases = (
+				D567E32CD2844904B48CD0BB /* [CP] Check Pods Manifest.lock */,
+				61ADBCFF23CC8AC2003DDD53 /* Sources */,
+				61ADBD0023CC8AC2003DDD53 /* Frameworks */,
+				61ADBD0123CC8AC2003DDD53 /* Resources */,
+				1F6D91F99C390780B6BA4B9D /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				61ADBD0923CC8AC3003DDD53 /* PBXTargetDependency */,
+			);
+			name = VibeChatTests;
+			productName = VibeChatTests;
+			productReference = 61ADBD0323CC8AC2003DDD53 /* VibeChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		61BB8D8A2398020300EEEEB0 /* VibeChat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 61BB8DAA2398020400EEEEB0 /* Build configuration list for PBXNativeTarget "VibeChat" */;
@@ -559,25 +669,6 @@
 			productReference = 61BB8D8B2398020300EEEEB0 /* Vibe Chat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		61BB8DA02398020400EEEEB0 /* VibeChatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 61BB8DAD2398020400EEEEB0 /* Build configuration list for PBXNativeTarget "VibeChatTests" */;
-			buildPhases = (
-				0DA0344B8AFC92EC7305BE1E /* [CP] Check Pods Manifest.lock */,
-				61BB8D9D2398020400EEEEB0 /* Sources */,
-				61BB8D9E2398020400EEEEB0 /* Frameworks */,
-				61BB8D9F2398020400EEEEB0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				61BB8DA32398020400EEEEB0 /* PBXTargetDependency */,
-			);
-			name = VibeChatTests;
-			productName = VibeChatTests;
-			productReference = 61BB8DA12398020400EEEEB0 /* VibeChatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -588,12 +679,12 @@
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Jack Smith";
 				TargetAttributes = {
+					61ADBD0223CC8AC2003DDD53 = {
+						CreatedOnToolsVersion = 11.2.1;
+						TestTargetID = 61BB8D8A2398020300EEEEB0;
+					};
 					61BB8D8A2398020300EEEEB0 = {
 						CreatedOnToolsVersion = 11.2;
-					};
-					61BB8DA02398020400EEEEB0 = {
-						CreatedOnToolsVersion = 11.2;
-						TestTargetID = 61BB8D8A2398020300EEEEB0;
 					};
 				};
 			};
@@ -611,52 +702,47 @@
 			projectRoot = "";
 			targets = (
 				61BB8D8A2398020300EEEEB0 /* VibeChat */,
-				61BB8DA02398020400EEEEB0 /* VibeChatTests */,
+				61ADBD0223CC8AC2003DDD53 /* VibeChatTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		61ADBD0123CC8AC2003DDD53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61BB8D892398020300EEEEB0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				61BB8D982398020300EEEEB0 /* Assets.xcassets in Resources */,
 				61BB8D962398020300EEEEB0 /* Main.storyboard in Resources */,
-				61DC11C723C5F98E00892F4A /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61BB8D9F2398020400EEEEB0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				613A3DF523D06D4100F0128A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0DA0344B8AFC92EC7305BE1E /* [CP] Check Pods Manifest.lock */ = {
+		1F6D91F99C390780B6BA4B9D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VibeChatTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D1C40DE0BD54C85E8F374B46 /* [CP] Check Pods Manifest.lock */ = {
@@ -675,6 +761,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-VibeChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D567E32CD2844904B48CD0BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VibeChat-VibeChatTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -701,6 +809,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		61ADBCFF23CC8AC2003DDD53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6177EF8323CCADED00323E4C /* XCTestCase+waitForExpectation.swift in Sources */,
+				61F5338723CC937100C35F49 /* UsersManagerTests.swift in Sources */,
+				6177EF8A23CDBE9000323E4C /* NetworkTest.swift in Sources */,
+				6177EF8523CCD3C700323E4C /* AuthenticationValidationTests.swift in Sources */,
+				6177EF8823CCD73A00323E4C /* HomeControllerMethodTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61BB8D872398020300EEEEB0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -710,72 +830,72 @@
 				61445FED23BF436A00452FBB /* TextMessage.swift in Sources */,
 				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
 				61BB8D932398020300EEEEB0 /* HomeController.swift in Sources */,
+				6177EF8E23CF33C000323E4C /* LoginController+CanAuthenticate.swift in Sources */,
 				61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */,
 				61BB8DBE239806FD00EEEEB0 /* AuthenticationButton.swift in Sources */,
-				61445FF023BF641300452FBB /* MessagesController+CollectionViewDataSource.swift in Sources */,
+				613A3DF723D0782E00F0128A /* MediaMessageUploader.swift in Sources */,
+				61445FF023BF641300452FBB /* MessagesController+CollectionView.swift in Sources */,
 				61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */,
-				61445FF423BF64CA00452FBB /* MessagesController+ImagePicker.swift in Sources */,
+				6177EF8C23CF304F00323E4C /* CreateAccountController+CanAuthenticate.swift in Sources */,
+				61445FF423BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift in Sources */,
 				61A5F84723C8BEAA000C4C5E /* CircularImageView.swift in Sources */,
-				61EA8E9A23BA18AA00FC7B87 /* UIImageView+.swift in Sources */,
+				61EA8E9A23BA18AA00FC7B87 /* UIImageView+ImageCache.swift in Sources */,
 				61EA8E9E23BA40F600FC7B87 /* GiphyMessage.swift in Sources */,
-				61BB8DD02399120900EEEEB0 /* UIViewController+.swift in Sources */,
+				61BB8DD02399120900EEEEB0 /* UIViewController+KeyboardHandling.swift in Sources */,
+				61BA83B423CC6C5900913DBC /* NoConversationsCoverView.swift in Sources */,
 				61E39233239FBE3100BAAD21 /* MessagingManager.swift in Sources */,
 				61DC11C523C5DC0D00892F4A /* ChatterProfileController.swift in Sources */,
-				61445FF623BF650C00452FBB /* MessagesController+Giphy.swift in Sources */,
+				613A3DF323D06C7D00F0128A /* MessagesController+MessageHandling.swift in Sources */,
+				61445FF623BF650C00452FBB /* MessagesController+GiphyPicker.swift in Sources */,
 				6175874A239E743E002ED670 /* Message.swift in Sources */,
 				61BB8DBA239805E900EEEEB0 /* LogInController.swift in Sources */,
 				61BB8DBC239806E100EEEEB0 /* CreateAccountController.swift in Sources */,
-				61445FF823BF655400452FBB /* MessagesController+MessageInteraction.swift in Sources */,
+				61445FF823BF655400452FBB /* MessagesController+ImageMessageInteraction.swift in Sources */,
 				61BB8DCC239904FD00EEEEB0 /* AuthenticationTextField.swift in Sources */,
 				61EA8E9C23BA22D800FC7B87 /* TextMessageCell.swift in Sources */,
+				613A3DFC23D0809F00F0128A /* MediaMessageUploader+Video.swift in Sources */,
 				61A5F85323C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift in Sources */,
-				61445FF223BF642700452FBB /* MessagesController+Methods.swift in Sources */,
+				61445FF223BF642700452FBB /* MessagesController+SetupMethods.swift in Sources */,
 				61A470F723A000AD003DD758 /* DateHeader.swift in Sources */,
 				61A5F84123C786AF000C4C5E /* VideoMessageCell.swift in Sources */,
 				6175874C239E7459002ED670 /* MessageCell.swift in Sources */,
 				61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */,
-				61BB8DB52398053900EEEEB0 /* AuthenticationController.swift in Sources */,
+				61BB8DB52398053900EEEEB0 /* AuthenticationHomeController.swift in Sources */,
 				61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */,
 				61A5F84923C8BEE8000C4C5E /* HomeController+TableView.swift in Sources */,
 				61E39237239FBED400BAAD21 /* UsersManager.swift in Sources */,
 				61A4710423A8F8AD003DD758 /* NewConversationController.swift in Sources */,
 				61BB8D912398020300EEEEB0 /* SceneDelegate.swift in Sources */,
+				61BA83B623CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift in Sources */,
 				61A5F84F23C8C404000C4C5E /* UserProfileController+Methods.swift in Sources */,
 				61A5F84B23C8BF31000C4C5E /* HomeController+Methods.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,
 				61EA8E9823BA073200FC7B87 /* ImageMessage.swift in Sources */,
-				61271C1F23993A6C00F1EE1B /* CanAuthenticate.swift in Sources */,
+				61271C1F23993A6C00F1EE1B /* CanAuthenticateWithForm.swift in Sources */,
 				61A5F85623C8CB46000C4C5E /* DateHeaderLabel.swift in Sources */,
 				61A5F84D23C8BF5D000C4C5E /* HomeController+HomeDelegate.swift in Sources */,
+				61206EB223CF37F200E2F658 /* AuthenticateController.swift in Sources */,
+				61392DFE23CF6EB00034B2D1 /* MessageOrganiser.swift in Sources */,
+				613A3DFA23D07E4C00F0128A /* MediaMessageUploader+Gif.swift in Sources */,
 				61EA8E9223ACDF9000FC7B87 /* NewConversationCell.swift in Sources */,
 				61EA8E9523BA017400FC7B87 /* ImageMessageCell.swift in Sources */,
 				6175874E239E74BB002ED670 /* MessagesController.swift in Sources */,
 				61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */,
 				61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */,
 				61445FE723BB742400452FBB /* VideoMessage.swift in Sources */,
+				613A3DFE23D080AC00F0128A /* MediaMessageUploader+Image.swift in Sources */,
 				616B2E63239A575700E9B0B2 /* UserProfileController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		61BB8D9D2398020400EEEEB0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				61E39239239FC74700BAAD21 /* MessagingManagerTests.swift in Sources */,
-				61A5F85C23C8CBCE000C4C5E /* AuthenticationControllerTests.swift in Sources */,
-				61A5F85A23C8CBBD000C4C5E /* HomeControllerTests.swift in Sources */,
-				61A5F85823C8CBB2000C4C5E /* MessagesControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		61BB8DA32398020400EEEEB0 /* PBXTargetDependency */ = {
+		61ADBD0923CC8AC3003DDD53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 61BB8D8A2398020300EEEEB0 /* VibeChat */;
-			targetProxy = 61BB8DA22398020400EEEEB0 /* PBXContainerItemProxy */;
+			targetProxy = 61ADBD0823CC8AC3003DDD53 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -791,6 +911,60 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		61ADBD0B23CC8AC3003DDD53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 410FA5D016379502FE59C7C9 /* Pods-VibeChat-VibeChatTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XY9CSH3M45;
+				HEADER_SEARCH_PATHS = (
+					"${PODS_ROOT}/Firebase/Core/Sources",
+					"${PODS_ROOT}/Headers/Public",
+					"${inherited}",
+					"${SRCROOT}/Pods/Firebase/CoreOnly/Sources",
+				);
+				INFOPLIST_FILE = VibeChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vibe Chat.app/Vibe Chat";
+			};
+			name = Debug;
+		};
+		61ADBD0C23CC8AC3003DDD53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E221EEEC9D02D47E9B77858 /* Pods-VibeChat-VibeChatTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XY9CSH3M45;
+				HEADER_SEARCH_PATHS = (
+					"${PODS_ROOT}/Firebase/Core/Sources",
+					"${PODS_ROOT}/Headers/Public",
+					"${inherited}",
+					"${SRCROOT}/Pods/Firebase/CoreOnly/Sources",
+				);
+				INFOPLIST_FILE = VibeChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vibe Chat.app/Vibe Chat";
+			};
+			name = Release;
+		};
 		61BB8DA82398020400EEEEB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -841,10 +1015,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = VibeChat;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -895,9 +1071,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = VibeChat;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -919,6 +1097,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "wrenkitchens.Vibe-Chat";
+				PRODUCT_MODULE_NAME = VibeChat;
 				PRODUCT_NAME = "Vibe Chat";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -939,61 +1118,25 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "wrenkitchens.Vibe-Chat";
+				PRODUCT_MODULE_NAME = VibeChat;
 				PRODUCT_NAME = "Vibe Chat";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		61BB8DAE2398020400EEEEB0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B812DC1F6BA4A2FCD075BF0 /* Pods-VibeChatTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6JFATDAPA6;
-				INFOPLIST_FILE = VibeChatTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VibeChat.app/VibeChat";
-			};
-			name = Debug;
-		};
-		61BB8DAF2398020400EEEEB0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6JFATDAPA6;
-				INFOPLIST_FILE = VibeChatTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = wrenkitchens.VibeChatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VibeChat.app/VibeChat";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		61ADBD0A23CC8AC3003DDD53 /* Build configuration list for PBXNativeTarget "VibeChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61ADBD0B23CC8AC3003DDD53 /* Debug */,
+				61ADBD0C23CC8AC3003DDD53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		61BB8D862398020300EEEEB0 /* Build configuration list for PBXProject "VibeChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1008,15 +1151,6 @@
 			buildConfigurations = (
 				61BB8DAB2398020400EEEEB0 /* Debug */,
 				61BB8DAC2398020400EEEEB0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		61BB8DAD2398020400EEEEB0 /* Build configuration list for PBXNativeTarget "VibeChatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				61BB8DAE2398020400EEEEB0 /* Debug */,
-				61BB8DAF2398020400EEEEB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

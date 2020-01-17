@@ -12,7 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
         guard let windowScene = (scene as? UIWindowScene) else { print("No window scene??"); return }
         let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
         
@@ -20,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let user = user {
                 CurrentUser.shared.setCurrentUser(user)
             }
-            let authenticationController = storyboard.instantiateViewController(identifier: "AuthenticationController") as! AuthenticationController
+            let authenticationController = storyboard.instantiateViewController(identifier: "AuthenticationController") as! AuthenticationHomeController
             self.window = UIWindow(windowScene: windowScene)
             self.window?.rootViewController = authenticationController
             self.window?.makeKeyAndVisible()

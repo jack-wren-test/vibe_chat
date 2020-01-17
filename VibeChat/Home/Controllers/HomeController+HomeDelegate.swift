@@ -10,10 +10,10 @@ import UIKit
 
 extension HomeController: HomeDelegate {
     
-    func presentNewChatWindow(conversation: Conversation) {
+    func presentNewWindow(conversation: Conversation) {
         let vc = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "MessagesController") as! MessagesController
         vc.conversation = conversation
-        navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func performLogOut() {

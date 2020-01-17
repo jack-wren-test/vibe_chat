@@ -10,7 +10,6 @@ import FirebaseFirestore
 
 /// Enumeration for Firestore database locations.
 enum dbCollection: String {
-    typealias RawValue = String
     case users, messaging, conversations, messages, groups, userMessages
 }
 

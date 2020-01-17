@@ -13,7 +13,7 @@ extension HomeController:   UITableViewDelegate,
                             UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orderedConversations?.count ?? 0
+        return self.orderedConversations?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -30,7 +30,7 @@ extension HomeController:   UITableViewDelegate,
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.orderedConversations?[indexPath.row].isReadStatus = true
-        performSegue(withIdentifier: "MessagesSegue", sender: self)
+        self.performSegue(withIdentifier: "MessagesSegue", sender: self)
     }
     
 }

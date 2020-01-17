@@ -13,18 +13,15 @@ class NewConversationController: UITableViewController {
     
     // MARK:- Properties
     
-    var homeDelegate: HomeDelegate?
-    var chatters = [User]() {
-        didSet {
-            if isViewLoaded { tableView.reloadData() }
-        }
-    }
-    let reuseIdentifier = "ChatterCell"
+    weak var homeDelegate: HomeDelegate?
+    private(set) var chatters: [User]?
+    private let reuseIdentifier = "ChatterCell"
     
     // MARK:- Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchChatters()
     }
     
     deinit {
@@ -34,7 +31,10 @@ class NewConversationController: UITableViewController {
     // MARK:- TableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatters.count
+        if let numberOfRows = chatters?.count {
+            return numberOfRows
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -43,14 +43,25 @@ class NewConversationController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! NewConversationCell
-        cell.chatter = chatters[indexPath.row]
+        cell.chatter = chatters?[indexPath.row]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversation = Conversation(withChatter: chatters[indexPath.row])
+        guard let chatter = chatters?[indexPath.row] else {return}
+        let conversation = Conversation(withChatter: chatter)
         dismiss(animated: true) {
-            self.homeDelegate?.presentNewChatWindow(conversation: conversation)
+            self.homeDelegate?.presentNewWindow(conversation: conversation)
+        }
+    }
+    
+    // MARK:- Methods
+    
+    private func fetchChatters() {
+        UsersManager.shared.fetchChatters { [weak self] (chatters) in
+            guard let self = self, let chatters = chatters else {return}
+            self.chatters = chatters
+            self.tableView.reloadData()
         }
     }
     

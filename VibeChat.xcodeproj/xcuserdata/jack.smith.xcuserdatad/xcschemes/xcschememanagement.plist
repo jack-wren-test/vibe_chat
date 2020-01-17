@@ -4,19 +4,54 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AuthenticationValidationTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>HomeControllerMethodTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>NetworkTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>VibeChat.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>0</integer>
 		</dict>
 		<key>VibeChatTests.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
-			<integer>25</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>61ADBD0223CC8AC2003DDD53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>61BA83C923CC812C00913DBC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>61BB8D8A2398020300EEEEB0</key>
 		<dict>
 			<key>primary</key>

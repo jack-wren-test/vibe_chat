@@ -10,23 +10,9 @@ import UIKit
 import AVFoundation
 
 /// Class for a video message cell.
-class VideoMessageCell: ImageMessageCell {
+final class VideoMessageCell: ImageMessageCell {
     
     // MARK:- Properties
-    
-    override var message: ImageMessage? {
-        didSet {
-            guard let message = message as? VideoMessage, let user = CurrentUser.shared.data, let url = message.imageUrl else {return}
-            imageMessageView.loadImageUsingCacheOrUrl(url: url) { (image) in
-                if image != nil {
-                    let isOutgoingMessage = message.fromUid == user.uid
-                    self.layoutMessage(isOutgoingMessage)
-                    self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
-                    self.setupVideoLayer()
-                }
-            }
-        }
-    }
     
     lazy var playButton: UIButton = {
         let button = UIButton(type: .system)
@@ -37,10 +23,9 @@ class VideoMessageCell: ImageMessageCell {
         return button
     }()
     
-    var playerLayer: AVPlayerLayer?
-    var player: AVPlayer?
-    var initialVideoMessageFrame: CGRect?
-    
+    private(set) var playerLayer: AVPlayerLayer?
+    private(set) var player: AVPlayer?
+    private(set) var initialVideoMessageFrame: CGRect?
     
     // MARK:- Lifecycle
     
@@ -53,38 +38,49 @@ class VideoMessageCell: ImageMessageCell {
     }
     
     override func prepareForReuse() {
-        playerLayer?.removeFromSuperlayer()
+        self.playerLayer?.removeFromSuperlayer()
     }
     
     // MARK:- Methods
     
-    fileprivate func setupVideoLayer() {
-        if let message = message as? VideoMessage, let url = message.videoUrl {
-            player = AVPlayer(url: url)
-            playerLayer = AVPlayerLayer(player: player!)
-            playerLayer!.frame = imageMessageView.bounds
-            imageMessageView.layer.addSublayer(playerLayer!)
+    private func setupVideoLayer() {
+        guard let imageMessageView = self.imageMessageView else {return}
+        guard let message = self.message as? VideoMessage, let url = message.videoUrl else {return}
+        self.player = AVPlayer(url: url)
+        self.playerLayer = AVPlayerLayer(player: self.player!)
+        self.playerLayer!.frame = imageMessageView.bounds
+        imageMessageView.layer.addSublayer(self.playerLayer!)
+    
+        imageMessageView.addSubview(playButton)
+        let playButtonSize: CGFloat = 75
+        self.playButton.centerXAnchor.constraint(equalTo: imageMessageView.centerXAnchor).isActive = true
+        self.playButton.centerYAnchor.constraint(equalTo: imageMessageView.centerYAnchor).isActive = true
+        self.playButton.heightAnchor.constraint(equalToConstant: playButtonSize).isActive = true
+        self.playButton.widthAnchor.constraint(equalToConstant: playButtonSize).isActive = true
         
-            imageMessageView.addSubview(playButton)
-            playButton.centerXAnchor.constraint(equalTo: imageMessageView.centerXAnchor).isActive = true
-            playButton.centerYAnchor.constraint(equalTo: imageMessageView.centerYAnchor).isActive = true
-            playButton.heightAnchor.constraint(equalToConstant: 75).isActive = true
-            playButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
-            
-            initialVideoMessageFrame = playerLayer?.frame
-        }
+        self.initialVideoMessageFrame = self.playerLayer?.frame
+    }
+    
+    override func setupMessage() {
+        super.setupMessage()
+        self.setupVideoLayer()
     }
     
     @objc override func handleImageTap() {
-        if let player = player, let layer = playerLayer {
-            controllerDelegate?.imageMessageTapped(imageMessageView, layer, player)
-        }
+        guard let player = self.player,
+              let imageMessageView = self.imageMessageView,
+              let layer = self.playerLayer else {return}
+        self.controllerDelegate?.imageMessageTapped(imageMessageView, layer, player)
     }
     
     @objc private func handleVideoPlayPause() {
-        if let playerLayer = playerLayer {
-            controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer, imageMessageView: imageMessageView, playButton: playButton, frame: initialVideoMessageFrame!)
-        }
+        guard let playerLayer = self.playerLayer,
+              let imageMessageView = self.imageMessageView,
+              let initialVideoMessageFrame = self.initialVideoMessageFrame else {return}
+        self.controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer,
+                                                  imageMessageView: imageMessageView,
+                                                  playButton: self.playButton,
+                                                  frame: initialVideoMessageFrame)
     }
     
 }

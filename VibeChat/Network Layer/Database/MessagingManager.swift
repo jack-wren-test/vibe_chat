@@ -23,23 +23,23 @@ final class MessagingManager: FirestoreManager {
     
     // MARK:- Methods
     
-    
     /// Upload a message to Firestore database.
     /// - Parameters:
     ///   - message: The message to be uploaded
-    ///   - completion: Completion handler with empty default implementation
-    public func uploadMessage(message: Message, completion: @escaping ()->() = {}) {
+    ///   - completion: Completion handler passing a success truth value
+    public func uploadMessage(message: Message, completion: @escaping ((_ success: Bool)->Void) = {_ in}) {
         guard let conversationId = message.conversationId else {return}
-        collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addDocument(data: message.dictionaryRepresentation) { (error) in
+        self.collectionReference.document(conversationId)
+            .collection(dbCollection.messages.rawValue)
+            .addDocument(data: message.dictionaryRepresentation) { error in
             if let error = error {
                 print("Error uploading message: \(error.localizedDescription)")
-                completion()
+                completion(false)
                 return
             }
-            completion()
+            completion(true)
         }
     }
-    
     
     /// Creates a listener for listening for new messages in a specified conversation.
     /// - Parameters:
@@ -47,28 +47,29 @@ final class MessagingManager: FirestoreManager {
     ///   - completion: Completion handler passing optional array of Message objects
     /// - Returns:
     ///   - The listener registration object
-    public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->()) -> ListenerRegistration {
+    public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->Void) -> ListenerRegistration {
         let conversationId = onConversation.uid
-        let listener = collectionReference.document(conversationId).collection(dbCollection.messages.rawValue).addSnapshotListener { (snapshot, error) in
+        let listener = self.collectionReference.document(conversationId)
+            .collection(dbCollection.messages.rawValue)
+            .addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
                 completion(nil)
             }
+            guard let snapshot = snapshot?.documentChanges else {return}
+            let messages = self.firestoreDocumentsToMessageArray(snapshot)
             DispatchQueue.main.async {
-                if let snapshot = snapshot?.documentChanges {
-                    self.firestoreDocumentsToMessageArray(snapshot, completion: completion)
-                }
+                completion(messages)
             }
         }
         return listener
     }
     
-    
     /// Parses an array of Firebase DocumentChange objects to array of Message objects.
     /// - Parameters:
     ///   - documentChange: The document change to parse
     ///   - completion: Completion handler passing array of optional Message objects
-    fileprivate func firestoreDocumentsToMessageArray(_ documentChange: [DocumentChange], completion: @escaping ([Message]?)->()) {
+    private func firestoreDocumentsToMessageArray(_ documentChange: [DocumentChange]) -> [Message]? {
         var messages = [Message]()
         documentChange.forEach { (document) in
             let messageData = document.document.data()
@@ -86,7 +87,7 @@ final class MessagingManager: FirestoreManager {
                 messages.append(message)
             }
         }
-        completion(messages)
+        return messages
     }
     
 }

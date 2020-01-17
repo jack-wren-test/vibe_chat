@@ -11,17 +11,17 @@ import UIKit
 extension UserProfileController {
     
     public func disableAllFields() {
-        form.subviews.forEach { (view) in
+        self.form.subviews.forEach { (view) in
             view.isUserInteractionEnabled = false
         }
     }
     
     public func setInitialFormValues() {
         if let currentUserData = CurrentUser.shared.data {
-            nameTF.text = currentUserData.name
-            vibeTF.text = currentUserData.vibe
-            emailTF.text = currentUserData.email
-            profileImageView.image = currentUserData.profileImage
+            self.nameTF.text = currentUserData.name
+            self.vibeTF.text = currentUserData.vibe
+            self.emailTF.text = currentUserData.email
+            self.profileImageView.image = currentUserData.profileImage
         }
     }
     
@@ -42,7 +42,7 @@ extension UserProfileController {
     
     @objc func handleProfileImageTapped() {
         if let imagePicker = imagePickerController {
-            present(imagePicker, animated: true)
+            self.present(imagePicker, animated: true)
         }
     }
     
