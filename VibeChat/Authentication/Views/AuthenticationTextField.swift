@@ -14,6 +14,8 @@ public class AuthenticationTextField: UITextField {
 
     // MARK:- Properties
     
+    private let padding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    
     @IBInspectable
     var placeholderTextColor: UIColor? {
         didSet {
@@ -44,6 +46,18 @@ public class AuthenticationTextField: UITextField {
         self.badInputIndicator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
         self.badInputIndicator.heightAnchor.constraint(equalToConstant: 36).isActive = true
         self.badInputIndicator.widthAnchor.constraint(equalToConstant: 36).isActive = true
+    }
+    
+    public override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    public override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
+    }
+    
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding)
     }
     
 }

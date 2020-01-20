@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to listen to your microphone!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need to take pictures!</string>
 	<key>NSPhotoLibraryUsageDescription</key>

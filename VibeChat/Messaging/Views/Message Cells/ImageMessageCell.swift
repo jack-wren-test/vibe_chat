@@ -38,6 +38,11 @@ class ImageMessageCell: MessageCell {
         super.init(coder: coder)
     }
     
+    override func didMoveToSuperview() {
+        guard let message = message as? ImageMessage else {return}
+        self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
+    }
+    
     override func prepareForReuse() {
         self.imageMessageView = nil
         self.message = nil
@@ -50,7 +55,6 @@ class ImageMessageCell: MessageCell {
         guard let message = self.message as? ImageMessage, let url = message.imageUrl else {return}
         guard let imageMessageView = self.imageMessageView else {return}
         imageMessageView.loadImageUsingCacheOrUrl(url: url)
-        self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
     }
     
     private func configureViews() {
@@ -69,6 +73,7 @@ class ImageMessageCell: MessageCell {
     
     public func updateHeightAnchor(usingAspectRatio aspectRatio: CGFloat) {
         self.viewHeightAnchor = heightAnchor.constraint(equalToConstant: self.maxMessageWidth/aspectRatio)
+        self.viewHeightAnchor?.priority = UILayoutPriority.init(rawValue: 999)
         self.viewHeightAnchor?.isActive = true
     }
     

@@ -22,13 +22,13 @@ extension MediaMessageUploader {
                                                         andAspectRatio: CGFloat,
                                                         completion: @escaping (_ success: Bool)->Void) {
         guard let currentUser = CurrentUser.shared.data else {return}
-        if isFirstMessage {
-            UserMessagesManager.shared.createConversation(conversation: conversation) { (success) in
-                guard success else {return}
+        if self.isFirstMessage {
+            UserMessagesManager.shared.createConversation(conversation: conversation) { [weak self] success in
+                guard let self = self, success else {return}
                 self.sendGiphyMessage(withGiphId, andAspectRatio, conversation, currentUser, completion)
             }
         } else {
-            sendGiphyMessage(withGiphId, andAspectRatio, conversation, currentUser, completion)
+            self.sendGiphyMessage(withGiphId, andAspectRatio, conversation, currentUser, completion)
         }
     }
     
@@ -44,7 +44,8 @@ extension MediaMessageUploader {
                                  _ conversation: Conversation,
                                  _ currentUser: User,
                                  _ completion: @escaping (_ success: Bool)->Void) {
-        let message = GiphyMessage(giphId: withGiphId, aspectRatio: andAspectRatio, toUid: conversation.chatter!.uid, fromUid: currentUser.uid, timestamp: Date(), conversationId: conversation.uid)
+        guard let chatter = conversation.chatter else {return}
+        let message = GiphyMessage(giphId: withGiphId, aspectRatio: andAspectRatio, toUid: chatter.uid, fromUid: currentUser.uid, timestamp: Date(), conversationId: conversation.uid)
         UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
             MessagingManager.shared.uploadMessage(message: message) { (success) in
                 completion(success)

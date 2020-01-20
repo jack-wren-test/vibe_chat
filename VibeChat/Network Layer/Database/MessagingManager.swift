@@ -51,16 +51,16 @@ final class MessagingManager: FirestoreManager {
         let conversationId = onConversation.uid
         let listener = self.collectionReference.document(conversationId)
             .collection(dbCollection.messages.rawValue)
-            .addSnapshotListener { (snapshot, error) in
-            if let error = error {
-                print("Error retrieving snapshot: \(error.localizedDescription)")
-                completion(nil)
-            }
-            guard let snapshot = snapshot?.documentChanges else {return}
-            let messages = self.firestoreDocumentsToMessageArray(snapshot)
-            DispatchQueue.main.async {
-                completion(messages)
-            }
+            .addSnapshotListener { snapshot, error in
+                if let error = error {
+                    print("Error retrieving snapshot: \(error.localizedDescription)")
+                    completion(nil)
+                }
+                guard let snapshot = snapshot?.documentChanges else {return}
+                let messages = self.firestoreDocumentsToMessageArray(snapshot)
+                DispatchQueue.main.async {
+                    completion(messages)
+                }
         }
         return listener
     }
@@ -71,7 +71,7 @@ final class MessagingManager: FirestoreManager {
     ///   - completion: Completion handler passing array of optional Message objects
     private func firestoreDocumentsToMessageArray(_ documentChange: [DocumentChange]) -> [Message]? {
         var messages = [Message]()
-        documentChange.forEach { (document) in
+        documentChange.forEach { document in
             let messageData = document.document.data()
             if messageData["videoUrl"] != nil {
                 let videoMessage = VideoMessage(withDictionary: messageData)

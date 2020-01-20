@@ -24,18 +24,18 @@ extension MediaMessageUploader {
                                    videoFileUrl: URL,
                                    completion: @escaping (_ success: Bool)->Void) -> StorageUploadTask? {
         
-        let uploadTask = StorageManager.shared.uploadVideoMessage(video: videoData) { (uploadedVideoUrl) in
+        let uploadTask = StorageManager.shared.uploadVideoMessage(video: videoData) { uploadedVideoUrl in
             guard let uploadedVideoUrl = uploadedVideoUrl else {return}
             guard let thumbnailImage = self.thumbnailImageForVideoUrl(videoFileUrl: videoFileUrl) else {return}
-            StorageManager.shared.uploadVideoThumbnail(image: thumbnailImage) { (url) in
-            guard let thumbnailImageUrl = url else {return}
-            let aspectRatio = thumbnailImage.size.width / thumbnailImage.size.height
-                self.checkForConversationAndSendVideoMessage(onConversation: onConversation,
-                                                              videoUrl: uploadedVideoUrl,
-                                                              thumbnailUrl: thumbnailImageUrl,
-                                                              aspectRatio: aspectRatio,
-                                                              completion: completion)
-            }
+            StorageManager.shared.uploadVideoThumbnail(image: thumbnailImage) { url in
+                guard let thumbnailImageUrl = url else {return}
+                let aspectRatio = thumbnailImage.size.width / thumbnailImage.size.height
+                    self.checkForConversationAndSendVideoMessage(onConversation: onConversation,
+                                                                 videoUrl: uploadedVideoUrl,
+                                                                 thumbnailUrl: thumbnailImageUrl,
+                                                                 aspectRatio: aspectRatio,
+                                                                 completion: completion)
+                }
         }
         return uploadTask
     }
@@ -63,30 +63,26 @@ extension MediaMessageUploader {
     ///   - aspectRatio: Thumbnail image aspect ratio
     ///   - completion: Completion handler passing a success truth value
     private func checkForConversationAndSendVideoMessage(onConversation conversation: Conversation,
-                                                             videoUrl: URL,
-                                                             thumbnailUrl: URL,
-                                                             aspectRatio: CGFloat,
-                                                             completion: @escaping (_ success: Bool)->Void) {
+                                                         videoUrl: URL,
+                                                         thumbnailUrl: URL,
+                                                         aspectRatio: CGFloat,
+                                                         completion: @escaping (_ success: Bool)->Void) {
         guard let currentUser = CurrentUser.shared.data else {return}
+        var semaphore: DispatchSemaphore?
+        var semaphoreResult: DispatchTimeoutResult?
         if isFirstMessage {
-            UserMessagesManager.shared.createConversation(conversation: conversation) { (success) in
+            semaphore = DispatchSemaphore(value: 0)
+            UserMessagesManager.shared.createConversation(conversation: conversation) { success in
                 if success {
-                    // Refactor this to use a semaphore rather than repeating the function
-                    self.sendVideoMessage(videoUrl: videoUrl,
-                                          thumbnailUrl: thumbnailUrl,
-                                          aspectRatio: aspectRatio,
-                                          conversation: conversation,
-                                          currentUser: currentUser,
-                                          completion: completion)
+                    semaphore?.signal()
                 }
             }
-        } else {
-            self.sendVideoMessage(videoUrl: videoUrl,
-                                  thumbnailUrl: thumbnailUrl,
-                                  aspectRatio: aspectRatio,
-                                  conversation: conversation,
-                                  currentUser: currentUser,
-                                  completion: completion)
+            guard let semaphore = semaphore else {return}
+            semaphoreResult = semaphore.wait(timeout: .now() + 5.0)
+        }
+        if semaphore == nil || semaphoreResult == .success {
+            self.sendVideoMessage(videoUrl: videoUrl, thumbnailUrl: thumbnailUrl, aspectRatio: aspectRatio,
+            conversation: conversation, currentUser: currentUser, completion: completion)
         }
     }
     

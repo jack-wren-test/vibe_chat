@@ -9,9 +9,10 @@
 import UIKit
 import MobileCoreServices
 import Firebase
+import AVFoundation
 
-extension MessagesController: UIImagePickerControllerDelegate,
-                              UINavigationControllerDelegate {
+extension MessagesController:   UIImagePickerControllerDelegate,
+                                UINavigationControllerDelegate {
 
     // MARK:- Methods
     
@@ -38,7 +39,7 @@ extension MessagesController: UIImagePickerControllerDelegate,
         guard let image = selectedImageFromPicker, let conversation = conversation else {return}
         let isFirstMessage = self.messages.count == 0 ? true : false
         let uploader = MediaMessageUploader(image: image, conversation: conversation, isFirstMessage: isFirstMessage)
-        let uploadTask = uploader.uploadMessage { (success)  in
+        let uploadTask = uploader.uploadMessage { success  in
             if !success {
                 print("Error uploading image message!")
             }
@@ -56,7 +57,7 @@ extension MessagesController: UIImagePickerControllerDelegate,
                                                 videoFileUrl: videoFileUrl,
                                                 conversation: conversation,
                                                 isFirstMessage: isFirstMessage)
-            let uploadTask = uploader.uploadMessage { (success) in
+            let uploadTask = uploader.uploadMessage { success in
                 if !success {
                     print("Error uploading video message!")
                 }
@@ -102,12 +103,23 @@ extension MessagesController: UIImagePickerControllerDelegate,
     
     // MARK:- IBActions
     
-    @IBAction private func imageMessageButtonPressed(_ sender: Any) {
+    private func openImagePicker(_ atCamera: Bool) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
         imagePickerController.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        if atCamera == true {
+            imagePickerController.sourceType = .camera
+        }
         self.present(imagePickerController, animated: true)
+    }
+    
+    @IBAction private func imageMessageButtonPressed(_ sender: Any) {
+        openImagePicker(false)
+    }
+    
+    @IBAction func cameraButtonPressed(_ sender: UIButton) {
+        openImagePicker(true)
     }
     
 }

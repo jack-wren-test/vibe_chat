@@ -32,6 +32,7 @@ class MessageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.layoutIfNeeded()
     }
     

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0CCCC69208DAA7A494629004 /* Pods_VibeChat_VibeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CCD5C2EA4B27D085969A96 /* Pods_VibeChat_VibeChatTests.framework */; };
 		61206EB223CF37F200E2F658 /* AuthenticateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61206EB123CF37F200E2F658 /* AuthenticateController.swift */; };
+		612154AB23D5BC880058AE0C /* MessagesController+TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612154AA23D5BC880058AE0C /* MessagesController+TextView.swift */; };
 		61271C1F23993A6C00F1EE1B /* CanAuthenticateWithForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */; };
 		61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C212399562100F1EE1B /* FirestoreManager.swift */; };
 		61392DFE23CF6EB00034B2D1 /* MessageOrganiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */; };
@@ -48,6 +49,7 @@
 		61A5F85323C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85223C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift */; };
 		61A5F85623C8CB46000C4C5E /* DateHeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A5F85523C8CB46000C4C5E /* DateHeaderLabel.swift */; };
 		61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */; };
+		61BA5A2223D5B52200A6FFC3 /* ExpandingTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA5A2123D5B52200A6FFC3 /* ExpandingTextInput.swift */; };
 		61BA83B423CC6C5900913DBC /* NoConversationsCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA83B323CC6C5900913DBC /* NoConversationsCoverView.swift */; };
 		61BA83B623CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA83B523CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift */; };
 		61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8D8E2398020300EEEEB0 /* AppDelegate.swift */; };
@@ -95,6 +97,7 @@
 		3838933A4A51E5BB5213103D /* Pods_VibeChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VibeChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		410FA5D016379502FE59C7C9 /* Pods-VibeChat-VibeChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat-VibeChatTests.debug.xcconfig"; path = "Target Support Files/Pods-VibeChat-VibeChatTests/Pods-VibeChat-VibeChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61206EB123CF37F200E2F658 /* AuthenticateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateController.swift; sourceTree = "<group>"; };
+		612154AA23D5BC880058AE0C /* MessagesController+TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+TextView.swift"; sourceTree = "<group>"; };
 		61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanAuthenticateWithForm.swift; sourceTree = "<group>"; };
 		61271C212399562100F1EE1B /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOrganiser.swift; sourceTree = "<group>"; };
@@ -136,6 +139,7 @@
 		61ADBD0323CC8AC2003DDD53 /* VibeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VibeChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61ADBD0723CC8AC3003DDD53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61B92F7D23AA272C00E516C1 /* UserMessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesManager.swift; sourceTree = "<group>"; };
+		61BA5A2123D5B52200A6FFC3 /* ExpandingTextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingTextInput.swift; sourceTree = "<group>"; };
 		61BA83B323CC6C5900913DBC /* NoConversationsCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoConversationsCoverView.swift; sourceTree = "<group>"; };
 		61BA83B523CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConvenienceConstraints.swift"; sourceTree = "<group>"; };
 		61BB8D8B2398020300EEEEB0 /* Vibe Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vibe Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +268,7 @@
 				61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */,
 				61445FEF23BF641300452FBB /* MessagesController+CollectionView.swift */,
 				61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */,
+				612154AA23D5BC880058AE0C /* MessagesController+TextView.swift */,
 				613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */,
 				61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */,
 			);
@@ -275,6 +280,7 @@
 			children = (
 				61EA8E9323BA011600FC7B87 /* Message Cells */,
 				61DC11C323C375CA00892F4A /* Supplimentary Views */,
+				61BA5A2323D5B52600A6FFC3 /* Text Input */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,6 +399,14 @@
 				61ADBD0723CC8AC3003DDD53 /* Info.plist */,
 			);
 			path = VibeChatTests;
+			sourceTree = "<group>";
+		};
+		61BA5A2323D5B52600A6FFC3 /* Text Input */ = {
+			isa = PBXGroup;
+			children = (
+				61BA5A2123D5B52200A6FFC3 /* ExpandingTextInput.swift */,
+			);
+			path = "Text Input";
 			sourceTree = "<group>";
 		};
 		61BB8D822398020300EEEEB0 = {
@@ -857,6 +871,7 @@
 				61A5F85323C8C4F9000C4C5E /* UserProfileController+ImagePicker.swift in Sources */,
 				61445FF223BF642700452FBB /* MessagesController+SetupMethods.swift in Sources */,
 				61A470F723A000AD003DD758 /* DateHeader.swift in Sources */,
+				61BA5A2223D5B52200A6FFC3 /* ExpandingTextInput.swift in Sources */,
 				61A5F84123C786AF000C4C5E /* VideoMessageCell.swift in Sources */,
 				6175874C239E7459002ED670 /* MessageCell.swift in Sources */,
 				61BB8D8F2398020300EEEEB0 /* AppDelegate.swift in Sources */,
@@ -884,6 +899,7 @@
 				61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */,
 				61A470FF23A7AD31003DD758 /* CurrentUser.swift in Sources */,
 				61445FE723BB742400452FBB /* VideoMessage.swift in Sources */,
+				612154AB23D5BC880058AE0C /* MessagesController+TextView.swift in Sources */,
 				613A3DFE23D080AC00F0128A /* MediaMessageUploader+Image.swift in Sources */,
 				616B2E63239A575700E9B0B2 /* UserProfileController.swift in Sources */,
 			);

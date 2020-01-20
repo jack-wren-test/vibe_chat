@@ -19,7 +19,7 @@ class MessagesController: UIViewController {
     @IBOutlet public weak var chatterNameLabel: UILabel!
     @IBOutlet public weak var chatterProfileImageView: CircularImageView!
     @IBOutlet public weak var collectionView: UICollectionView!
-    @IBOutlet public weak var messageTextField: AuthenticationTextField!
+    @IBOutlet public weak var messageInput: ExpandingTextInput!
     @IBOutlet public weak var textEntryBottomConstraint: NSLayoutConstraint!
     @IBOutlet public weak var specialMessageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet public weak var specialMessageLeadingConstraint: NSLayoutConstraint!
@@ -34,6 +34,8 @@ class MessagesController: UIViewController {
     var conversationListener: ListenerRegistration?
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
+    
+    lazy var messageInputWidth = messageInput.frame.width
     
     var startingImageView: UIImageView?
     var imageStartingFrame: CGRect?
@@ -70,19 +72,16 @@ class MessagesController: UIViewController {
         self.setupTapToDismissKeyboard()
 
         self.setupObservers()
+        self.messageInput.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.scrollToBottomOfMessages()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    deinit {
         self.conversationListener?.remove()
         self.conversationStatusListener?.remove()
-    }
-    
-    deinit {
-        print("Messages controller deinitialised")
     }
     
     // MARK:- @IBActions
@@ -93,11 +92,11 @@ class MessagesController: UIViewController {
     
     @IBAction private func sendButtonPressed(_ sender: UIButton) {
         guard let conversation = self.conversation else {return}
-        guard let text = self.messageTextField.text else {return}
+        guard let text = self.messageInput.text else {return}
         if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             if  let toUid = conversation.chatter?.uid,
                 let fromUid = CurrentUser.shared.data?.uid {
-                self.messageTextField.text = ""
+                self.messageInput.text = ""
                 self.checkForConversationAndSendTextMessage(conversation, text, toUid, fromUid)
             }
         }

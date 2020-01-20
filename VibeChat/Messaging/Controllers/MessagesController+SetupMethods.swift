@@ -32,7 +32,7 @@ extension MessagesController {
         button.bottomAnchor.constraint(equalTo: chatterNameLabel.bottomAnchor).isActive = true
     }
     
-    @objc fileprivate func handleProfileTapped() {
+    @objc private func handleProfileTapped() {
         performSegue(withIdentifier: "chatterProfileSegue", sender: self)
     }
     
@@ -50,6 +50,7 @@ extension MessagesController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(DateHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseId)
+        collectionView.keyboardDismissMode = .interactive
         collectionView.register(TextMessageCell.self, forCellWithReuseIdentifier: MessageType.textMessage.reuseId)
         collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: MessageType.imageMessage.reuseId)
         collectionView.register(GiphyMessageCell.self, forCellWithReuseIdentifier: MessageType.giphyMessage.reuseId)
@@ -58,8 +59,7 @@ extension MessagesController {
     
     public func setupConverstationStatusListener() {
         guard let conversation = conversation else {return}
-        conversationStatusListener = UserMessagesManager.shared.listenForConversationChanges(conversaion: conversation,
-                                                                                             completion: { [weak self] (conversation) in
+        conversationStatusListener = UserMessagesManager.shared.listenForConversationChanges(conversaion: conversation, completion: { [weak self] (conversation) in
             if let conversation = conversation {
                 conversation.fetchChatter { (success) in
                     if success, let isOnline = conversation.chatter?.isOnline {
@@ -75,8 +75,6 @@ extension MessagesController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             UIView.animate(withDuration: 0.5) {
-                self.specialMessageLeadingConstraint.constant = 0
-                self.specialMessageViewWidthConstraint.constant = 0
                 self.textEntryBottomConstraint.constant = -keyboardHeight
                 self.view.layoutIfNeeded()
             }
@@ -86,8 +84,6 @@ extension MessagesController {
     
     override func keyboardWillHide(_ notification: Notification) {
         UIView.animate(withDuration: 0.5) {
-            self.specialMessageLeadingConstraint.constant = 10
-            self.specialMessageViewWidthConstraint.constant = 110
             self.textEntryBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }

@@ -12,8 +12,8 @@ class MessageOrganiser {
     
     // MARK:- Properties
     
-    var newMessages: [Message]
-    var existingMessages: [[Message]]?
+    private var newMessages: [Message]
+    private var existingMessages: [[Message]]?
     
     // MARK:- Lifecycle
     
@@ -91,7 +91,7 @@ class MessageOrganiser {
     ///   - newMessages: Messages to check the date of
     ///   - calendar: The calendar to check against (use .current)
     private func isSameDay(_ newMessages: [Message], _ calendar: Calendar) -> Bool {
-        if  let todaysMessages = existingMessages?.last,
+        if  let todaysMessages = self.existingMessages?.last,
             let latestMessageTimestamp = todaysMessages.first?.timestamp,
             let thisMessageTimestamp = newMessages.first?.timestamp,
             calendar.startOfDay(for: latestMessageTimestamp) == calendar.startOfDay(for: thisMessageTimestamp) {

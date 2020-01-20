@@ -69,6 +69,10 @@ class MediaMessageUploader {
         self.isFirstMessage = isFirstMessage
     }
     
+    deinit {
+        print("Media message uploader deinitialized.")
+    }
+    
     // MARK:- Methods
     
     /// Upload the media message.
@@ -89,7 +93,7 @@ class MediaMessageUploader {
     /// Upload a gif reference to the Firestore database.
     /// - Parameter completion: Completion handler passing a success truth value.
     private func uploadGif(completion: @escaping (_ success: Bool)->Void) {
-        guard let gif = gif else {return}
+        guard let gif = self.gif else {return}
         checkForConversationAndSendGiphyMessage(onConversation: conversation,
                                                 withGiphId: gif.id,
                                                 andAspectRatio: gif.aspectRatio,
@@ -101,21 +105,21 @@ class MediaMessageUploader {
     private func uploadImage(completion: @escaping (_ success: Bool)->Void) -> StorageUploadTask? {
         guard let image = image else {return nil}
         let aspectRatio = image.size.width / image.size.height
-        let uploadTask = uploadImageMessage(image: image,
-                           onConversation: conversation,
-                           aspectRatio: aspectRatio,
-                           completion: completion)
+        let uploadTask = self.uploadImageMessage(image: image,
+                                                 onConversation: self.conversation,
+                                                 aspectRatio: aspectRatio,
+                                                 completion: completion)
         return uploadTask
     }
     
     /// Upload a video to storage and link video message to Url.
     /// - Parameter completion: Completion handler passing a success truth value.
     private func uploadVideo(completion: @escaping (_ success: Bool)->Void) -> StorageUploadTask? {
-        guard let video = video, let videoFileUrl = videoFileUrl else {return nil}
-        let uploadTask = uploadVideoMessage(onConversation: conversation,
-                           videoData: video,
-                           videoFileUrl: videoFileUrl,
-                           completion: completion)
+        guard let video = self.video, let videoFileUrl = self.videoFileUrl else {return nil}
+        let uploadTask = self.uploadVideoMessage(onConversation: self.conversation,
+                                                 videoData: video,
+                                                 videoFileUrl: videoFileUrl,
+                                                 completion: completion)
         return uploadTask
     }
     

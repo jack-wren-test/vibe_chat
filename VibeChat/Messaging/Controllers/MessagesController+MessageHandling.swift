@@ -23,7 +23,7 @@ extension MessagesController {
         }
     }
     
-    fileprivate func sendTextMessage(_ text: String, _ toUid: String, _ fromUid: String, _ conversation: Conversation) {
+    private func sendTextMessage(_ text: String, _ toUid: String, _ fromUid: String, _ conversation: Conversation) {
         let message = TextMessage(text: text, toUid: toUid, fromUid: fromUid, timestamp: Date(), conversationId: conversation.uid)
         UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
             MessagingManager.shared.uploadMessage(message: message)
@@ -43,7 +43,7 @@ extension MessagesController {
         }
     }
     
-    fileprivate func organiseAndDisplayNewMessages(_ newMessages: [Message]) {
+    private func organiseAndDisplayNewMessages(_ newMessages: [Message]) {
         self.organiser = MessageOrganiser(newMessages: newMessages, existingMessages: self.messages)
         guard let messages = self.organiser?.organiseMessages() else { return }
         let isSection = self.messages.count != messages.count
@@ -52,7 +52,7 @@ extension MessagesController {
         self.conversation?.isReadStatus = true
     }
     
-    fileprivate func organiseAndDisplayExistingMessages(_ newMessages: [Message]) {
+    private func organiseAndDisplayExistingMessages(_ newMessages: [Message]) {
         self.organiser = MessageOrganiser(newMessages: newMessages, existingMessages: nil)
         guard let messages = self.organiser?.organiseMessages() else { return }
         self.messages = messages
@@ -61,7 +61,7 @@ extension MessagesController {
         conversation?.isReadStatus = true
     }
     
-    fileprivate func animateAddNewMessage(_ isNewSection: Bool) {
+    private func animateAddNewMessage(_ isNewSection: Bool) {
         let row = messages[messages.count-1].count-1
         let section = messages.count-1
         if isNewSection {

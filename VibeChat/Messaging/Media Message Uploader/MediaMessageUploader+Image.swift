@@ -21,7 +21,7 @@ extension MediaMessageUploader {
                                    onConversation: Conversation,
                                    aspectRatio: CGFloat,
                                    completion: @escaping (_ success: Bool)->Void) -> StorageUploadTask? {
-        let uploadTask = StorageManager.shared.uploadImageMessage(image: image) { (url) in
+        let uploadTask = StorageManager.shared.uploadImageMessage(image: image) { url in
             guard let url = url else {return}
             self.checkForConversationAndSendImageMessage(onConversation: onConversation, imageUrl: url, andAspectRatio: aspectRatio) { (success) in
                 completion(success)
@@ -72,7 +72,6 @@ extension MediaMessageUploader {
                                    conversationId: conversation.uid)
         
         UserMessagesManager.shared.updateConversationStatus(conversation: conversation, userIsRead: true, chatterIsRead: false, withNewMessageTime: Date()) {
-            print("Sending Image Message!")
             MessagingManager.shared.uploadMessage(message: message, completion: completion)
         }
     }
