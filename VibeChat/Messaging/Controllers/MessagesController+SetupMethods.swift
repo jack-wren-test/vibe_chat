@@ -42,10 +42,6 @@ extension MessagesController {
         }
     }
     
-    public func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-    }
-    
     public func collectionViewConfig() {
         collectionView.delegate = self
         collectionView.dataSource = self

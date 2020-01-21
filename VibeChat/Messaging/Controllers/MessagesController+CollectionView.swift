@@ -26,7 +26,10 @@ extension MessagesController:   UICollectionViewDelegate,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: type.reuseId, for: indexPath) as! MessageCell
         cell.message = message
         if let cell = cell as? ImageMessageCell {
-            cell.controllerDelegate = self
+            cell.delegate = self
+        }
+        if let cell = cell as? VideoMessageCell {
+            cell.videoView?.delegate = self
         }
         return cell
     }

@@ -25,7 +25,7 @@ class ImageMessageCell: MessageCell {
         return imageView
     }()
     
-    weak var controllerDelegate: ImageInteractionDelegate?
+    weak var delegate: ExpandingMediaMessageDelegate?
     
     // MARK:- Init
     
@@ -45,7 +45,6 @@ class ImageMessageCell: MessageCell {
     
     override func prepareForReuse() {
         self.imageMessageView = nil
-        self.message = nil
     }
     
     // MARK:- Methods
@@ -60,10 +59,12 @@ class ImageMessageCell: MessageCell {
     private func configureViews() {
         guard let imageMessageView = self.imageMessageView else {return}
         self.addSubview(imageMessageView)
+        
         self.incomingXConstraint = imageMessageView.leadingAnchor.constraint(equalTo: self.leadingAnchor,
                                                                              constant: self.edgeBuffer)
         self.outgoingXConstraint = imageMessageView.trailingAnchor.constraint(equalTo: self.trailingAnchor,
                                                                               constant: -self.edgeBuffer)
+        
         imageMessageView.widthAnchor.constraint(equalToConstant: self.maxMessageWidth).isActive = true
         imageMessageView.topAnchor.constraint(equalTo: self.topAnchor,
                                               constant: self.cellBuffer).isActive = true
@@ -78,8 +79,8 @@ class ImageMessageCell: MessageCell {
     }
     
     @objc public func handleImageTap() {
-        guard let imageMessageView = imageMessageView else {return}
-        self.controllerDelegate?.imageMessageTapped(imageMessageView, nil, nil)
+        guard let imageMessageView = self.imageMessageView else {return}
+        self.delegate?.expand(imageMessageView)
     }
     
 }

@@ -10,77 +10,68 @@ import UIKit
 import AVFoundation
 
 /// Class for a video message cell.
-final class VideoMessageCell: ImageMessageCell {
+final class VideoMessageCell: MessageCell {
     
     // MARK:- Properties
     
-    lazy var playButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "playIcon").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.tintColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleVideoPlayPause), for: .touchUpInside)
-        return button
-    }()
-    
-    private(set) var playerLayer: AVPlayerLayer?
-    private(set) var player: AVPlayer?
-    private(set) var initialVideoMessageFrame: CGRect?
+    private(set) var videoView: VideoView?
     
     // MARK:- Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.configureViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func didMoveToSuperview() {
+        guard let message = message as? VideoMessage else {return}
+        self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
+    }
+    
     override func prepareForReuse() {
-        self.playerLayer?.removeFromSuperlayer()
+        self.videoView = nil
     }
     
     // MARK:- Methods
     
-    private func setupVideoLayer() {
-        guard let imageMessageView = self.imageMessageView else {return}
-        guard let message = self.message as? VideoMessage, let url = message.videoUrl else {return}
-        self.player = AVPlayer(url: url)
-        self.playerLayer = AVPlayerLayer(player: self.player!)
-        self.playerLayer!.frame = imageMessageView.bounds
-        imageMessageView.layer.addSublayer(self.playerLayer!)
-    
-        imageMessageView.addSubview(playButton)
-        let playButtonSize: CGFloat = 75
-        self.playButton.centerXAnchor.constraint(equalTo: imageMessageView.centerXAnchor).isActive = true
-        self.playButton.centerYAnchor.constraint(equalTo: imageMessageView.centerYAnchor).isActive = true
-        self.playButton.heightAnchor.constraint(equalToConstant: playButtonSize).isActive = true
-        self.playButton.widthAnchor.constraint(equalToConstant: playButtonSize).isActive = true
-        
-        self.initialVideoMessageFrame = self.playerLayer?.frame
-    }
-    
     override func setupMessage() {
         super.setupMessage()
-        self.setupVideoLayer()
+        self.setupVideoView()
     }
     
-    @objc override func handleImageTap() {
-        guard let player = self.player,
-              let imageMessageView = self.imageMessageView,
-              let layer = self.playerLayer else {return}
-        self.controllerDelegate?.imageMessageTapped(imageMessageView, layer, player)
+    private func setupVideoView() {
+        guard let message = message as? VideoMessage,
+              let videoModel = message.toVideoModel() else {return}
+        self.videoView?.videoModel = videoModel
     }
     
-    @objc private func handleVideoPlayPause() {
-        guard let playerLayer = self.playerLayer,
-              let imageMessageView = self.imageMessageView,
-              let initialVideoMessageFrame = self.initialVideoMessageFrame else {return}
-        self.controllerDelegate?.playVideoMessage(messagePlayerLayer: playerLayer,
-                                                  imageMessageView: imageMessageView,
-                                                  playButton: self.playButton,
-                                                  frame: initialVideoMessageFrame)
+    private func configureViews() {
+        
+        videoView = VideoView()
+        guard let videoView = self.videoView else {return}
+        self.addSubview(videoView)
+        
+        
+        videoView.anchor(top: self.topAnchor, bottom: self.bottomAnchor,
+                         leading: nil, trailing: nil,
+                         padding: .init(top: self.cellBuffer, left: self.cellBuffer, bottom: 0, right: 0),
+                         size: nil)
+        videoView.widthAnchor.constraint(equalToConstant: self.maxMessageWidth).isActive = true
+        
+        self.incomingXConstraint = videoView.leadingAnchor.constraint(equalTo: self.leadingAnchor,
+                                                                             constant: self.edgeBuffer)
+        self.outgoingXConstraint = videoView.trailingAnchor.constraint(equalTo: self.trailingAnchor,
+                                                                              constant: -self.edgeBuffer)
+    }
+    
+    public func updateHeightAnchor(usingAspectRatio aspectRatio: CGFloat) {
+        self.viewHeightAnchor = heightAnchor.constraint(equalToConstant: self.maxMessageWidth/aspectRatio)
+        self.viewHeightAnchor?.priority = UILayoutPriority.init(rawValue: 999)
+        self.viewHeightAnchor?.isActive = true
     }
     
 }

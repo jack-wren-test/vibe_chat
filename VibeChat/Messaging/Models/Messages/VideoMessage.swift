@@ -42,4 +42,10 @@ final class VideoMessage: ImageMessage {
         self.dictionaryRepresentation["videoUrl"] = videoUrl.absoluteString
     }
     
+    public func toVideoModel() -> VideoModel? {
+        guard let videoUrl = videoUrl, let imageUrl = imageUrl else {return nil}
+        let model = VideoModel(videoUrl: videoUrl, thumbnailUrl: imageUrl)
+        return model
+    }
+    
 }

@@ -35,26 +35,9 @@ class MessagesController: UIViewController {
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
     
-    lazy var messageInputWidth = messageInput.frame.width
-    
-    var startingImageView: UIImageView?
-    var imageStartingFrame: CGRect?
+    var initialMediaMessageFrame: CGRect?
     var backgroundView: UIView?
-    
-    var player: AVPlayer?
-    var playerLayer: AVPlayerLayer?
-    var zoomingImageView: UIImageView?
-    var initialVideoMessageFrame: CGRect?
-    
-    var playButton: UIButton?
-    let activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        activityIndicator.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
+    lazy var messageInputWidth = messageInput.frame.width
     
     // MARK:- Lifecycle
     
@@ -71,7 +54,6 @@ class MessagesController: UIViewController {
         self.registerForKeyboardWillHide()
         self.setupTapToDismissKeyboard()
 
-        self.setupObservers()
         self.messageInput.delegate = self
     }
     

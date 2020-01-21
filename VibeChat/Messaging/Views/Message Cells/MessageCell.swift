@@ -41,6 +41,7 @@ class MessageCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        self.message = nil
         self.viewHeightAnchor = nil
     }
     

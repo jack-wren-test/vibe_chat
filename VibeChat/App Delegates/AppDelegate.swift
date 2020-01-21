@@ -17,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
-        
-        // Enable offline data persistence
         let db = Firestore.firestore()
         db.settings = settings
         
