@@ -25,6 +25,13 @@ final class CreateAccountController: AuthenticateController {
     
     let formRulesText = "Your password must be at least 8 characters long, contain at least one uppercase letter, and contain at least one number."
     
+    override var borderColour: CGColor? {
+        didSet {
+            guard let borderColour = borderColour else {return}
+            authenticateButton.layer.borderColor = authenticateButton.isEnabled ? borderColour : UIColor.systemGray2.cgColor
+        }
+    }
+    
     // MARK:- ViewDidLoad
     
     override func viewDidLoad() {
@@ -69,6 +76,12 @@ final class CreateAccountController: AuthenticateController {
                 self.formKeyboardVisibleYConstraint?.isActive = true
                 self.view.layoutIfNeeded()
             }
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13, *), self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            borderColour = UIColor(named: "text_alt")?.cgColor
         }
     }
 

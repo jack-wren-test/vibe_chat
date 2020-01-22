@@ -30,10 +30,14 @@ class MessagesController: UIViewController {
     let headerReuseId = "headerView"
     
     var messages = [[Message]]()
-    var organiser: MessageOrganiser?
     var conversationListener: ListenerRegistration?
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
+    
+    var fetchingMoreMessages = false
+    var endOfMessageListReached = false
+    var initialScrollComplete = false
+    let leadingScreensForBatching: CGFloat = 0.5
     
     var zoomingView: UIView?
     var initialMediaMessageFrame: CGRect?

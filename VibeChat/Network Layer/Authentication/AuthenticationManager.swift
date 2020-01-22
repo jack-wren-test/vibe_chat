@@ -114,9 +114,9 @@ final class AuthenticationManager {
     /// Check to see if the previous user of this app & device is valid and already logged in to Firebase backend system.
     /// - Parameter completion: Completion handler passing optional User object
     public func checkForValidUser(completion: @escaping (_ user: User?)->Void) {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let uid = Auth.auth().currentUser?.uid else {completion(nil); return}
         UsersManager.shared.fetchUserData(uid: uid) { user in
-            guard let user = user else {return}
+            guard let user = user else {completion(nil); return}
             user.isOnline = true
             DispatchQueue.main.async {
                 completion(user)
@@ -124,7 +124,7 @@ final class AuthenticationManager {
         }
     }
     
-    fileprivate func updateCurrentUser(_ user: User, completion: @escaping (_ error: Error?)->Void) {
+    private func updateCurrentUser(_ user: User, completion: @escaping (_ error: Error?)->Void) {
         CurrentUser.shared.setCurrentUser(user)
         UsersManager.shared.updateUserData(forUser: user) { error in
             if let error = error {

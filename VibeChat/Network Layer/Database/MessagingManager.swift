@@ -49,20 +49,39 @@ final class MessagingManager: FirestoreManager {
     ///   - The listener registration object
     public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->Void) -> ListenerRegistration {
         let conversationId = onConversation.uid
-        let listener = self.collectionReference.document(conversationId)
-            .collection(dbCollection.messages.rawValue)
-            .addSnapshotListener { snapshot, error in
-                if let error = error {
-                    print("Error retrieving snapshot: \(error.localizedDescription)")
-                    completion(nil)
-                }
-                guard let snapshot = snapshot?.documentChanges else {return}
-                let messages = self.firestoreDocumentsToMessageArray(snapshot)
-                DispatchQueue.main.async {
-                    completion(messages)
-                }
+        let messageQueryRef = self.collectionReference.document(conversationId)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).limit(to: 25)
+        let listener = messageQueryRef.addSnapshotListener { snapshot, error in
+            if let error = error {
+                print("Error retrieving snapshot: \(error.localizedDescription)")
+                completion(nil)
+            }
+            guard let snapshot = snapshot?.documentChanges else {return}
+            let messages = self.firestoreDocumentsToMessageArray(snapshot)
+            DispatchQueue.main.async {
+                completion(messages)
+            }
         }
         return listener
+    }
+    
+    public func fetchMessages(firstPost: Message?, onConversation: Conversation, completion: @escaping ([Message]?)->Void) {
+        guard let firstPostDate = firstPost?.timestamp else {return}
+        let firstPostTimestamp = Timestamp(date: firstPostDate)
+        let conversationId = onConversation.uid
+        let messageQueryRef = self.collectionReference.document(conversationId)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).end(before: [firstPostTimestamp]).limit(to: 25)
+        messageQueryRef.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error retrieving snapshot: \(error.localizedDescription)")
+                completion(nil)
+            }
+            guard let snapshot = snapshot?.documentChanges else {return}
+            let messages = self.firestoreDocumentsToMessageArray(snapshot)
+            DispatchQueue.main.async {
+                completion(messages)
+            }
+        }
     }
     
     /// Parses an array of Firebase DocumentChange objects to array of Message objects.

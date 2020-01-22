@@ -22,6 +22,7 @@ class HomeController: UIViewController {
     @IBOutlet public weak var tableView: UITableView!
     @IBOutlet public weak var profileButton: UIButton!
     @IBOutlet public weak var newChatButton: UIButton!
+    @IBOutlet public weak var searchBar: UISearchBar!
     
     // MARK:- Properties
     
@@ -29,6 +30,8 @@ class HomeController: UIViewController {
     var conversationsDict: [String: Conversation] = [:]
     var orderedConversations: [Conversation]?
     
+    var searching = false
+    var searchResults = [Conversation]()
     let reuseIdentifier = "ChatterCell"
     
     // MARK:- lifecycle
@@ -37,11 +40,12 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         self.tableViewConfig()
+        self.searchBarConfig()
         self.listenForConversationChanges()
+        self.registerForKeyboardWillHide()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tableView.reloadData()
         guard let isNewUser = self.isNewUser else {return}
         if isNewUser {
             performSegue(withIdentifier: "ProfileSegue", sender: self)
@@ -49,8 +53,14 @@ class HomeController: UIViewController {
         }
     }
     
-    deinit {
-        print("home controller deinitialized")
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
+    override func keyboardWillHide(_ notification: Notification) {
+        self.searchBar.text = ""
+        self.searching = false
+        self.tableView.reloadData()
     }
     
     // MARK:- IBActions

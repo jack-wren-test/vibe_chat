@@ -286,6 +286,10 @@
                         <viewLayoutGuide key="safeArea" id="G7O-XO-glw"/>
                     </view>
                     <navigationItem key="navigationItem" id="IGB-qe-Sad"/>
+                    <connections>
+                        <outlet property="createAccountButton" destination="qJg-LE-I8w" id="c5D-sn-h5d"/>
+                        <outlet property="loginButton" destination="CsX-DV-Aio" id="RN7-KW-5Ls"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZeR-TS-2bi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -626,7 +630,7 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8gO-gt-VRz">
                                 <rect key="frame" x="0.0" y="90" width="414" height="663.5"/>
-                                <color key="backgroundColor" name="background_alt"/>
+                                <color key="backgroundColor" name="whiteblack"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="i8J-gf-2Pi">
                                     <size key="itemSize" width="414" height="43"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -837,8 +841,7 @@
                                 <color key="backgroundColor" name="background"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7Ba-4S-Pms">
-                                <rect key="frame" x="0.0" y="134" width="414" height="762"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="190" width="414" height="706"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatterCell" rowHeight="80" id="tRS-bG-qjb" customClass="ConversationCell" customModule="VibeChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
@@ -925,9 +928,28 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Dq-iY-lhQ">
+                                <rect key="frame" x="0.0" y="134" width="414" height="56"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" name="blackwhite"/>
+                                <color key="barTintColor" name="whiteblack"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" name="blackwhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" name="background_alt"/>
                         <constraints>
+                            <constraint firstItem="7Dq-iY-lhQ" firstAttribute="leading" secondItem="IdI-es-YtH" secondAttribute="leading" id="16y-CC-ZXV"/>
+                            <constraint firstItem="7Dq-iY-lhQ" firstAttribute="top" secondItem="gRf-9i-ZzH" secondAttribute="bottom" id="51U-1G-6xv"/>
+                            <constraint firstItem="7Ba-4S-Pms" firstAttribute="top" secondItem="7Dq-iY-lhQ" secondAttribute="bottom" id="6Xy-KO-2ex"/>
                             <constraint firstItem="gRf-9i-ZzH" firstAttribute="leading" secondItem="IdI-es-YtH" secondAttribute="leading" id="UBy-KE-M5a"/>
                             <constraint firstItem="7Ba-4S-Pms" firstAttribute="trailing" secondItem="IdI-es-YtH" secondAttribute="trailing" id="VYp-Fw-uvg"/>
                             <constraint firstItem="Yrf-cS-b7Z" firstAttribute="leading" secondItem="jhz-qt-033" secondAttribute="leading" id="Ygb-fq-2Qh"/>
@@ -935,7 +957,7 @@
                             <constraint firstItem="7Ba-4S-Pms" firstAttribute="leading" secondItem="IdI-es-YtH" secondAttribute="leading" id="ciU-hZ-2Ji"/>
                             <constraint firstItem="Yrf-cS-b7Z" firstAttribute="top" secondItem="jhz-qt-033" secondAttribute="top" id="doy-aW-4Er"/>
                             <constraint firstItem="gRf-9i-ZzH" firstAttribute="top" secondItem="Yrf-cS-b7Z" secondAttribute="bottom" id="qcN-eT-sGJ"/>
-                            <constraint firstItem="7Ba-4S-Pms" firstAttribute="top" secondItem="gRf-9i-ZzH" secondAttribute="bottom" id="qco-YR-4UT"/>
+                            <constraint firstItem="7Dq-iY-lhQ" firstAttribute="trailing" secondItem="IdI-es-YtH" secondAttribute="trailing" id="ubj-xs-1Tl"/>
                             <constraint firstAttribute="bottom" secondItem="7Ba-4S-Pms" secondAttribute="bottom" id="url-TC-CVk"/>
                             <constraint firstItem="gRf-9i-ZzH" firstAttribute="trailing" secondItem="IdI-es-YtH" secondAttribute="trailing" id="xd0-48-AHW"/>
                             <constraint firstItem="gRf-9i-ZzH" firstAttribute="top" secondItem="IdI-es-YtH" secondAttribute="top" id="zw7-If-OzR"/>
@@ -945,6 +967,7 @@
                     <connections>
                         <outlet property="newChatButton" destination="MXI-Q0-YEh" id="Wn7-Cr-8gJ"/>
                         <outlet property="profileButton" destination="lTA-ql-id9" id="FQe-9W-FBi"/>
+                        <outlet property="searchBar" destination="7Dq-iY-lhQ" id="kto-x4-ZUE"/>
                         <outlet property="tableView" destination="7Ba-4S-Pms" id="hiI-Fb-GZP"/>
                         <segue destination="oOP-ow-YcZ" kind="show" identifier="MessagesSegue" id="e2A-LH-SSu"/>
                         <segue destination="sva-3r-1uI" kind="presentation" identifier="ProfileSegue" id="fOL-TG-Nff"/>
@@ -1333,6 +1356,9 @@
         <namedColor name="background_alt">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="blackwhite">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="decoration">
             <color red="0.97299998998641968" green="0.43900001049041748" blue="0.37599998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1341,6 +1367,9 @@
         </namedColor>
         <namedColor name="text_alt">
             <color red="0.062745098039215685" green="0.14117647058823529" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whiteblack">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

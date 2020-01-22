@@ -9,13 +9,13 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { print("No window scene??"); return }
         let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
-        
-        AuthenticationManager.shared.checkForValidUser { (user) in
+        AuthenticationManager.shared.checkForValidUser { user in
             if let user = user {
                 CurrentUser.shared.setCurrentUser(user)
             }
@@ -25,8 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window?.makeKeyAndVisible()
         }
     }
-    
-    // App status functions for mornitoring user online staus if exists
 
     func sceneDidDisconnect(_ scene: UIScene) {
         CurrentUser.shared.data?.isOnline = false

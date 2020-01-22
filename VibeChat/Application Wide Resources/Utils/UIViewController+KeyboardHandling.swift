@@ -93,8 +93,9 @@ extension UIViewController {
     }
     
     @objc fileprivate func dismissKeyboard() {
-        view.endEditing(true)
+        if UIApplication.shared.isKeyboardShowing {
+            view.endEditing(true)
+        }
     }
-    
     
 }

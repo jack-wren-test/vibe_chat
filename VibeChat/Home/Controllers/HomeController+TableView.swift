@@ -13,7 +13,11 @@ extension HomeController:   UITableViewDelegate,
                             UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.orderedConversations?.count ?? 0
+        if searching {
+            return self.searchResults.count
+        } else {
+            return self.orderedConversations?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -22,7 +26,9 @@ extension HomeController:   UITableViewDelegate,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as! ConversationCell
-        if self.orderedConversations?.count != 0 {
+        if self.searching {
+            cell.conversation = self.searchResults[indexPath.row]
+        } else if self.orderedConversations?.count != 0 {
             cell.conversation = self.orderedConversations![indexPath.row]
         }
         return cell

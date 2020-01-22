@@ -17,6 +17,10 @@ class NewConversationController: UITableViewController {
     private(set) var chatters: [User]?
     private let reuseIdentifier = "ChatterCell"
     
+    var searching = false
+    var searchBar: UISearchBar?
+    var searchResults = [Conversation]()
+    
     // MARK:- Lifecycle
     
     override func viewDidLoad() {

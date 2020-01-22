@@ -10,10 +10,16 @@ import UIKit
 
 extension HomeController {
     
-    public func tableViewConfig() {
+    public func searchBarConfig() {
+        self.searchBar.layer.addBorder(edge: .bottom, color: .gray, thickness: 1)
+        self.searchBar.delegate = self
+    }
+    
+    public func tableViewConfig() { 
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.rowHeight = 80
+        self.tableView.keyboardDismissMode = .interactive
     }
     
     public func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
@@ -26,6 +32,7 @@ extension HomeController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.searchBar?.resignFirstResponder()
         switch segue.identifier {
         case "ProfileSegue":
             let vc = segue.destination as! UserProfileController
@@ -36,8 +43,12 @@ extension HomeController {
         case "MessagesSegue":
             let vc = segue.destination as! MessagesController
             if let indexPath = tableView.indexPathForSelectedRow {
-                guard let orderedConvos = orderedConversations else {return}
-                vc.conversation = orderedConvos[indexPath.row]
+                if searching {
+                    vc.conversation = searchResults[indexPath.row]
+                } else {
+                    guard let orderedConvos = orderedConversations else {return}
+                    vc.conversation = orderedConvos[indexPath.row]
+                }
             }
         default:
             break

@@ -43,9 +43,9 @@ extension MessagesController {
         }
     }
     
-    private func organiseAndDisplayNewMessages(_ newMessages: [Message]) {
-        self.organiser = MessageOrganiser(newMessages: newMessages, existingMessages: self.messages)
-        guard let messages = self.organiser?.organiseMessages() else { return }
+    func organiseAndDisplayNewMessages(_ newMessages: [Message]) {
+        let organiser = MessageOrganiser(newMessages: newMessages, existingMessages: self.messages)
+        guard let messages = organiser.organiseMessages() else { return }
         let isSection = self.messages.count != messages.count
         self.messages = messages
         self.animateAddNewMessage(isSection)
@@ -53,8 +53,8 @@ extension MessagesController {
     }
     
     private func organiseAndDisplayExistingMessages(_ newMessages: [Message]) {
-        self.organiser = MessageOrganiser(newMessages: newMessages, existingMessages: nil)
-        guard let messages = self.organiser?.organiseMessages() else { return }
+        let organiser = MessageOrganiser(newMessages: newMessages, existingMessages: nil)
+        guard let messages = organiser.organiseMessages() else { return }
         self.messages = messages
         collectionView.reloadData()
         scrollToBottomOfMessages()

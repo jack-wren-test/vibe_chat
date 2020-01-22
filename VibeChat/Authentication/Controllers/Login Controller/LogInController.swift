@@ -23,6 +23,13 @@ final class LogInController: AuthenticateController {
     
     let formRulesText = ""
     
+    override var borderColour: CGColor? {
+        didSet {
+            guard let borderColour = borderColour else {return}
+            authenticateButton.layer.borderColor = authenticateButton.isEnabled ? borderColour : UIColor.systemGray2.cgColor
+        }
+    }
+    
     // MARK:- Lifecycle
     
     override func viewDidLoad() {
@@ -66,5 +73,10 @@ final class LogInController: AuthenticateController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13, *), self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            borderColour = UIColor(named: "text_alt")?.cgColor
+        }
+    }
     
 }

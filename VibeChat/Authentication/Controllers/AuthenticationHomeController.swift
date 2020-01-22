@@ -15,9 +15,21 @@ import UIKit
 /// The controller for the authentication home screen.
 final class AuthenticationHomeController: UIViewController, LoginDelegate {
     
+    // MARK:- IBOutlets
+    
+    @IBOutlet weak private var loginButton: AuthenticationButton!
+    @IBOutlet weak private var createAccountButton: AuthenticationButton!
+    
     // MARK:- Properties
     
     var isAlreadyLoggedIn = false
+    override var borderColour: CGColor? {
+        didSet {
+            guard let borderColour = self.borderColour else {return}
+            loginButton.layer.borderColor = borderColour
+            createAccountButton.layer.borderColor = borderColour
+        }
+    }
     
     // MARK:- Lifecycle
     
@@ -55,6 +67,12 @@ final class AuthenticationHomeController: UIViewController, LoginDelegate {
             dismiss(animated: true) {
                 self.present(navController, animated: true)
             }
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13, *), self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            borderColour = UIColor(named: "text_alt")?.cgColor
         }
     }
     

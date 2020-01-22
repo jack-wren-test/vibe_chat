@@ -69,4 +69,36 @@ extension MessagesController:   UICollectionViewDelegate,
         return header
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let collectionViewContentHeight = scrollView.contentSize.height
+        let collectionViewHeight = scrollView.frame.size.height
+        if offsetY >= collectionViewContentHeight - collectionViewHeight {
+            initialScrollComplete = true
+        }
+        if offsetY < collectionViewHeight * leadingScreensForBatching, initialScrollComplete {
+            if !self.fetchingMoreMessages && !endOfMessageListReached {
+                self.beginMessageBatchFetch()
+            }
+        }
+    }
+
+    public func beginMessageBatchFetch() {
+        guard let conversation = conversation else {return}
+        fetchingMoreMessages = true
+        let firstPost = self.messages.first?.first
+        MessagingManager.shared.fetchMessages(firstPost: firstPost, onConversation: conversation) { oldMessages in
+            guard let oldMessages = oldMessages else {return}
+            
+            // Need new function for sorting and adding these messages
+            let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
+            guard let messages = organiser.organiseMessages() else { return }
+            self.messages = messages
+            self.collectionView.reloadData()
+            
+            self.fetchingMoreMessages = false
+            self.endOfMessageListReached = oldMessages.count == 0
+        }
+    }
+    
 }

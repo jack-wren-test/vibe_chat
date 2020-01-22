@@ -109,9 +109,9 @@ final class UsersManager: FirestoreManager {
             if let userData = snapshot?.data() {
                 let user = User(withDictionary: userData)
                 completion(user)
-            } else {
-                completion(nil)
+                return
             }
+            completion(nil)
         }
     }
     
