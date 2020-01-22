@@ -37,10 +37,10 @@ extension MessagesController: UITextViewDelegate {
             }
         }
         if estimatedSize.height >= 225 {
-            messageInput.isScrollEnabled = true
-            // scroll to bottom
+            self.messageInput.isScrollEnabled = true
+            self.messageInput.scrollToBottom()
         } else {
-            messageInput.isScrollEnabled = false
+            self.messageInput.isScrollEnabled = false
         }
     }
     

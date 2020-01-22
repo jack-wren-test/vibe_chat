@@ -27,7 +27,6 @@
 		61445FF223BF642700452FBB /* MessagesController+SetupMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */; };
 		61445FF423BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */; };
 		61445FF623BF650C00452FBB /* MessagesController+GiphyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF523BF650C00452FBB /* MessagesController+GiphyPicker.swift */; };
-		61445FF823BF655400452FBB /* MessagesController+ImageMessageInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */; };
 		616B2E63239A575700E9B0B2 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B2E62239A575700E9B0B2 /* UserProfileController.swift */; };
 		6175874A239E743E002ED670 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61758749239E743E002ED670 /* Message.swift */; };
 		6175874C239E7459002ED670 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175874B239E7459002ED670 /* MessageCell.swift */; };
@@ -80,6 +79,7 @@
 		61EA8E9E23BA40F600FC7B87 /* GiphyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */; };
 		61EA8EA023BA47CC00FC7B87 /* GiphyMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */; };
 		61EA8EA423BB461E00FC7B87 /* GiphyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */; };
+		61EB635A23D85BB4002457C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61EB635923D85BB4002457C1 /* AVFoundation.framework */; };
 		61F5338723CC937100C35F49 /* UsersManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5338623CC937100C35F49 /* UsersManagerTests.swift */; };
 		E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */; };
 /* End PBXBuildFile section */
@@ -117,7 +117,6 @@
 		61445FF123BF642700452FBB /* MessagesController+SetupMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+SetupMethods.swift"; sourceTree = "<group>"; };
 		61445FF323BF64CA00452FBB /* MessagesController+ImageVideoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+ImageVideoPicker.swift"; sourceTree = "<group>"; };
 		61445FF523BF650C00452FBB /* MessagesController+GiphyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+GiphyPicker.swift"; sourceTree = "<group>"; };
-		61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+ImageMessageInteraction.swift"; sourceTree = "<group>"; };
 		616B2E62239A575700E9B0B2 /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		61758749239E743E002ED670 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		6175874B239E7459002ED670 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -174,6 +173,7 @@
 		61EA8E9D23BA40F600FC7B87 /* GiphyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessage.swift; sourceTree = "<group>"; };
 		61EA8E9F23BA47CC00FC7B87 /* GiphyMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyMessageCell.swift; sourceTree = "<group>"; };
 		61EA8EA323BB461E00FC7B87 /* GiphyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyManager.swift; sourceTree = "<group>"; };
+		61EB635923D85BB4002457C1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		61F5338623CC937100C35F49 /* UsersManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManagerTests.swift; sourceTree = "<group>"; };
 		6E3C3FD3DB807EB252E0B1D1 /* Pods-VibeChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChat.release.xcconfig"; path = "Target Support Files/Pods-VibeChat/Pods-VibeChat.release.xcconfig"; sourceTree = "<group>"; };
 		76B8F170C6A52A7E1C90EDFB /* Pods-VibeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VibeChatTests.release.xcconfig"; path = "Target Support Files/Pods-VibeChatTests/Pods-VibeChatTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -196,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61EB635A23D85BB4002457C1 /* AVFoundation.framework in Frameworks */,
 				E0CABD7A9882888B23E4121B /* Pods_VibeChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +207,7 @@
 		1A44F77FE3250693108DEE87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61EB635923D85BB4002457C1 /* AVFoundation.framework */,
 				AE2CCF23D9ED75CDC9E01F13 /* Pods_VibeChat.framework */,
 				3838933A4A51E5BB5213103D /* Pods_VibeChatTests.framework */,
 				C1CCD5C2EA4B27D085969A96 /* Pods_VibeChat_VibeChatTests.framework */,
@@ -283,7 +285,6 @@
 				612154AA23D5BC880058AE0C /* MessagesController+TextView.swift */,
 				613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */,
 				612154AF23D704EA0058AE0C /* MessagesController+ExpandingMediaMessages.swift */,
-				61445FF723BF655400452FBB /* MessagesController+ImageMessageInteraction.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -879,7 +880,6 @@
 				6175874A239E743E002ED670 /* Message.swift in Sources */,
 				61BB8DBA239805E900EEEEB0 /* LogInController.swift in Sources */,
 				61BB8DBC239806E100EEEEB0 /* CreateAccountController.swift in Sources */,
-				61445FF823BF655400452FBB /* MessagesController+ImageMessageInteraction.swift in Sources */,
 				61BB8DCC239904FD00EEEEB0 /* AuthenticationTextField.swift in Sources */,
 				61EA8E9C23BA22D800FC7B87 /* TextMessageCell.swift in Sources */,
 				613A3DFC23D0809F00F0128A /* MediaMessageUploader+Video.swift in Sources */,

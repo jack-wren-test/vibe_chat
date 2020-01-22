@@ -52,4 +52,9 @@ class ExpandingTextInput: UITextView {
         placeholderLabel.isHidden = false
     }
     
+    public func scrollToBottom() {
+        let bottom = self.contentSize.height - self.frame.height
+        self.setContentOffset(CGPoint(x: 0, y: bottom), animated: true)
+    }
+    
 }

@@ -35,6 +35,7 @@ class MessagesController: UIViewController {
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
     
+    var zoomingView: UIView?
     var initialMediaMessageFrame: CGRect?
     var backgroundView: UIView?
     lazy var messageInputWidth = messageInput.frame.width
