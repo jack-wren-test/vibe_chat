@@ -19,7 +19,7 @@ class HomeController: UIViewController {
     
     // MARK:- IBOutlets
     
-    @IBOutlet public weak var tableView: UITableView!
+    @IBOutlet public weak var homeTableView: UITableView!
     @IBOutlet public weak var profileButton: UIButton!
     @IBOutlet public weak var newChatButton: UIButton!
     @IBOutlet public weak var searchBar: UISearchBar!
@@ -29,6 +29,8 @@ class HomeController: UIViewController {
     var isNewUser: Bool?
     var conversationsDict: [String: Conversation] = [:]
     var orderedConversations: [Conversation]?
+    
+    var noConversationsCover: NoConversationsCoverView?
     
     var searching = false
     var searchResults = [Conversation]()
@@ -51,16 +53,17 @@ class HomeController: UIViewController {
             performSegue(withIdentifier: "ProfileSegue", sender: self)
             self.isNewUser = !isNewUser
         }
+        self.addNoConversationsCoverIfNeeded(orderedConversations: self.orderedConversations)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
+        self.homeTableView.reloadData()
     }
     
     override func keyboardWillHide(_ notification: Notification) {
         self.searchBar.text = ""
         self.searching = false
-        self.tableView.reloadData()
+        self.homeTableView.reloadData()
     }
     
     // MARK:- IBActions

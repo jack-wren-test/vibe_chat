@@ -39,6 +39,11 @@ final class GiphyMessageCell : MessageCell {
         self.giphyMediaView.image = nil
     }
     
+    override func didMoveToSuperview() {
+        guard let message = message as? GiphyMessage else {return}
+        self.updateHeightAnchor(usingAspectRatio: message.aspectRatio)
+    }
+    
     // MARK:- Methods
     
     private func configureViews() {

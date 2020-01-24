@@ -68,10 +68,4 @@ final class VideoMessageCell: MessageCell {
                                                                               constant: -self.edgeBuffer)
     }
     
-    public func updateHeightAnchor(usingAspectRatio aspectRatio: CGFloat) {
-        self.viewHeightAnchor = heightAnchor.constraint(equalToConstant: self.maxMessageWidth/aspectRatio)
-        self.viewHeightAnchor?.priority = UILayoutPriority.init(rawValue: 999)
-        self.viewHeightAnchor?.isActive = true
-    }
-    
 }

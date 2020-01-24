@@ -72,12 +72,6 @@ class ImageMessageCell: MessageCell {
                                                  constant: -self.cellBuffer).isActive = true
     }
     
-    public func updateHeightAnchor(usingAspectRatio aspectRatio: CGFloat) {
-        self.viewHeightAnchor = heightAnchor.constraint(equalToConstant: self.maxMessageWidth/aspectRatio)
-        self.viewHeightAnchor?.priority = UILayoutPriority.init(rawValue: 999)
-        self.viewHeightAnchor?.isActive = true
-    }
-    
     @objc public func handleImageTap() {
         guard let imageMessageView = self.imageMessageView else {return}
         self.delegate?.expand(imageMessageView)

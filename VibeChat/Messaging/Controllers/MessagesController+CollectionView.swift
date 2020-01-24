@@ -78,12 +78,15 @@ extension MessagesController:   UICollectionViewDelegate,
         }
         if offsetY < collectionViewHeight * leadingScreensForBatching, initialScrollComplete {
             if !self.fetchingMoreMessages && !endOfMessageListReached {
-                self.beginMessageBatchFetch()
+                self.beginMessageBatchFetch {
+                    let newOffset = collectionViewContentHeight-(collectionViewContentHeight-offsetY)
+                    self.collectionView.setContentOffset(CGPoint(x: 0, y: newOffset), animated: false)
+                }
             }
         }
     }
 
-    public func beginMessageBatchFetch() {
+    public func beginMessageBatchFetch(completion: @escaping ()->Void) {
         guard let conversation = conversation else {return}
         fetchingMoreMessages = true
         let firstPost = self.messages.first?.first

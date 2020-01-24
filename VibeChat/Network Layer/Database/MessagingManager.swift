@@ -57,11 +57,11 @@ final class MessagingManager: FirestoreManager {
                 completion(nil)
             }
             guard let snapshot = snapshot?.documentChanges else {return}
-            var messages = self.firestoreDocumentsToMessageArray(snapshot)
+            let messages = self.firestoreDocumentsToMessageArray(snapshot)
             
-            if messages?.count == 2 { // HACKY FIX
-                messages?.remove(at: 0)
-            }
+//            if messages?.count == 2 { // HACKY FIX
+//                messages?.remove(at: 0)
+//            }
             
             DispatchQueue.main.async {
                 completion(messages)

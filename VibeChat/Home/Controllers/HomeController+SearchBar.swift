@@ -17,7 +17,7 @@ extension HomeController: UISearchBarDelegate {
             let chatterName = conversation.chatter!.name
             return chatterName.prefix(searchText.count) == searchText
         })
-        self.tableView.reloadData()
+        self.homeTableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -16,10 +16,10 @@ extension HomeController {
     }
     
     public func tableViewConfig() { 
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.rowHeight = 80
-        self.tableView.keyboardDismissMode = .interactive
+        self.homeTableView.delegate = self
+        self.homeTableView.dataSource = self
+        self.homeTableView.rowHeight = 80
+        self.homeTableView.keyboardDismissMode = .interactive
     }
     
     public func orderConversationsByLatestMesage(conversations: [String: Conversation]) -> [Conversation] {
@@ -42,7 +42,7 @@ extension HomeController {
             vc.homeDelegate = self
         case "MessagesSegue":
             let vc = segue.destination as! MessagesController
-            if let indexPath = tableView.indexPathForSelectedRow {
+            if let indexPath = homeTableView.indexPathForSelectedRow {
                 if searching {
                     vc.conversation = searchResults[indexPath.row]
                 } else {
@@ -60,7 +60,7 @@ extension HomeController {
             guard let self = self else {return}
             conversations.forEach { self.conversationsDict[$0.uid] = $0 }
             self.orderedConversations = self.orderConversationsByLatestMesage(conversations: self.conversationsDict)
-            self.tableView.reloadData()
+            self.homeTableView.reloadData()
             self.addNoConversationsCoverIfNeeded(orderedConversations: self.orderedConversations)
         }
     }
@@ -74,11 +74,10 @@ extension HomeController {
     }
     
     public func addNoConversationsCoverIfNeeded(orderedConversations: [Conversation]?) {
-        var noConversationsCover: NoConversationsCoverView?
         if orderedConversations?.count == 0 || orderedConversations == nil {
-            let noConversationsCover = NoConversationsCoverView()
-            view.addSubview(noConversationsCover)
-            noConversationsCover.constraintsEqual(toView: tableView)
+            noConversationsCover = NoConversationsCoverView()
+            view.addSubview(noConversationsCover!)
+            noConversationsCover!.constraintsEqual(toView: self.homeTableView)
         } else {
             noConversationsCover?.removeFromSuperview()
             noConversationsCover = nil

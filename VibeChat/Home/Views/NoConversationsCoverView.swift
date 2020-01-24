@@ -16,7 +16,7 @@ final class NoConversationsCoverView: UIView {
     private let imageView: UIImageView = {
         let view = UIImageView(image: #imageLiteral(resourceName: "sadFaceIcon"))
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = UIColor(named: "text")
+        view.tintColor = UIColor(named: "text_alt")
         return view
     }()
     
@@ -25,7 +25,7 @@ final class NoConversationsCoverView: UIView {
         label.text = "You have no conversations yet. Tap the new conversations button (top right) to get started!"
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 20, weight: .light)
-        label.textColor = UIColor(named: "text")
+        label.textColor = UIColor(named: "text_alt")
         label.textAlignment = .center
         return label
     }()
@@ -45,7 +45,7 @@ final class NoConversationsCoverView: UIView {
     // MARK:- Methods
     
     fileprivate func layoutViews() {
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(named: "whiteblack")
         
         self.imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         self.imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true

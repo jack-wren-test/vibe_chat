@@ -23,8 +23,7 @@ extension MediaMessageUploader {
                                                         completion: @escaping (_ success: Bool)->Void) {
         guard let currentUser = CurrentUser.shared.data else {return}
         if self.isFirstMessage {
-            UserMessagesManager.shared.createConversation(conversation: conversation) { [weak self] success in
-                guard let self = self, success else {return}
+            UserMessagesManager.shared.createConversation(conversation: conversation) { success in
                 self.sendGiphyMessage(withGiphId, andAspectRatio, conversation, currentUser, completion)
             }
         } else {
