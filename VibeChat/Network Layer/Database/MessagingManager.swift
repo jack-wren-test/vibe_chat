@@ -50,14 +50,19 @@ final class MessagingManager: FirestoreManager {
     public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->Void) -> ListenerRegistration {
         let conversationId = onConversation.uid
         let messageQueryRef = self.collectionReference.document(conversationId)
-            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).limit(to: 50)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).limit(to: 25)
         let listener = messageQueryRef.addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
                 completion(nil)
             }
             guard let snapshot = snapshot?.documentChanges else {return}
-            let messages = self.firestoreDocumentsToMessageArray(snapshot)
+            var messages = self.firestoreDocumentsToMessageArray(snapshot)
+            
+            if messages?.count == 2 { // HACKY FIX
+                messages?.remove(at: 0)
+            }
+            
             DispatchQueue.main.async {
                 completion(messages)
             }
@@ -65,12 +70,12 @@ final class MessagingManager: FirestoreManager {
         return listener
     }
     
-    public func fetchMessages(firstPost: Message?, onConversation: Conversation, completion: @escaping ([Message]?)->Void) {
-        guard let firstPostDate = firstPost?.timestamp else {return}
-        let firstPostTimestamp = Timestamp(date: firstPostDate)
+    public func fetchMessages(firstMessage: Message?, onConversation: Conversation, completion: @escaping ([Message]?)->Void) {
+        guard let firstMessageDate = firstMessage?.timestamp else {return}
+        let firstPostTimestamp = Timestamp(date: firstMessageDate)
         let conversationId = onConversation.uid
         let messageQueryRef = self.collectionReference.document(conversationId)
-            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: false).end(at: [firstPostTimestamp]).limit(to: 50)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).start(after: [firstPostTimestamp]).limit(to: 25)
         messageQueryRef.getDocuments { snapshot, error in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")

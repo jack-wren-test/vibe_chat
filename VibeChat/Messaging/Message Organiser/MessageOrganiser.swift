@@ -28,19 +28,19 @@ class MessageOrganiser {
     
     /// Organises the new messages as previous messages brought through during pagination.
     public func organisePaginatedMessages() -> [[Message]]? {
-        guard var existingMessages = existingMessages else {return nil}
-        var organisedMessages = self.sortAndGroupMessages(newMessages)
-        
-        guard var lastDayPaginated = organisedMessages.last else {return nil}
-        let isSameDay = self.isSameDay(lastDayPaginated)
-        if isSameDay {
-            organisedMessages.remove(at: organisedMessages.count-1)
-            lastDayPaginated.append(contentsOf: existingMessages[0])
-            existingMessages[0] = lastDayPaginated
-        }
-        organisedMessages.append(contentsOf: existingMessages)
-        
+        guard var brokenOutExistingMessages = breakOutExistingMessages() else {return nil}
+        brokenOutExistingMessages.append(contentsOf: self.newMessages)
+        let organisedMessages = self.sortAndGroupMessages(brokenOutExistingMessages)
         return organisedMessages
+    }
+    
+    private func breakOutExistingMessages() -> [Message]? {
+        guard let existingMessages = self.existingMessages else {return nil}
+        var brokenOutMessages = [Message]()
+        existingMessages.forEach { messageDay in
+            brokenOutMessages.append(contentsOf: messageDay)
+        }
+        return brokenOutMessages
     }
     
     /// Organises new messages and existing messages into 2D array of messages sorted by date and time.
