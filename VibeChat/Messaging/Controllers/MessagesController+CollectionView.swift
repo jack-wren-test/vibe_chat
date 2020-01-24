@@ -94,17 +94,26 @@ extension MessagesController:   UICollectionViewDelegate,
 
     public func beginMessageBatchFetch() {
         guard let conversation = conversation else {return}
-        let firstPost = self.messages.first?.first
-        MessagingManager.shared.fetchMessages(firstMessage: firstPost, onConversation: conversation) { [weak self] oldMessages in
-            guard let self = self, let oldMessages = oldMessages else {return}
-            
-            let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
-            guard let messages = organiser.organisePaginatedMessages() else { return }
-            self.messages = messages
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.refreshControl.endRefreshing()
+        
+        if !endOfMessageListReached {
+            let firstPost = self.messages.first?.first
+            MessagingManager.shared.fetchMessages(firstMessage: firstPost, onConversation: conversation) { [weak self] oldMessages in
+                guard let self = self, let oldMessages = oldMessages else {return}
+                
+                if oldMessages.count != 0 {
+                    let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
+                    guard let messages = organiser.organisePaginatedMessages() else { return }
+                    self.messages = messages
+                    
+                    DispatchQueue.main.async {
+                        // Add all messages function?
+                        self.collectionView.reloadData()
+                        self.refreshControl.endRefreshing()
+                    }
+                } else {
+                    self.refreshControl.endRefreshing()
+                }
+                
             }
         }
     }

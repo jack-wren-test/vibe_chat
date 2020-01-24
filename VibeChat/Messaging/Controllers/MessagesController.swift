@@ -35,10 +35,7 @@ class MessagesController: UIViewController {
     var conversation: Conversation?
     
     let refreshControl = UIRefreshControl()
-    var fetchingMoreMessages = false
     var endOfMessageListReached = false
-    var initialScrollComplete = false
-    let leadingScreensForBatching: CGFloat = 0.1
     
     var zoomingView: UIView?
     var initialMediaMessageFrame: CGRect?
