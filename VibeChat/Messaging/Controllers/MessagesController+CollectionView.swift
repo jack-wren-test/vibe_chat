@@ -90,9 +90,13 @@ extension MessagesController:   UICollectionViewDelegate,
         MessagingManager.shared.fetchMessages(firstPost: firstPost, onConversation: conversation) { oldMessages in
             guard let oldMessages = oldMessages else {return}
             
+            oldMessages.forEach { message in
+                print("Loading old message: \(message)")
+            }
+            
             // Need new function for sorting and adding these messages
             let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
-            guard let messages = organiser.organiseMessages() else { return }
+            guard let messages = organiser.organisePaginatedMessages() else { return }
             self.messages = messages
             self.collectionView.reloadData()
             

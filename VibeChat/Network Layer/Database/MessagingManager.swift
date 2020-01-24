@@ -50,7 +50,7 @@ final class MessagingManager: FirestoreManager {
     public func listenForMessages(onConversation: Conversation, completion: @escaping ([Message]?)->Void) -> ListenerRegistration {
         let conversationId = onConversation.uid
         let messageQueryRef = self.collectionReference.document(conversationId)
-            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).limit(to: 25)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).limit(to: 50)
         let listener = messageQueryRef.addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")
@@ -70,7 +70,7 @@ final class MessagingManager: FirestoreManager {
         let firstPostTimestamp = Timestamp(date: firstPostDate)
         let conversationId = onConversation.uid
         let messageQueryRef = self.collectionReference.document(conversationId)
-            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: true).end(before: [firstPostTimestamp]).limit(to: 25)
+            .collection(dbCollection.messages.rawValue).order(by: "timestamp", descending: false).end(at: [firstPostTimestamp]).limit(to: 50)
         messageQueryRef.getDocuments { snapshot, error in
             if let error = error {
                 print("Error retrieving snapshot: \(error.localizedDescription)")

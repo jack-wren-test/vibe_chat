@@ -12,6 +12,8 @@ class MessageOrganiser {
     
     // MARK:- Properties
     
+    private let calendar = Calendar.current
+    
     private var newMessages: [Message]
     private var existingMessages: [[Message]]?
     
@@ -23,6 +25,23 @@ class MessageOrganiser {
     }
     
     // MARK:- Methods
+    
+    /// Organises the new messages as previous messages brought through during pagination.
+    public func organisePaginatedMessages() -> [[Message]]? {
+        guard var existingMessages = existingMessages else {return nil}
+        var organisedMessages = self.sortAndGroupMessages(newMessages)
+        
+        guard var lastDayPaginated = organisedMessages.last else {return nil}
+        let isSameDay = self.isSameDay(lastDayPaginated)
+        if isSameDay {
+            organisedMessages.remove(at: organisedMessages.count-1)
+            lastDayPaginated.append(contentsOf: existingMessages[0])
+            existingMessages[0] = lastDayPaginated
+        }
+        organisedMessages.append(contentsOf: existingMessages)
+        
+        return organisedMessages
+    }
     
     /// Organises new messages and existing messages into 2D array of messages sorted by date and time.
     public func organiseMessages() -> [[Message]]? {
@@ -45,8 +64,7 @@ class MessageOrganiser {
     private func appendNewMessagesToExistingMessages(_ newMessages: [Message],
                                                          _ existingMessages: [[Message]]) -> [[Message]] {
         var fullSetOfMessages: [[Message]] = existingMessages
-        let calendar = Calendar.current
-        if self.isSameDay(newMessages, calendar), var todaysMessages = fullSetOfMessages.last  {
+        if self.isSameDay(newMessages), var todaysMessages = fullSetOfMessages.last  {
             todaysMessages.append(contentsOf: newMessages)
             fullSetOfMessages[fullSetOfMessages.count-1] = todaysMessages
         } else {
@@ -58,9 +76,8 @@ class MessageOrganiser {
     /// Sorts an array of messages into a 2D array of messages organised by day and time.
     /// - Parameter messages: The message array to organise.
     private func sortAndGroupMessages(_ messages: [Message]) -> [[Message]] {
-        let calendar = Calendar.current
         let dictOfMessagesKeyedByDate = Dictionary(grouping: messages) { (element) -> Date in
-            return calendar.startOfDay(for: element.timestamp!)
+            return self.calendar.startOfDay(for: element.timestamp!)
         }
         let sortedDates = dictOfMessagesKeyedByDate.keys.sorted()
         let sortedAndGroupedMessages = groupMessagesByDateAndTime(sortedDates, dictOfMessagesKeyedByDate)
@@ -90,11 +107,11 @@ class MessageOrganiser {
     /// - Parameters:
     ///   - newMessages: Messages to check the date of
     ///   - calendar: The calendar to check against (use .current)
-    private func isSameDay(_ newMessages: [Message], _ calendar: Calendar) -> Bool {
+    private func isSameDay(_ newMessages: [Message]) -> Bool {
         if  let todaysMessages = self.existingMessages?.last,
             let latestMessageTimestamp = todaysMessages.first?.timestamp,
             let thisMessageTimestamp = newMessages.first?.timestamp,
-            calendar.startOfDay(for: latestMessageTimestamp) == calendar.startOfDay(for: thisMessageTimestamp) {
+            self.calendar.startOfDay(for: latestMessageTimestamp) == self.calendar.startOfDay(for: thisMessageTimestamp) {
             return true
         }
         return false
