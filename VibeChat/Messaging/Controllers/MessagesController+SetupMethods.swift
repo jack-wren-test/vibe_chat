@@ -51,6 +51,9 @@ extension MessagesController {
         collectionView.register(ImageMessageCell.self, forCellWithReuseIdentifier: MessageType.imageMessage.reuseId)
         collectionView.register(GiphyMessageCell.self, forCellWithReuseIdentifier: MessageType.giphyMessage.reuseId)
         collectionView.register(VideoMessageCell.self, forCellWithReuseIdentifier: MessageType.videoMessage.reuseId)
+        
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        collectionView.addSubview(refreshControl)
     }
     
     public func setupConverstationStatusListener() {

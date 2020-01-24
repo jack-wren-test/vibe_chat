@@ -68,40 +68,49 @@ extension MessagesController:   UICollectionViewDelegate,
         header.dateLabel.date = self.messages[indexPath.section][0].timestamp
         return header
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let collectionViewContentHeight = scrollView.contentSize.height
-        let collectionViewHeight = scrollView.frame.size.height
-        if offsetY >= collectionViewContentHeight - collectionViewHeight {
-            initialScrollComplete = true
-        }
-        if offsetY < collectionViewHeight * leadingScreensForBatching, initialScrollComplete {
-            if !self.fetchingMoreMessages && !endOfMessageListReached {
-                self.beginMessageBatchFetch {
-                    let newOffset = collectionViewContentHeight-(collectionViewContentHeight-offsetY)
-                    self.collectionView.setContentOffset(CGPoint(x: 0, y: newOffset), animated: false)
-                }
-            }
-        }
-    }
 
-    public func beginMessageBatchFetch(completion: @escaping ()->Void) {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let offsetY = scrollView.contentOffset.y
+//        let collectionViewContentHeight = scrollView.contentSize.height
+//        let collectionViewHeight = scrollView.frame.size.height
+//        if offsetY >= collectionViewContentHeight - (collectionViewHeight+50) {
+//            initialScrollComplete = true
+//        }
+//        let attributes = self.collectionView.layoutAttributesForItem(at: [0, 0])
+//        let rect = collectionView.convert(attributes!.frame, to: collectionView)
+//        let oldHeight = rect.height
+//
+//        if offsetY < collectionViewHeight * leadingScreensForBatching, initialScrollComplete {
+//            if !self.fetchingMoreMessages && !endOfMessageListReached {
+//                self.beginMessageBatchFetch {
+//                    let attributes = self.collectionView.layoutAttributesForItem(at: [0, 0])
+//                    let rect = self.collectionView.convert(attributes!.frame, to: self.collectionView)
+//                    let newHeight = rect.height
+//
+//                }
+//            }
+//        }
+//    }
+
+    public func beginMessageBatchFetch() {
         guard let conversation = conversation else {return}
-        fetchingMoreMessages = true
         let firstPost = self.messages.first?.first
-        MessagingManager.shared.fetchMessages(firstMessage: firstPost, onConversation: conversation) { oldMessages in
-            guard let oldMessages = oldMessages else {return}
+        MessagingManager.shared.fetchMessages(firstMessage: firstPost, onConversation: conversation) { [weak self] oldMessages in
+            guard let self = self, let oldMessages = oldMessages else {return}
             
-            // Need new function for sorting and adding these messages
             let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
             guard let messages = organiser.organisePaginatedMessages() else { return }
             self.messages = messages
-            self.collectionView.reloadData()
             
-            self.fetchingMoreMessages = false
-            self.endOfMessageListReached = oldMessages.count == 0
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
+    }
+    
+    @objc public func refresh() {
+        beginMessageBatchFetch()
     }
     
 }

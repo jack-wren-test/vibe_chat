@@ -34,10 +34,11 @@ class MessagesController: UIViewController {
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
     
+    let refreshControl = UIRefreshControl()
     var fetchingMoreMessages = false
     var endOfMessageListReached = false
     var initialScrollComplete = false
-    let leadingScreensForBatching: CGFloat = 0.5
+    let leadingScreensForBatching: CGFloat = 0.1
     
     var zoomingView: UIView?
     var initialMediaMessageFrame: CGRect?
