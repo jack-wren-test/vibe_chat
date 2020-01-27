@@ -69,53 +69,65 @@ extension MessagesController:   UICollectionViewDelegate,
         return header
     }
 
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y
-//        let collectionViewContentHeight = scrollView.contentSize.height
-//        let collectionViewHeight = scrollView.frame.size.height
-//        if offsetY >= collectionViewContentHeight - (collectionViewHeight+50) {
-//            initialScrollComplete = true
-//        }
-//        let attributes = self.collectionView.layoutAttributesForItem(at: [0, 0])
-//        let rect = collectionView.convert(attributes!.frame, to: collectionView)
-//        let oldHeight = rect.height
-//
-//        if offsetY < collectionViewHeight * leadingScreensForBatching, initialScrollComplete {
-//            if !self.fetchingMoreMessages && !endOfMessageListReached {
-//                self.beginMessageBatchFetch {
-//                    let attributes = self.collectionView.layoutAttributesForItem(at: [0, 0])
-//                    let rect = self.collectionView.convert(attributes!.frame, to: self.collectionView)
-//                    let newHeight = rect.height
-//
-//                }
-//            }
-//        }
-//    }
-
+    private func retainPostition() {
+        let newMessagesCount = self.countTotalMessages() - self.previousMessageCount
+        let indexPath = self.getTopCellIndexPath(forMessageNumber: newMessagesCount-1)
+        let attributes = self.collectionView.layoutAttributesForItem(at: indexPath)
+        let rect = self.collectionView.convert(attributes!.frame, to: self.collectionView)
+        let newY = rect.maxY
+        self.collectionView.setContentOffset(CGPoint(x: 0, y: newY), animated: false)
+    }
+    
+    private func getTopCellIndexPath(forMessageNumber: Int) -> IndexPath {
+        var stepsToMessageNumber = forMessageNumber
+        var section = 0
+        var item = 0
+        
+        // WORKS BUT INEFFICIENTLY, WILL KEEP RUNNING THROUGH EVERY DAY UNNESSESARILY
+        self.messages.forEach { day in
+            if day.count > stepsToMessageNumber {
+                item = stepsToMessageNumber
+            } else {
+                stepsToMessageNumber -= day.count
+                section += 1
+            }
+        }
+        return IndexPath(item: item, section: section)
+    }
+    
     public func beginMessageBatchFetch() {
         guard let conversation = conversation else {return}
-        
         if !endOfMessageListReached {
             let firstPost = self.messages.first?.first
+            self.previousMessageCount = self.countTotalMessages()
             MessagingManager.shared.fetchMessages(firstMessage: firstPost, onConversation: conversation) { [weak self] oldMessages in
                 guard let self = self, let oldMessages = oldMessages else {return}
-                
                 if oldMessages.count != 0 {
+                    
                     let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
                     guard let messages = organiser.organisePaginatedMessages() else { return }
                     self.messages = messages
                     
                     DispatchQueue.main.async {
-                        // Add all messages function?
                         self.collectionView.reloadData()
                         self.refreshControl.endRefreshing()
+                        self.retainPostition()
                     }
+                    
                 } else {
                     self.refreshControl.endRefreshing()
                 }
                 
             }
         }
+    }
+    
+    private func countTotalMessages() -> Int {
+        var messageCount = 0
+        self.messages.forEach { day in
+            messageCount += day.count
+        }
+        return messageCount
     }
     
     @objc public func refresh() {

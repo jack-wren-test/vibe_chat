@@ -34,8 +34,9 @@ class MessagesController: UIViewController {
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
     
-    let refreshControl = UIRefreshControl()
     var endOfMessageListReached = false
+    var previousMessageCount = 0
+    let refreshControl = UIRefreshControl()
     
     var zoomingView: UIView?
     var initialMediaMessageFrame: CGRect?

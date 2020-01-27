@@ -77,7 +77,7 @@ extension MessagesController {
             let contentHeight: CGFloat = self.collectionView.contentSize.height
             let heightAfterInserts: CGFloat = self.collectionView.frame.size.height - (self.collectionView.contentInset.top + self.collectionView.contentInset.bottom)
             if contentHeight > heightAfterInserts {
-                self.collectionView.setContentOffset(CGPoint(x: 0, y: self.collectionView.contentSize.height - self.collectionView.frame.size.height), animated: true)
+                self.collectionView.setContentOffset(CGPoint(x: 0, y: (self.collectionView.contentSize.height - self.collectionView.frame.size.height) + 6), animated: true)
             }
         }
     }
