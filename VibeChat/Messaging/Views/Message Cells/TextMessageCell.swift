@@ -35,6 +35,7 @@ final class TextMessageCell: MessageCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureViews()
+        self.backgroundColor = .orange
     }
     
     required init?(coder: NSCoder) {
@@ -42,34 +43,41 @@ final class TextMessageCell: MessageCell {
     }
     
     override func prepareForReuse() {
-        self.messageLabel.text = nil
+        self.messageLabel.text   = nil
     }
     
     // MARK:- Methods
     
     private func configureViews() {
-        self.addSubview(bubbleView)
-        self.addSubview(messageLabel)
-        
-        self.incomingXConstraint = bubbleView.leadingAnchor.constraint(equalTo: self.leadingAnchor,
-                                                                       constant: self.edgeBuffer)
-        self.outgoingXConstraint = bubbleView.trailingAnchor.constraint(equalTo: self.trailingAnchor,
-                                                                        constant: -self.edgeBuffer)
-        
-        self.messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.maxMessageWidth).isActive = true
-        self.messageLabel.topAnchor.constraint(equalTo: topAnchor,
-                                               constant: self.bubbleViewSpacing+self.cellBuffer).isActive = true
-        self.messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                                  constant: -(self.bubbleViewSpacing+self.cellBuffer)).isActive = true
-        
-        self.bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor,
-                                                 constant: -self.bubbleViewSpacing).isActive = true
-        self.bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor,
-                                             constant: -self.bubbleViewSpacing).isActive = true
-        self.bubbleView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor,
-                                                  constant: self.bubbleViewSpacing).isActive = true
-        self.bubbleView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor,
-                                                constant: self.bubbleViewSpacing).isActive = true
+//        self.addSubview(bubbleView)
+//        self.addSubview(messageLabel)
+//
+//        self.incomingXConstraint = bubbleView.leadingAnchor.constraint(equalTo: self.leadingAnchor,
+//                                                                       constant: self.edgeBuffer)
+//        self.outgoingXConstraint = bubbleView.trailingAnchor.constraint(equalTo: self.trailingAnchor,
+//                                                                        constant: -self.edgeBuffer)
+//
+//        self.addSubview(self.timestampLabel)
+//        timestampLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+//        timestampLabel.leadingAnchor.constraint(equalTo: self.messageLabel.leadingAnchor).isActive = true
+//        timestampLabel.trailingAnchor.constraint(equalTo: self.messageLabel.trailingAnchor).isActive = true
+//        timestampLabel.bottomAnchor.constraint(equalTo: self.bubbleView.topAnchor).isActive = true
+//
+//
+//        self.messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.maxMessageWidth).isActive = true
+//        self.messageLabel.topAnchor.constraint(equalTo: topAnchor,
+//                                               constant: self.bubbleViewSpacing+self.cellBuffer).isActive = true
+//        self.messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor,
+//                                                  constant: -(self.bubbleViewSpacing+self.cellBuffer)).isActive = true
+//
+//        self.bubbleView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor,
+//                                                 constant: -self.bubbleViewSpacing).isActive = true
+//        self.bubbleView.topAnchor.constraint(equalTo: messageLabel.topAnchor,
+//                                             constant: -self.bubbleViewSpacing).isActive = true
+//        self.bubbleView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor,
+//                                                  constant: self.bubbleViewSpacing).isActive = true
+//        self.bubbleView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor,
+//                                                constant: self.bubbleViewSpacing).isActive = true
     }
     
     override func setupMessage() {

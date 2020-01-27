@@ -8,12 +8,13 @@
 
 import UIKit
 
+//TODO:- Refactor this extension
 extension MessagesController:   UICollectionViewDelegate,
                                 UICollectionViewDataSource,
                                 UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -31,6 +32,8 @@ extension MessagesController:   UICollectionViewDelegate,
         if let cell = cell as? VideoMessageCell {
             cell.videoView?.delegate = self
         }
+        cell.messageCellDelegate = self
+        cell.indexPath = indexPath
         return cell
     }
     
@@ -38,15 +41,21 @@ extension MessagesController:   UICollectionViewDelegate,
         var height: CGFloat!
         let message = self.messages[indexPath.section][indexPath.item]
         if let message = message as? TextMessage {
-            height = self.estimatedFrameForText(text: message.text!).height+22
+            height = self.estimatedFrameForText(text: message.text!).height+28
         } else if let message = message as? ImageBasedMessage {
             height = 225/message.aspectRatio
         }
-        return CGSize(width: view.frame.width, height: height)
+        
+        if self.messageTimestampShowing[indexPath.section][indexPath.item] {
+            return CGSize(width: view.frame.width, height: height+100)
+        } else {
+            return CGSize(width: view.frame.width, height: height)
+        }
+        
     }
     
     private func estimatedFrameForText(text: String) -> CGRect {
-            let size = CGSize(width: 250, height: 1000)
+            let size = CGSize(width: 225, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light)], context: nil)
         }

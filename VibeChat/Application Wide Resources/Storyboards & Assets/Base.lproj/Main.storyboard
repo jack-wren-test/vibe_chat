@@ -666,7 +666,7 @@
                             <constraint firstItem="F2E-8g-KQq" firstAttribute="bottom" secondItem="Alp-Op-MLO" secondAttribute="bottom" id="mHV-IB-pkS"/>
                             <constraint firstItem="8gO-gt-VRz" firstAttribute="leading" secondItem="Alp-Op-MLO" secondAttribute="leading" id="rNU-mo-Cz3"/>
                             <constraint firstItem="pdB-93-EVK" firstAttribute="leading" secondItem="Smc-YH-dEG" secondAttribute="leading" id="xIc-ZI-bN9"/>
-                            <constraint firstItem="8gO-gt-VRz" firstAttribute="trailing" secondItem="Alp-Op-MLO" secondAttribute="trailing" id="zN9-ND-yKY"/>
+                            <constraint firstItem="8gO-gt-VRz" firstAttribute="trailing" secondItem="Alp-Op-MLO" secondAttribute="trailing" id="xhs-c1-Fvs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Alp-Op-MLO"/>
                     </view>
@@ -808,7 +808,7 @@
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="waf-AE-fSf">
-                                                <rect key="frame" x="94.5" y="0.0" width="185.5" height="50"/>
+                                                <rect key="frame" x="70" y="0.0" width="234" height="50"/>
                                                 <color key="tintColor" name="text_alt"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXI-Q0-YEh">

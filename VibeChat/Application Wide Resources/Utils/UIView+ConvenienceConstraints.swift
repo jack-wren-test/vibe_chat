@@ -57,30 +57,30 @@ extension UIView {
         
         if let top = top {
             let topConstraint = topAnchor.constraint(equalTo: top)
-            topConstraint.isActive = true
             guard let topPadding = padding?.top else {return}
             topConstraint.constant = topPadding
+            topConstraint.isActive = true
         }
         
         if let bottom = bottom {
             let bottomConstraint = bottomAnchor.constraint(equalTo: bottom)
-            bottomConstraint.isActive = true
             guard let bottomPadding = padding?.bottom else {return}
             bottomConstraint.constant = -bottomPadding
+            bottomConstraint.isActive = true
         }
         
         if let leading = leading {
             let leadingConstraint = leadingAnchor.constraint(equalTo: leading)
-            leadingConstraint.isActive = true
             guard let leadingPadding = padding?.left else {return}
             leadingConstraint.constant = leadingPadding
+            leadingConstraint.isActive = true
         }
         
         if let trailing = trailing {
             let trailingConstraint = trailingAnchor.constraint(equalTo: trailing)
-            trailingConstraint.isActive = true
             guard let trailingPadding = padding?.right else {return}
             trailingConstraint.constant = -trailingPadding
+            trailingConstraint.isActive = true
         }
         
         if let size = size {

@@ -38,7 +38,12 @@ extension MessagesController {
             if isFirstTimeLoading {
                 self.organiseAndDisplayExistingMessages(newMessages)
             } else {
-                self.organiseAndDisplayNewMessages(newMessages)
+                // Hacking away firebase bug
+                var messages = newMessages
+                if messages.count == 2 {
+                    messages.remove(at: 0)
+                }
+                self.organiseAndDisplayNewMessages(messages)
             }
         }
     }
@@ -46,6 +51,7 @@ extension MessagesController {
     func organiseAndDisplayNewMessages(_ newMessages: [Message]) {
         let organiser = MessageOrganiser(newMessages: newMessages, existingMessages: self.messages)
         guard let messages = organiser.organiseMessages() else { return }
+        self.hideMessageTimestamps(messages: messages)
         let isSection = self.messages.count != messages.count
         self.messages = messages
         self.animateAddNewMessage(isSection)
@@ -55,10 +61,20 @@ extension MessagesController {
     private func organiseAndDisplayExistingMessages(_ newMessages: [Message]) {
         let organiser = MessageOrganiser(newMessages: newMessages, existingMessages: nil)
         guard let messages = organiser.organiseMessages() else { return }
+        self.hideMessageTimestamps(messages: messages)
         self.messages = messages
         collectionView.reloadData()
         scrollToBottomOfMessages()
         conversation?.isReadStatus = true
+    }
+    
+    private func hideMessageTimestamps(messages: [[Message]]) {
+        var messageTimestampShowing = [[Bool]]()
+        messages.forEach { day in
+            let timestampsForDay = Array(repeating: false, count: day.count)
+            messageTimestampShowing.append(timestampsForDay)
+        }
+        self.messageTimestampShowing = messageTimestampShowing
     }
     
     private func animateAddNewMessage(_ isNewSection: Bool) {
@@ -77,9 +93,18 @@ extension MessagesController {
             let contentHeight: CGFloat = self.collectionView.contentSize.height
             let heightAfterInserts: CGFloat = self.collectionView.frame.size.height - (self.collectionView.contentInset.top + self.collectionView.contentInset.bottom)
             if contentHeight > heightAfterInserts {
-                self.collectionView.setContentOffset(CGPoint(x: 0, y: (self.collectionView.contentSize.height - self.collectionView.frame.size.height) + 6), animated: true)
+                self.collectionView.setContentOffset(CGPoint(x: 0, y: (self.collectionView.contentSize.height - self.collectionView.frame.size.height)), animated: true)
             }
         }
     }
     
+}
+
+extension MessagesController: MessageCellDelegate {
+    func showHideTimestamp(indexPath: IndexPath) {
+        self.messageTimestampShowing[indexPath.section][indexPath.item] = !self.messageTimestampShowing[indexPath.section][indexPath.item]
+        UIView.animate(withDuration: 0.8) {
+            self.collectionView.reloadItems(at: [indexPath])
+        }
+    }
 }

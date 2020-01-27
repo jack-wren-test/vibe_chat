@@ -25,11 +25,14 @@ class MessagesController: UIViewController {
     @IBOutlet public weak var specialMessageLeadingConstraint: NSLayoutConstraint!
     @IBOutlet public weak var progressBarWidthAnchor: NSLayoutConstraint!
     
+    
     // MARK:- Properties
     
     let headerReuseId = "headerView"
     
     var messages = [[Message]]()
+    var messageTimestampShowing = [[Bool]]()
+    
     var conversationListener: ListenerRegistration?
     var conversationStatusListener: ListenerRegistration?
     var conversation: Conversation?
