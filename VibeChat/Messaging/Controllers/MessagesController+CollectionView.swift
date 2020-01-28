@@ -32,8 +32,11 @@ extension MessagesController:   UICollectionViewDelegate,
         if let cell = cell as? VideoMessageCell {
             cell.videoView?.delegate = self
         }
+        
+        // May not be needed in the end
         cell.messageCellDelegate = self
         cell.indexPath = indexPath
+        
         return cell
     }
     
@@ -41,17 +44,11 @@ extension MessagesController:   UICollectionViewDelegate,
         var height: CGFloat!
         let message = self.messages[indexPath.section][indexPath.item]
         if let message = message as? TextMessage {
-            height = self.estimatedFrameForText(text: message.text!).height+28
+            height = self.estimatedFrameForText(text: message.text!).height+24
         } else if let message = message as? ImageBasedMessage {
             height = 225/message.aspectRatio
         }
-        
-        if self.messageTimestampShowing[indexPath.section][indexPath.item] {
-            return CGSize(width: view.frame.width, height: height+100)
-        } else {
-            return CGSize(width: view.frame.width, height: height)
-        }
-        
+        return CGSize(width: self.collectionView.frame.width, height: height)
     }
     
     private func estimatedFrameForText(text: String) -> CGRect {
@@ -115,6 +112,7 @@ extension MessagesController:   UICollectionViewDelegate,
                     
                     let organiser = MessageOrganiser(newMessages: oldMessages, existingMessages: self.messages)
                     guard let messages = organiser.organisePaginatedMessages() else { return }
+                    self.hideMessageTimestamps(messages: messages)
                     self.messages = messages
                     
                     DispatchQueue.main.async {

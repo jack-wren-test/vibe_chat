@@ -68,7 +68,7 @@ extension MessagesController {
         conversation?.isReadStatus = true
     }
     
-    private func hideMessageTimestamps(messages: [[Message]]) {
+    public func hideMessageTimestamps(messages: [[Message]]) {
         var messageTimestampShowing = [[Bool]]()
         messages.forEach { day in
             let timestampsForDay = Array(repeating: false, count: day.count)
@@ -101,10 +101,5 @@ extension MessagesController {
 }
 
 extension MessagesController: MessageCellDelegate {
-    func showHideTimestamp(indexPath: IndexPath) {
-        self.messageTimestampShowing[indexPath.section][indexPath.item] = !self.messageTimestampShowing[indexPath.section][indexPath.item]
-        UIView.animate(withDuration: 0.8) {
-            self.collectionView.reloadItems(at: [indexPath])
-        }
-    }
+   
 }

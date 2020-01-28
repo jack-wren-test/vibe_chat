@@ -15,7 +15,7 @@ final class GiphyMessageCell : MessageCell {
     
     // MARK:- Properties
     
-    fileprivate let giphyMediaView: GPHMediaView = {
+    private let giphyMediaView: GPHMediaView = {
         let view = GPHMediaView()
         view.contentMode = .scaleToFill
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +63,12 @@ final class GiphyMessageCell : MessageCell {
             guard let self = self, let media = media else {return}
             self.giphyMediaView.setMedia(media)
         }
+    }
+    
+    override func addTapGesture() {
+        super.addTapGesture()
+        guard let pan = self.panGesture else {return}
+        self.giphyMediaView.addGestureRecognizer(pan)
     }
     
 }

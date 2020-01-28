@@ -68,4 +68,10 @@ final class VideoMessageCell: MessageCell {
                                                                               constant: -self.edgeBuffer)
     }
     
+    override func addTapGesture() {
+        super.addTapGesture()
+        guard let pan = self.panGesture else {return}
+        self.videoView!.addGestureRecognizer(pan)
+    }
+    
 }

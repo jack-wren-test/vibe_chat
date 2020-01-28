@@ -77,4 +77,10 @@ class ImageMessageCell: MessageCell {
         self.delegate?.expand(imageMessageView)
     }
     
+    override func addTapGesture() {
+        super.addTapGesture()
+        guard let pan = self.panGesture else {return}
+        self.imageMessageView!.addGestureRecognizer(pan)
+    }
+    
 }
