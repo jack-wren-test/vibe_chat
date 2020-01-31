@@ -99,7 +99,3 @@ extension MessagesController {
     }
     
 }
-
-extension MessagesController: MessageCellDelegate {
-   
-}

@@ -65,8 +65,8 @@ final class GiphyMessageCell : MessageCell {
         }
     }
     
-    override func addTapGesture() {
-        super.addTapGesture()
+    override func addActions() {
+        super.addActions()
         guard let pan = self.panGesture else {return}
         self.giphyMediaView.addGestureRecognizer(pan)
     }

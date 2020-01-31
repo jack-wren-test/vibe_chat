@@ -15,6 +15,7 @@
 		61271C1F23993A6C00F1EE1B /* CanAuthenticateWithForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */; };
 		61271C222399562100F1EE1B /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61271C212399562100F1EE1B /* FirestoreManager.swift */; };
 		612E1AD823E08EFA00B529C3 /* MessageTimeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612E1AD723E08EFA00B529C3 /* MessageTimeLabel.swift */; };
+		612E1ADC23E1895F00B529C3 /* MessagesController+PanMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612E1ADB23E1895F00B529C3 /* MessagesController+PanMessage.swift */; };
 		61392DFE23CF6EB00034B2D1 /* MessageOrganiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */; };
 		613A3DF323D06C7D00F0128A /* MessagesController+MessageHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */; };
 		613A3DF523D06D4100F0128A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 613A3DF423D06D4100F0128A /* GoogleService-Info.plist */; };
@@ -70,6 +71,8 @@
 		61BB8DCE23990E4B00EEEEB0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCD23990E4B00EEEEB0 /* User.swift */; };
 		61BB8DD02399120900EEEEB0 /* UIViewController+KeyboardHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DCF2399120900EEEEB0 /* UIViewController+KeyboardHandling.swift */; };
 		61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */; };
+		61BBCB1423E47A8300F58E23 /* ReactButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBCB1323E47A8300F58E23 /* ReactButton.swift */; };
+		61BBCB1823E48B3700F58E23 /* React Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBCB1723E48B3700F58E23 /* React Panel.swift */; };
 		61BC3A0523D8671E007BF61E /* UIView+LayerColorUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3A0423D8671E007BF61E /* UIView+LayerColorUpdates.swift */; };
 		61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D16FCC239AB55F006435C2 /* StorageManager.swift */; };
 		61D5448F23D8740D00056C4D /* HomeController+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D5448E23D8740D00056C4D /* HomeController+SearchBar.swift */; };
@@ -110,6 +113,7 @@
 		61271C1E23993A6C00F1EE1B /* CanAuthenticateWithForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanAuthenticateWithForm.swift; sourceTree = "<group>"; };
 		61271C212399562100F1EE1B /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		612E1AD723E08EFA00B529C3 /* MessageTimeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTimeLabel.swift; sourceTree = "<group>"; };
+		612E1ADB23E1895F00B529C3 /* MessagesController+PanMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+PanMessage.swift"; sourceTree = "<group>"; };
 		61392DFD23CF6EB00034B2D1 /* MessageOrganiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOrganiser.swift; sourceTree = "<group>"; };
 		613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesController+MessageHandling.swift"; sourceTree = "<group>"; };
 		613A3DF423D06D4100F0128A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 		61BB8DCD23990E4B00EEEEB0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		61BB8DCF2399120900EEEEB0 /* UIViewController+KeyboardHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandling.swift"; sourceTree = "<group>"; };
 		61BB8DD5239923DD00EEEEB0 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
+		61BBCB1323E47A8300F58E23 /* ReactButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactButton.swift; sourceTree = "<group>"; };
+		61BBCB1723E48B3700F58E23 /* React Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "React Panel.swift"; sourceTree = "<group>"; };
 		61BC3A0423D8671E007BF61E /* UIView+LayerColorUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayerColorUpdates.swift"; sourceTree = "<group>"; };
 		61D16FCC239AB55F006435C2 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		61D5448E23D8740D00056C4D /* HomeController+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeController+SearchBar.swift"; sourceTree = "<group>"; };
@@ -244,6 +250,23 @@
 			path = "Network Layer";
 			sourceTree = "<group>";
 		};
+		612E1AD923E1860900B529C3 /* React Button */ = {
+			isa = PBXGroup;
+			children = (
+				61BBCB1323E47A8300F58E23 /* ReactButton.swift */,
+			);
+			path = "React Button";
+			sourceTree = "<group>";
+		};
+		612E1ADA23E1861D00B529C3 /* React Panel */ = {
+			isa = PBXGroup;
+			children = (
+				61BBCB1723E48B3700F58E23 /* React Panel.swift */,
+			);
+			name = "React Panel";
+			path = ../../..;
+			sourceTree = "<group>";
+		};
 		613A3DF823D07E3300F0128A /* Media Message Uploader */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +318,7 @@
 				612154AA23D5BC880058AE0C /* MessagesController+TextView.swift */,
 				613A3DF223D06C7D00F0128A /* MessagesController+MessageHandling.swift */,
 				612154AF23D704EA0058AE0C /* MessagesController+ExpandingMediaMessages.swift */,
+				612E1ADB23E1895F00B529C3 /* MessagesController+PanMessage.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -302,6 +326,8 @@
 		61758747239E73F6002ED670 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				612E1ADA23E1861D00B529C3 /* React Panel */,
+				612E1AD923E1860900B529C3 /* React Button */,
 				612154AC23D6F01B0058AE0C /* Video View */,
 				61EA8E9323BA011600FC7B87 /* Message Cells */,
 				61DC11C323C375CA00892F4A /* Supplimentary Views */,
@@ -872,6 +898,7 @@
 				61BB8DD6239923DD00EEEEB0 /* ConversationCell.swift in Sources */,
 				612154B023D704EA0058AE0C /* MessagesController+ExpandingMediaMessages.swift in Sources */,
 				61D5448F23D8740D00056C4D /* HomeController+SearchBar.swift in Sources */,
+				61BBCB1423E47A8300F58E23 /* ReactButton.swift in Sources */,
 				61D16FCD239AB55F006435C2 /* StorageManager.swift in Sources */,
 				61445FED23BF436A00452FBB /* TextMessage.swift in Sources */,
 				61B92F7E23AA272C00E516C1 /* UserMessagesManager.swift in Sources */,
@@ -904,6 +931,7 @@
 				61BC3A0523D8671E007BF61E /* UIView+LayerColorUpdates.swift in Sources */,
 				61445FF223BF642700452FBB /* MessagesController+SetupMethods.swift in Sources */,
 				61A470F723A000AD003DD758 /* DateHeader.swift in Sources */,
+				612E1ADC23E1895F00B529C3 /* MessagesController+PanMessage.swift in Sources */,
 				61BA5A2223D5B52200A6FFC3 /* ExpandingTextInput.swift in Sources */,
 				61A5F84123C786AF000C4C5E /* VideoMessageCell.swift in Sources */,
 				6175874C239E7459002ED670 /* MessageCell.swift in Sources */,
@@ -918,6 +946,7 @@
 				61BA83B623CC6EEB00913DBC /* UIView+ConvenienceConstraints.swift in Sources */,
 				61A5F84F23C8C404000C4C5E /* UserProfileController+Methods.swift in Sources */,
 				619367C623D89859004F4B6C /* CALayer+SingleSidedBorder.swift in Sources */,
+				61BBCB1823E48B3700F58E23 /* React Panel.swift in Sources */,
 				61A5F84B23C8BF31000C4C5E /* HomeController+Methods.swift in Sources */,
 				61BB8DC42398075600EEEEB0 /* AuthenticationManager.swift in Sources */,
 				61A4710123A8E4C2003DD758 /* Conversation.swift in Sources */,

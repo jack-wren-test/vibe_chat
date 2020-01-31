@@ -15,7 +15,7 @@ final class TextMessageCell: MessageCell {
     
     private let bubbleViewSpacing: CGFloat = 10
     
-    private let messageLabel : UILabel = {
+    let messageLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 18, weight: .light)
@@ -23,7 +23,7 @@ final class TextMessageCell: MessageCell {
         return label
     }()
     
-    private let bubbleView : UIView = {
+    let bubbleView : UIView = {
         let view = UIView()
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +72,10 @@ final class TextMessageCell: MessageCell {
                                                   constant: self.bubbleViewSpacing).isActive = true
         self.bubbleView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor,
                                                 constant: self.bubbleViewSpacing).isActive = true
+        
+        self.addSubview(self.reactButton)
+        self.reactButton.centerYAnchor.constraint(equalTo: self.timestampLabel.centerYAnchor).isActive = true
+        self.reactButton.leadingAnchor.constraint(equalTo: self.timestampLabel.trailingAnchor, constant: 10).isActive = true
     }
     
     override func setupMessage() {
@@ -96,8 +100,8 @@ final class TextMessageCell: MessageCell {
         }
     }
     
-    override func addTapGesture() {
-        super.addTapGesture()
+    override func addActions() {
+        super.addActions()
         guard let pan = self.panGesture else {return}
         self.bubbleView.addGestureRecognizer(pan)
     }
